@@ -114,11 +114,14 @@ body {
     line-height: 1.5;
 }
 
+/* ========== 서비스 소개 링크 (좌측 정렬 수정) ========== */
 .info-pane .service-intro-link {
     margin-top: auto; 
     padding-top: 2rem; 
-    text-align: center;
+    text-align: left; /* center -> left로 수정 */
 }
+/* ==================================================== */
+
 .info-pane .service-intro-link a {
     color: #ffffff;
     font-weight: 700;
@@ -222,18 +225,15 @@ body {
     color: #d93025;
 }
 
-/* ========== (선택) 레이블 간격 수정 ========== */
 .form-group label {
     display: block;
     font-weight: 600;
     font-size: 0.9rem;
     color: #555;
-    margin-bottom: 0.5rem; /* 이 속성이 간격을 만듭니다 */
+    margin-bottom: 0.5rem; 
 }
-/* ========================================= */
 
 
-/* ========== 폰트 수정 ========== */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -248,11 +248,8 @@ textarea {
     font-size: 1rem;
     background: #fdfdfd;
     transition: border-color 0.3s, box-shadow 0.3s;
-    
-    /* 이 폰트 속성이 입력창 글꼴을 지정합니다 */
     font-family: 'Pretendard', 'Inter', sans-serif;
 }
-/* ============================= */
 
 select { padding-left: 1rem; }
 textarea { padding-left: 1rem; resize: vertical; min-height: 100px; }
@@ -278,7 +275,7 @@ input:focus, select:focus, textarea:focus {
     padding: 0 0.25rem;
     transition: all 0.3s ease;
     pointer-events: none;
-    margin-bottom: 0; /* 플로팅 레이블은 간격 필요 없음 */
+    margin-bottom: 0; 
 }
 .form-group.floating input:focus + label,
 .form-group.floating input:not(:placeholder-shown) + label {
