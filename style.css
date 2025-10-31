@@ -32,7 +32,7 @@
 
 html, body {
   height: 100%;
-  margin: 0;            /* ← 기본 여백 제거 */
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
@@ -79,27 +79,26 @@ body {
 
 /* ----------------------------------------------------
    2) Page Wrapper
-   - 가로 중앙, 세로 상단 정렬 (요구 반영)
+   - 세로 상단, 가로 중앙을 '확실히' 보장
+   - 정렬은 block + 자동 마진으로 안정화
 ---------------------------------------------------- */
 .page {
-  /* 뷰포트 높이 단위: 모바일 툴바 대응을 위해 svh/dvh 폴백 */
   min-height: 100svh;
   min-height: 100dvh;
   min-height: 100vh; /* 폴백 */
-
-  display: flex;
-  justify-content: center;   /* 가로 중앙 */
-  align-items: flex-start;   /* 세로 상단 */
-
+  display: block;                 /* 예측 가능한 블록 컨텍스트 */
   padding: clamp(16px, 2vw, 24px);
 }
 
 /* ----------------------------------------------------
    3) Main Card (Glassmorphism)
+   - 가로 중앙: 자동 마진으로 확정
 ---------------------------------------------------- */
 .form-container {
-  width: 100%;
-  max-width: 950px;
+  width: min(100%, 950px);        /* max-width 효과를 가시적으로 보장 */
+  margin-inline: auto;            /* 좌우 자동 마진 → 확실한 가로 중앙 */
+  margin-block: 0;                /* 상하 여백은 페이지 패딩으로 제어 */
+
   display: flex;
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -110,6 +109,7 @@ body {
   box-shadow: var(--shadow-2);
   transform-style: preserve-3d;
   transition: box-shadow .25s ease, transform .25s ease;
+  will-change: transform;         /* 파라ラック스 성능 힌트 */
 }
 .form-container:hover {
   box-shadow: 0 30px 80px rgba(0,0,0,0.22);
@@ -390,7 +390,7 @@ a:focus-visible {
 @media (max-width: 960px) {
   .form-container {
     flex-direction: column;
-    max-width: 720px;
+    width: min(100%, 720px);
   }
   .info-pane, .form-pane {
     width: 100%;
