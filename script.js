@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateStep(currentStep)) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/여기에_복사한_URL_붙여넣기/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec";
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
