@@ -4,14 +4,19 @@
 /* --- 0. 기본 및 동적 배경 --- */
 body {
     font-family: 'Pretendard', 'Inter', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    /* ========== 1. 여백 문제 최종 수정 ========== */
+    display: flex; /* 가로 중앙 정렬을 위해 flex 유지 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    /* align-items: center; <-- 수직 중앙 정렬 삭제! (상단 정렬) */
     min-height: 100vh;
-    padding: 2rem;
-    box-sizing: border-box; /* PC 스크롤 방지 */
+    
+    /* padding: 2rem; <-- 상단 여백의 주범! 삭제! */
+    
+    box-sizing: border-box; 
     overflow-x: hidden; 
     perspective: 1500px; 
+    /* ======================================== */
 }
 
 .animated-bg {
@@ -45,9 +50,13 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
+
+    /* ========== 2. 바깥쪽 여백 제거 ========== */
+    /* margin: 2rem; <-- 불필요한 여백 제거! */
+    /* ===================================== */
 }
 
-/* --- 2. 왼쪽 정보 패널 (수평 정렬 수정됨) --- */
+/* --- 2. 왼쪽 정보 패널 --- */
 .info-pane {
     width: 40%;
     background: #6d28d2;
@@ -56,7 +65,7 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; <-- 이 줄을 삭제하여 수평 정렬을 맞춥니다. */
+    justify-content: center; /* 왼쪽 패널 내부는 중앙 정렬 (롤백) */
 }
 
 .info-pane .info-logo {
@@ -82,10 +91,6 @@ body {
     margin-top: 1rem;
 }
 
-/* ========== ( info-block 스타일 삭제 ) ========== */
-
-
-/* ========== 회전 슬라이더 스타일 (복구됨) ========== */
 .testimonial-slider {
     margin-top: 2.5rem;
     height: 120px;
@@ -93,6 +98,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     padding-top: 2.5rem;
 }
+
 .testimonial-item {
     position: absolute;
     width: 100%;
@@ -116,7 +122,6 @@ body {
     opacity: 0.85;
     line-height: 1.5;
 }
-/* ============================================== */
 
 .info-pane .service-intro-link {
     margin-top: auto; 
@@ -124,239 +129,3 @@ body {
     text-align: left;
 }
 .info-pane .service-intro-link a {
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-.info-pane .service-intro-link a:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-}
-
-/* --- 3. 오른쪽 폼 패널 --- */
-.form-pane {
-    width: 60%;
-    padding: 3rem;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.85);
-}
-
-.mobile-logo {
-    display: none;
-    width: 180px;
-    height: auto;
-    margin: 0 auto 1.5rem auto; 
-}
-
-.form-intro {
-    font-size: 0.95rem;
-    color: #333;
-    text-align: center;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-    background-color: #f4f6f9;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-}
-.form-intro strong {
-    color: #6d28d2;
-    font-weight: 700;
-}
-
-.progress-bar { 
-    display: flex; 
-    justify-content: space-between; 
-    position: relative; 
-    margin-bottom: 2.5rem;
-}
-.progress-bar::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 3px; background-color: #e0e0e0; z-index: 1; }
-.progress-bar-fill { 
-    position: absolute; top: 50%; left: 0; width: 0%; height: 3px; 
-    background-color: #6d28d2; z-index: 2; transition: width 0.4s ease; 
-}
-.progress-step { font-size: 0.85rem; font-weight: 600; color: #aaa; background: #fff; padding: 0 0.5rem; z-index: 3; }
-.progress-step.active { color: #6d28d2; }
-
-.required-note {
-    font-size: 0.8rem;
-    color: #d93025;
-    text-align: right;
-    margin-top: 1.5rem; 
-    margin-bottom: 1rem;
-}
-
-/* --- 4. 폼 스텝 & 슬라이드 애니메이션 --- */
-.form-step {
-    display: none;
-    animation: slideInRight 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.form-step.active { display: block; }
-@keyframes slideInRight {
-    from { opacity: 0; transform: translateX(30px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-.step-title {
-    font-size: 1.6rem;
-    color: #111;
-    margin-bottom: 2rem;
-    font-weight: 700;
-}
-.step-title strong { color: #6d28d2; }
-
-/* --- 5. 폼 그룹 (아이콘 & 플로팅 레이블) --- */
-.form-group {
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-.form-group .icon {
-    position: absolute;
-    top: 0.9rem;
-    left: 1rem;
-    font-size: 1.1rem;
-    color: #999;
-    transition: color 0.3s ease;
-}
-.form-group.required > label::after {
-    content: ' *';
-    color: #d93025;
-}
-
-.form-group label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 0.5rem; 
-}
-
-
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-select,
-textarea {
-    width: 100%;
-    padding: 1rem;
-    padding-left: 3rem; 
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 1rem;
-    background: #fdfdfd;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    font-family: 'Pretendard', 'Inter', sans-serif;
-}
-
-select { padding-left: 1rem; }
-textarea { padding-left: 1rem; resize: vertical; min-height: 100px; }
-
-/* 포커스 상태 */
-input:focus, select:focus, textarea:focus {
-    border-color: #6d28d2;
-    box-shadow: 0 0 0 3px rgba(109, 40, 210, 0.2);
-    outline: none;
-    background: #fff;
-}
-.form-group input:focus + label { color: #6d28d2; }
-.form-group input:focus ~ .icon { color: #6d28d2; }
-
-/* 플로팅 레이블 */
-.form-group.floating { margin-bottom: 2rem; }
-.form-group.floating label {
-    position: absolute;
-    top: 1rem;
-    left: 3rem; 
-    color: #999;
-    background: #fdfdfd;
-    padding: 0 0.25rem;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    margin-bottom: 0; 
-}
-.form-group.floating input:focus + label,
-.form-group.floating input:not(:placeholder-shown) + label {
-    top: -0.7rem;
-    left: 2.75rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    background: #fff;
-    color: #6d28d2;
-}
-.form-group.floating input:not(:placeholder-shown) { background: #fff; }
-
-/* 체크박스 */
-.checkbox-group { display: flex; align-items: center; }
-.checkbox-group input[type="checkbox"] { width: auto; margin-right: 0.75rem; }
-.checkbox-group label { font-weight: normal; font-size: 0.85rem; color: #666; margin-bottom: 0; }
-
-/* --- 6. 네비게이션 버튼 --- */
-.form-navigation { display: flex; justify-content: space-between; margin-top: 0; }
-.btn {
-    padding: 0.85rem 1.75rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.btn-prev { background-color: #e0e0e0; color: #555; }
-.btn-prev:hover { background-color: #ccc; transform: scale(1.02); }
-.btn-next { 
-    background-color: #6d28d2; 
-    color: white; 
-}
-.btn-next:hover { 
-    background-color: #581c87; 
-    transform: translateY(-2px); 
-    box-shadow: 0 4px 10px rgba(109, 40, 210, 0.3); 
-}
-
-.btn-submit {
-    background: #6d28d2;
-    color: white;
-    overflow: hidden;
-    position: relative;
-}
-.btn-submit:hover {
-    background: #581c87;
-    box-shadow: 0 5px 15px rgba(109, 40, 210, 0.4);
-    transform: translateY(-2px);
-}
-.btn-prev, .btn-submit { display: none; }
-
-/* --- 7. 모바일 반응형 --- */
-@media (max-width: 768px) {
-    body {
-        padding: 1rem; 
-        display: block; 
-        min-height: 100dvh; 
-        align-items: stretch; 
-    }
-    .form-container {
-        flex-direction: column; 
-        width: 100%; 
-        max-width: 500px; 
-        margin: 1rem auto; 
-    }
-    .info-pane { display: none; }
-    .form-pane { width: 100%; padding: 2rem 1.5rem; }
-    .mobile-logo { display: block; }
-    .step-title { font-size: 1.4rem; }
-    .form-group .icon { top: 0.8rem; }
-}
-
-/* --- 개인정보보호정책 링크 스타일 --- */
-.checkbox-group label a {
-    color: #6d28d2;
-    text-decoration: underline;
-    font-weight: 600;
-}
-.checkbox-group label a:hover {
-    color: #581c87;
-}
