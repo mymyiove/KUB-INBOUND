@@ -89,14 +89,11 @@ body {
     backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     
-    /* ========== [수정] 3D 틸트 속성 (복구됨) ========== */
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
-    /* ============================================= */
 }
 
-/* ========== [수정] 3D 틸트 빛 반사 (복구됨) ========== */
 .glare {
     position: absolute;
     top: 0;
@@ -110,8 +107,6 @@ body {
     z-index: 5;
     will-change: background;
 }
-/* ================================================= */
-
 
 /* ----------------------------------------------------
    3) Left Info Pane
@@ -185,9 +180,7 @@ body {
 .info-pane .service-intro-link {
     margin-top: auto; 
     text-align: left;
-    /* ========== "한 줄 여백" 요청 (유지됨) ========== */
     padding-top: 3rem; 
-    /* ========================================== */
 }
 .info-pane .service-intro-link a {
     color: var(--white);
@@ -249,7 +242,9 @@ body {
     font-size: 0.85rem; 
     font-weight: 600; 
     color: #aaa; 
-    background: var(--white); 
+    /* ========== [수정] 체크모양 배경색 투명하게 변경 ========== */
+    background: transparent; 
+    /* ================================================== */
     padding: 0 0.5rem; 
     z-index: 3;
     transition: color 0.3s ease;
