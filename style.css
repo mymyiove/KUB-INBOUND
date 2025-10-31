@@ -47,7 +47,7 @@ body {
     transition: transform 0.1s ease-out;
 }
 
-/* --- 2. 왼쪽 정보 패널 (스타일 수정됨) --- */
+/* --- 2. 왼쪽 정보 패널 (수평 정렬 수정됨) --- */
 .info-pane {
     width: 40%;
     background: #6d28d2;
@@ -56,7 +56,7 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center; 
+    /* justify-content: center; <-- 이 줄을 삭제하여 수평 정렬을 맞춥니다. */
 }
 
 .info-pane .info-logo {
@@ -82,29 +82,41 @@ body {
     margin-top: 1rem;
 }
 
-/* ========== ( testimonial-slider, testimonial-item 관련 CSS 모두 삭제 ) ========== */
+/* ========== ( info-block 스타일 삭제 ) ========== */
 
 
-/* ========== 스크린샷 레이아웃용 새 스타일 (추가됨) ========== */
-.info-pane .info-block {
-    margin-top: 2.5rem; /* "파트너" 문구와 "Top 1%" 헤드라인 사이 간격 */
-    border-top: 1px solid rgba(255, 255, 255, 0.3); /* 구분선 */
+/* ========== 회전 슬라이더 스타일 (복구됨) ========== */
+.testimonial-slider {
+    margin-top: 2.5rem;
+    height: 120px;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
     padding-top: 2.5rem;
 }
-.info-pane .info-block h4 {
+.testimonial-item {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.testimonial-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+.testimonial-item h4 {
     font-size: 1.1rem;
     font-weight: 700;
     color: #fff;
     margin-bottom: 0.5rem;
 }
-.info-pane .info-block p.info-block-body {
+.testimonial-item p {
     font-size: 0.95rem;
     font-style: italic;
     opacity: 0.85;
     line-height: 1.5;
 }
-/* ==================================================== */
-
+/* ============================================== */
 
 .info-pane .service-intro-link {
     margin-top: auto; 
