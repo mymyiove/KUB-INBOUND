@@ -6,10 +6,8 @@
 
 /* ----------------------------------------------------
    0) Global Reset & Theming
-   - 전역 여백 제거, 박스사이징 통일, 색 변수
 ---------------------------------------------------- */
 :root {
-  /* 색상 변수 (기존 톤 유지) */
   --ub-purple-700: #6d28d2;
   --ub-purple-600: #7a35da;
   --ub-accent:     #a435f0;
@@ -18,7 +16,6 @@
 
   --glass-bg:      rgba(255, 255, 255, 0.75);
   --glass-border:  rgba(255, 255, 255, 0.30);
-  --shadow-1:      0 12px 30px rgba(0,0,0,0.18);
   --shadow-2:      0 25px 60px rgba(0,0,0,0.20);
 
   --text-900: #111;
@@ -35,14 +32,11 @@
 
 html, body {
   height: 100%;
-  margin: 0;            /* ← 기본 여백 제거 (핵심) */
+  margin: 0;            /* ← 기본 여백 제거 */
   padding: 0;
   box-sizing: border-box;
 }
-
-*, *::before, *::after {
-  box-sizing: inherit;
-}
+*, *::before, *::after { box-sizing: inherit; }
 
 body {
   font-family: 'Pretendard', 'Inter', sans-serif;
@@ -56,7 +50,7 @@ body {
   padding-right: env(safe-area-inset-right, 0);
 }
 
-/* 사용자의 '모션 줄임' 설정을 존중 */
+/* 모션 줄임 설정 존중 */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
@@ -77,7 +71,6 @@ body {
   animation: gradient-flow 15s ease infinite;
   will-change: background-position;
 }
-
 @keyframes gradient-flow {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
@@ -85,17 +78,24 @@ body {
 }
 
 /* ----------------------------------------------------
-   2) Page Wrapper: 중앙 정렬 전담
+   2) Page Wrapper
+   - 가로 중앙, 세로 상단 정렬 (요구 반영)
 ---------------------------------------------------- */
 .page {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
+  /* 뷰포트 높이 단위: 모바일 툴바 대응을 위해 svh/dvh 폴백 */
+  min-height: 100svh;
+  min-height: 100dvh;
+  min-height: 100vh; /* 폴백 */
+
+  display: flex;
+  justify-content: center;   /* 가로 중앙 */
+  align-items: flex-start;   /* 세로 상단 */
+
   padding: clamp(16px, 2vw, 24px);
 }
 
 /* ----------------------------------------------------
-   3) Main Card Container (Glassmorphism)
+   3) Main Card (Glassmorphism)
 ---------------------------------------------------- */
 .form-container {
   width: 100%;
@@ -111,7 +111,6 @@ body {
   transform-style: preserve-3d;
   transition: box-shadow .25s ease, transform .25s ease;
 }
-
 .form-container:hover {
   box-shadow: 0 30px 80px rgba(0,0,0,0.22);
   transform: translateY(-2px);
@@ -129,7 +128,6 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-
 .info-content { width: 100%; }
 
 .info-logo {
@@ -145,7 +143,6 @@ body {
   opacity: 1;
   margin: 0 0 0.75rem 0;
 }
-
 .info-pane p strong { font-weight: 700; }
 
 .trusted-by-line {
@@ -164,7 +161,6 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   padding-top: 2rem;
 }
-
 .testimonial-item {
   position: absolute;
   inset: 0 auto auto 0;
@@ -173,10 +169,7 @@ body {
   transform: translateY(10px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.testimonial-item.active {
-  opacity: 1;
-  transform: translateY(0);
-}
+.testimonial-item.active { opacity: 1; transform: translateY(0); }
 .testimonial-item h4 {
   font-size: clamp(1rem, 1.1vw, 1.1rem);
   font-weight: 700;
@@ -232,16 +225,8 @@ body {
   border-radius: 999px;
   transition: width 0.4s ease;
 }
-.progress-step {
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--text-500);
-  z-index: 1;
-}
-.progress-step.active {
-  color: var(--ub-purple-700);
-  font-weight: 700;
-}
+.progress-step { text-align: center; font-size: 0.85rem; color: var(--text-500); z-index: 1; }
+.progress-step.active { color: var(--ub-purple-700); font-weight: 700; }
 
 /* Steps */
 .form-step { display: none; }
@@ -254,13 +239,8 @@ body {
 }
 
 /* Floating Labels */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group.floating {
-  position: relative;
-}
+.form-group { margin-bottom: 1rem; }
+.form-group.floating { position: relative; }
 
 .form-group .icon {
   position: absolute;
@@ -282,7 +262,6 @@ body {
   color: var(--text-900);
   transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
 }
-
 .form-group.floating input::placeholder { color: transparent; }
 
 .form-group.floating label {
@@ -297,8 +276,7 @@ body {
   background: transparent;
   padding: 0 4px;
 }
-
-/* 내용이 있거나 포커스 시 라벨 떠오름 */
+/* 내용/포커스 시 라벨 */
 .form-group.floating input:not(:placeholder-shown) + label,
 .form-group.floating input:focus + label {
   top: -8px;
@@ -309,7 +287,7 @@ body {
   border-radius: 6px;
 }
 
-/* 셀렉트/텍스트에어리어 */
+/* Select/Textarea */
 .form-group select,
 .form-group textarea {
   width: 100%;
@@ -323,7 +301,7 @@ body {
   resize: vertical;
 }
 
-/* Focus visible 접근성 */
+/* Focus Visible */
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
@@ -348,7 +326,6 @@ a:focus-visible {
   gap: 10px;
   align-items: start;
 }
-
 .checkbox-group input[type="checkbox"] {
   width: 18px;
   height: 18px;
@@ -361,9 +338,7 @@ a:focus-visible {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.form-pane a:hover {
-  color: var(--ub-purple-600);
-}
+.form-pane a:hover { color: var(--ub-purple-600); }
 
 /* Buttons */
 .form-navigation {
@@ -373,7 +348,6 @@ a:focus-visible {
   align-items: center;
   margin-top: 1rem;
 }
-
 .btn {
   appearance: none;
   border: none;
@@ -385,13 +359,9 @@ a:focus-visible {
   transition: transform .12s ease, box-shadow .2s ease, background-color .2s ease;
   will-change: transform;
 }
-
 .btn:active { transform: translateY(1px); }
 
-.btn-prev {
-  background: #eee;
-  color: #333;
-}
+.btn-prev { background: #eee; color: #333; }
 .btn-prev:hover { background: #e3e3e3; }
 
 .btn-next {
@@ -446,10 +416,7 @@ a:focus-visible {
 }
 
 /* ----------------------------------------------------
-   7) Small Polishes
+   7) Polishes
 ---------------------------------------------------- */
-::selection {
-  background: rgba(164, 53, 240, 0.25);
-}
-
+::selection { background: rgba(164, 53, 240, 0.25); }
 img { max-width: 100%; height: auto; display: block; }
