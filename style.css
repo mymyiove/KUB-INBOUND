@@ -1,361 +1,141 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미래를 준비하는 기업 교육 | Udemy Business</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="animated-bg"></div>
 
-/* --- 0. 기본 및 동적 배경 --- */
-body {
-    font-family: 'Pretendard', 'Inter', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
-    box-sizing: border-box;
-    overflow-x: hidden; 
-    perspective: 1500px; 
-}
+    <div class="form-container">
+        
+        <div class="info-pane">
+            <div class="info-content">
+                
+                <img src="udemy-logo-white.png" alt="Udemy Business Logo" class="info-logo">
+                
+                <p>미래를 준비하는 기업들의<br><strong>마지막 선택!</strong></p>
+                
+                <p class="trusted-by-line">
+                    삼성, SK, 현대, LG, 롯데, KT, POSCO 등<br>
+                    국내의 대기업이 이미 함께 성장하고 있습니다.
+                </p>
+                
+                <div class="testimonial-slider">
+                    <div class="testimonial-item active">
+                        <h4>26,000+ 최신 콘텐츠의 무한학습</h4>
+                        <p>"매일 업데이트되는 가장 트렌디한 강의를<br>지금 바로 만나보세요."</p>
+                    </div>
+                    <div class="testimonial-item">
+                        <h4>Top 1% 현업 전문가의 독점 강의</h4>
+                        <p>"Google, AWS, Microsoft 현직자의<br>실무 노하우를 직접 배웁니다."</p>
+                    </div>
+                    <div class="testimonial-item">
+                        <h4>데이터로 증명된 학습 ROI</h4>
+                        <p>"직원의 성장이 어떻게 비즈니스 성과로<br>이어지는지 데이터로 증명합니다."</p>
+                    </div>
+                </div>
+                <div class="service-intro-link">
+                    <a href="UBCSM.html" target="_blank" rel="noopener noreferrer">
+                        UB KOREA 서비스 소개 보기 →
+                    </a>
+                </div>
 
-.animated-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(135deg, #6d28d2, #a435f0, #f09435, #d52a7c);
-    background-size: 400% 400%;
-    animation: gradient-flow 15s ease infinite;
-}
+            </div>
+        </div>
 
-@keyframes gradient-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+        <div class="form-pane">
 
-/* --- 1. 메인 컨테이너 --- */
-.form-container {
-    width: 100%;
-    max-width: 950px;
-    display: flex;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transform-style: preserve-3d;
-    transition: transform 0.1s ease-out;
-}
+            <img src="udemy-logo-purple.png" alt="Udemy Business Logo" class="mobile-logo">
 
-/* --- 2. 왼쪽 정보 패널 --- */
-.info-pane {
-    width: 40%;
-    background: #6d28d2;
-    color: white;
-    padding: 3rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-}
+            <form id="pro-contact-form">
+                
+                <p class="form-intro">
+                    지금 문의하시면, 1:1 전문 컨설팅과 함께<br>
+                    귀사만을 위한 맞춤형 데모를 <strong>무료</strong>로 제공합니다.
+                </p>
 
-.info-pane .info-logo {
-    width: 200px; 
-    height: auto; 
-    margin-bottom: 1.5rem; 
-}
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                    <div class="progress-step active" data-step="1">기본 정보</div>
+                    <div class="progress-step" data-step="2">회사 정보</div>
+                    <div class="progress-step" data-step="3">문의</div>
+                </div>
 
-.info-pane p {
-    font-size: 1.2rem; 
-    line-height: 1.6;
-    opacity: 1; 
-}
-.info-pane p strong {
-    font-weight: 700;
-}
+                <div class="form-step active" data-step="1">
+                    <h3 class="step-title">반갑습니다! <strong>담당자님</strong>을 알려주세요.</h3>
+                    <div class="form-group floating required">
+                        <span class="icon">👤</span>
+                        <input type="text" id="full-name" name="full_name" required placeholder=" ">
+                        <label for="full-name">이름 (성함)</label>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">📧</span>
+                        <input type="email" id="email" name="email" required placeholder=" ">
+                        <label for="email">회사 이메일</label>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">📞</span>
+                        <input type="text" id="phone" name="phone" required placeholder=" ">
+                        <label for="phone">전화번호</label>
+                    </div>
+                </div>
 
-.info-pane .trusted-by-line {
-    font-size: 0.95rem;
-    font-weight: 500;
-    opacity: 0.8;
-    line-height: 1.5;
-    margin-top: 1rem;
-}
+                <div class="form-step" data-step="2">
+                    <h3 class="step-title">귀사의 <strong>교육 목표</strong>를 들려주세요.</h3>
+                    <div class="form-group floating required">
+                        <span class="icon">💼</span>
+                        <input type="text" id="company-name" name="company_name" required placeholder=" ">
+                        <label for="company-name">회사/기관명</label>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">🧑‍💻</span>
+                        <input type="text" id="job-title" name="job_title" required placeholder=" ">
+                        <label for="job-title">직급 / 직책</label>
+                    </div>
+                    <div class="form-group required">
+                        <label for="employee-count">예상 교육 인원</label>
+                        <select id="employee-count" name="employee_count" required>
+                            <option value="" disabled selected>인원을 선택하세요...</option>
+                            <option value="1-100">1-100명</option>
+                            <option value="101-500">101-500명</option>
+                            <option value="501-1000">501-1,000명</option>
+                            <option value="1000+">1,000명 이상</option>
+                        </select>
+                    </div>
+                </div>
 
-.testimonial-slider {
-    margin-top: 2.5rem;
-    height: 120px;
-    position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    padding-top: 2.5rem;
-}
+                <div class="form-step" data-step="3">
+                    <h3 class="step-title">성장을 위한 마지막 단계입니다.</h3>
+                    <div class="form-group">
+                        <label for="inquiry">문의사항 (선택)</label>
+                        <textarea id="inquiry" name="inquiry" rows="5" placeholder="도입 비용, 특정 강의 커리큘럼, 데모 시연 등 무엇이든 문의하세요."></textarea>
+                    </div>
+                    <div class="form-group checkbox-group required">
+                        <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
+                        <label for="privacy-agree">
+                            위 박스에 체크하시면 <a href="https.www.udemy.com/terms/privacy/" target="_blank">Udemy 개인정보 보호 정책</a>에 동의하게 됩니다. Udemy, Inc.는 귀하에게 서비스 제공을 위해 귀하의 정보(예: 이름, 이메일, 전화번호)를 수집 및 이용할 수 있습니다.
+                        </label>
+                    </div>
+                </div>
 
-.testimonial-item {
-    position: absolute;
-    width: 100%;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.testimonial-item.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-.testimonial-item h4 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.5rem;
-}
-.testimonial-item p {
-    font-size: 0.95rem;
-    font-style: italic;
-    opacity: 0.85;
-    line-height: 1.5;
-}
+                <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
 
-/* ========== 서비스 소개 링크 (좌측 정렬 수정) ========== */
-.info-pane .service-intro-link {
-    margin-top: auto; 
-    padding-top: 2rem; 
-    text-align: left; /* center -> left로 수정 */
-}
-/* ==================================================== */
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-prev" id="prev-btn">이전</button>
+                    <button type="button" class="btn btn-next" id="next-btn">다음</button>
+                    <button type="submit" class="btn btn-submit" id="submit-btn">
+                        무료 상담 및 데모 신청
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-.info-pane .service-intro-link a {
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-.info-pane .service-intro-link a:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-}
-
-/* --- 3. 오른쪽 폼 패널 --- */
-.form-pane {
-    width: 60%;
-    padding: 3rem;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.85);
-}
-
-.mobile-logo {
-    display: none;
-    width: 180px;
-    height: auto;
-    margin: 0 auto 1.5rem auto; 
-}
-
-.form-intro {
-    font-size: 0.95rem;
-    color: #333;
-    text-align: center;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-    background-color: #f4f6f9;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-}
-.form-intro strong {
-    color: #6d28d2;
-    font-weight: 700;
-}
-
-.progress-bar { 
-    display: flex; 
-    justify-content: space-between; 
-    position: relative; 
-    margin-bottom: 2.5rem;
-}
-.progress-bar::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 3px; background-color: #e0e0e0; z-index: 1; }
-.progress-bar-fill { 
-    position: absolute; top: 50%; left: 0; width: 0%; height: 3px; 
-    background-color: #6d28d2; z-index: 2; transition: width 0.4s ease; 
-}
-.progress-step { font-size: 0.85rem; font-weight: 600; color: #aaa; background: #fff; padding: 0 0.5rem; z-index: 3; }
-.progress-step.active { color: #6d28d2; }
-
-.required-note {
-    font-size: 0.8rem;
-    color: #d93025;
-    text-align: right;
-    margin-top: 1.5rem; 
-    margin-bottom: 1rem;
-}
-
-/* --- 4. 폼 스텝 & 슬라이드 애니메이션 --- */
-.form-step {
-    display: none;
-    animation: slideInRight 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.form-step.active { display: block; }
-@keyframes slideInRight {
-    from { opacity: 0; transform: translateX(30px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-.step-title {
-    font-size: 1.6rem;
-    color: #111;
-    margin-bottom: 2rem;
-    font-weight: 700;
-}
-.step-title strong { color: #6d28d2; }
-
-/* --- 5. 폼 그룹 (아이콘 & 플로팅 레이블) --- */
-.form-group {
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-.form-group .icon {
-    position: absolute;
-    top: 0.9rem;
-    left: 1rem;
-    font-size: 1.1rem;
-    color: #999;
-    transition: color 0.3s ease;
-}
-.form-group.required > label::after {
-    content: ' *';
-    color: #d93025;
-}
-
-.form-group label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 0.5rem; 
-}
-
-
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-select,
-textarea {
-    width: 100%;
-    padding: 1rem;
-    padding-left: 3rem; 
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 1rem;
-    background: #fdfdfd;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    font-family: 'Pretendard', 'Inter', sans-serif;
-}
-
-select { padding-left: 1rem; }
-textarea { padding-left: 1rem; resize: vertical; min-height: 100px; }
-
-/* 포커스 상태 */
-input:focus, select:focus, textarea:focus {
-    border-color: #6d28d2;
-    box-shadow: 0 0 0 3px rgba(109, 40, 210, 0.2);
-    outline: none;
-    background: #fff;
-}
-.form-group input:focus + label { color: #6d28d2; }
-.form-group input:focus ~ .icon { color: #6d28d2; }
-
-/* 플로팅 레이블 */
-.form-group.floating { margin-bottom: 2rem; }
-.form-group.floating label {
-    position: absolute;
-    top: 1rem;
-    left: 3rem; 
-    color: #999;
-    background: #fdfdfd;
-    padding: 0 0.25rem;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    margin-bottom: 0; 
-}
-.form-group.floating input:focus + label,
-.form-group.floating input:not(:placeholder-shown) + label {
-    top: -0.7rem;
-    left: 2.75rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    background: #fff;
-    color: #6d28d2;
-}
-.form-group.floating input:not(:placeholder-shown) { background: #fff; }
-
-/* 체크박스 */
-.checkbox-group { display: flex; align-items: center; }
-.checkbox-group input[type="checkbox"] { width: auto; margin-right: 0.75rem; }
-.checkbox-group label { font-weight: normal; font-size: 0.85rem; color: #666; margin-bottom: 0; }
-
-/* --- 6. 네비게이션 버튼 --- */
-.form-navigation { display: flex; justify-content: space-between; margin-top: 0; }
-.btn {
-    padding: 0.85rem 1.75rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.btn-prev { background-color: #e0e0e0; color: #555; }
-.btn-prev:hover { background-color: #ccc; transform: scale(1.02); }
-.btn-next { 
-    background-color: #6d28d2; 
-    color: white; 
-}
-.btn-next:hover { 
-    background-color: #581c87; 
-    transform: translateY(-2px); 
-    box-shadow: 0 4px 10px rgba(109, 40, 210, 0.3); 
-}
-
-.btn-submit {
-    background: #6d28d2;
-    color: white;
-    overflow: hidden;
-    position: relative;
-}
-.btn-submit:hover {
-    background: #581c87;
-    box-shadow: 0 5px 15px rgba(109, 40, 210, 0.4);
-    transform: translateY(-2px);
-}
-.btn-prev, .btn-submit { display: none; }
-
-/* --- 7. 모바일 반응형 --- */
-@media (max-width: 768px) {
-    body {
-        padding: 1rem; 
-        display: block; 
-        min-height: 100dvh; 
-        align-items: stretch; 
-    }
-    .form-container {
-        flex-direction: column; 
-        width: 100%; 
-        max-width: 500px; 
-        margin: 1rem auto; 
-    }
-    .info-pane { display: none; }
-    .form-pane { width: 100%; padding: 2rem 1.5rem; }
-    .mobile-logo { display: block; }
-    .step-title { font-size: 1.4rem; }
-    .form-group .icon { top: 0.8rem; }
-}
-
-/* --- 개인정보보호정책 링크 스타일 --- */
-.checkbox-group label a {
-    color: #6d28d2;
-    text-decoration: underline;
-    font-weight: 600;
-}
-.checkbox-group label a:hover {
-    color: #581c87;
-}
+    <script src="script.js"></script>
+</body>
+</html>
