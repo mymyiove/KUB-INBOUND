@@ -9,7 +9,11 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 2rem;
-    box-sizing: border-box; /* PC 스크롤 방지 */
+    
+    /* ========== 2. 스크롤 문제 해결 ========== */
+    box-sizing: border-box; /* 여백(padding)을 100vh 높이 안에 포함시킴 */
+    /* ================================== */
+
     overflow-x: hidden; 
     perspective: 1500px; 
 }
@@ -47,7 +51,7 @@ body {
     transition: transform 0.1s ease-out;
 }
 
-/* --- 2. 왼쪽 정보 패널 (수평 정렬 수정됨) --- */
+/* --- 2. 왼쪽 정보 패널 (정렬 문제 해결) --- */
 .info-pane {
     width: 40%;
     background: #6d28d2;
@@ -56,7 +60,10 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; <-- 이 줄을 삭제하여 수평 정렬을 맞춥니다. */
+    
+    /* ========== 1. 정렬 문제 해결 ========== */
+    /* justify-content: center; <-- 이 속성을 삭제하여 상단 정렬! */
+    /* ================================== */
 }
 
 .info-pane .info-logo {
@@ -82,10 +89,6 @@ body {
     margin-top: 1rem;
 }
 
-/* ========== ( info-block 스타일 삭제 ) ========== */
-
-
-/* ========== 회전 슬라이더 스타일 (복구됨) ========== */
 .testimonial-slider {
     margin-top: 2.5rem;
     height: 120px;
@@ -93,6 +96,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     padding-top: 2.5rem;
 }
+
 .testimonial-item {
     position: absolute;
     width: 100%;
@@ -116,7 +120,6 @@ body {
     opacity: 0.85;
     line-height: 1.5;
 }
-/* ============================================== */
 
 .info-pane .service-intro-link {
     margin-top: auto; 
