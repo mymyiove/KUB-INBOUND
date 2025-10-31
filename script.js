@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // --- 백엔드 전송 로직 시작 ---
         
         // 1. 여기에 2단계에서 복사한 Google Apps Script "웹 앱 URL"을 붙여넣으세요.
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYKAhYNszhZtGlA6i_kdQbmuS2kotoUV2hZcOFoQR9gI-y335YbFskJWxSKdJcVERH/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec";
 
         const submitButton = document.getElementById("submit-btn");
 
