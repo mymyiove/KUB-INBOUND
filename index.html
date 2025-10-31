@@ -13,6 +13,7 @@
 
     <div class="form-container">
         
+        <div class="glare"></div>
         <div class="info-pane">
             <div class="info-content">
                 
@@ -69,34 +70,41 @@
 
                 <div class="form-step active" data-step="1">
                     <h3 class="step-title">반갑습니다! <strong>담당자님</strong>을 알려주세요.</h3>
+                    
                     <div class="form-group floating required">
                         <span class="icon">👤</span>
                         <input type="text" id="full-name" name="full_name" required placeholder=" ">
                         <label for="full-name">이름 (성함)</label>
+                        <div class="error-message"></div>
                     </div>
                     <div class="form-group floating required">
                         <span class="icon">📧</span>
                         <input type="email" id="email" name="email" required placeholder=" ">
                         <label for="email">회사 이메일</label>
+                        <div class="error-message"></div>
                     </div>
                     <div class="form-group floating required">
                         <span class="icon">📞</span>
                         <input type="text" id="phone" name="phone" required placeholder=" ">
                         <label for="phone">전화번호</label>
+                        <div class="error-message"></div>
                     </div>
-                </div>
+                    </div>
 
                 <div class="form-step" data-step="2">
                     <h3 class="step-title">귀사의 <strong>교육 목표</strong>를 들려주세요.</h3>
+                    
                     <div class="form-group floating required">
                         <span class="icon">💼</span>
                         <input type="text" id="company-name" name="company_name" required placeholder=" ">
                         <label for="company-name">회사/기관명</label>
+                        <div class="error-message"></div>
                     </div>
                     <div class="form-group floating required">
                         <span class="icon">🧑‍💻</span>
                         <input type="text" id="job-title" name="job_title" required placeholder=" ">
                         <label for="job-title">직급 / 직책</label>
+                        <div class="error-message"></div>
                     </div>
                     <div class="form-group required">
                         <label for="employee-count">예상 교육 인원</label>
@@ -107,8 +115,9 @@
                             <option value="501-1000">501-1,000명</option>
                             <option value="1000+">1,000명 이상</option>
                         </select>
+                        <div class="error-message"></div>
                     </div>
-                </div>
+                    </div>
 
                 <div class="form-step" data-step="3">
                     <h3 class="step-title">성장을 위한 마지막 단계입니다.</h3>
@@ -116,13 +125,15 @@
                         <label for="inquiry">문의사항 (선택)</label>
                         <textarea id="inquiry" name="inquiry" rows="5" placeholder="도입 비용, 특정 강의 커리큘럼, 데모 시연 등 무엇이든 문의하세요."></textarea>
                     </div>
+
                     <div class="form-group checkbox-group required">
                         <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
                         <label for="privacy-agree">
                             위 박스에 체크하시면 <a href="https://www.udemy.com/terms/privacy/" target="_blank">Udemy 개인정보 보호 정책</a>에 동의하게 됩니다. Udemy, Inc.는 귀하에게 서비스 제공을 위해 귀하의 정보(예: 이름, 이메일, 전화번호)를 수집 및 이용할 수 있습니다.
                         </label>
+                        <div class="error-message checkbox-error"></div>
                     </div>
-                </div>
+                    </div>
 
                 <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
 
@@ -134,7 +145,13 @@
                     </button>
                 </div>
             </form>
-        </div>
+
+            <div id="success-message" style="display: none;">
+                <h3>🎉 제출이 완료되었습니다!</h3>
+                <p>신속하게 검토 후 24시간 내에 연락드리겠습니다.<br>감사합니다.</p>
+                <button type="button" class="btn" id="reset-form-btn">새로운 문의하기</button>
+            </div>
+            </div>
     </div>
 
     <script src="script.js"></script>
