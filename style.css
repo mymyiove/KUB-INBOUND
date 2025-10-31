@@ -5,15 +5,11 @@
 body {
     font-family: 'Pretendard', 'Inter', sans-serif;
     display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    
-    /* ========== 1. 정렬/스크롤 문제 해결 (수정됨) ========== */
-    /* align-items: center; <-- 수직 중앙 정렬 제거! (상단 정렬) */
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     padding: 2rem;
-    box-sizing: border-box; /* padding이 100vh 안으로 포함됨 */
-    /* ================================================= */
-
+    box-sizing: border-box; /* PC 스크롤 방지 */
     overflow-x: hidden; 
     perspective: 1500px; 
 }
@@ -49,14 +45,9 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
-
-    /* ========== 2. 상단 여백 추가 (추가됨) ========== */
-    margin-top: 4rem; /* body의 padding 대신 폼에 직접 상단 여백 부여 */
-    margin-bottom: 4rem; /* 하단에도 동일하게 여유 공간 부여 */
-    /* =========================================== */
 }
 
-/* --- 2. 왼쪽 정보 패널 --- */
+/* --- 2. 왼쪽 정보 패널 (수평 정렬 수정됨) --- */
 .info-pane {
     width: 40%;
     background: #6d28d2;
@@ -65,7 +56,7 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; <-- 삭제됨 (상단 정렬) */
+    /* justify-content: center; <-- 이 줄을 삭제하여 수평 정렬을 맞춥니다. */
 }
 
 .info-pane .info-logo {
@@ -91,6 +82,10 @@ body {
     margin-top: 1rem;
 }
 
+/* ========== ( info-block 스타일 삭제 ) ========== */
+
+
+/* ========== 회전 슬라이더 스타일 (복구됨) ========== */
 .testimonial-slider {
     margin-top: 2.5rem;
     height: 120px;
@@ -98,7 +93,6 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     padding-top: 2.5rem;
 }
-
 .testimonial-item {
     position: absolute;
     width: 100%;
@@ -122,6 +116,7 @@ body {
     opacity: 0.85;
     line-height: 1.5;
 }
+/* ============================================== */
 
 .info-pane .service-intro-link {
     margin-top: auto; 
@@ -341,13 +336,13 @@ input:focus, select:focus, textarea:focus {
         padding: 1rem; 
         display: block; 
         min-height: 100dvh; 
-        align-items: stretch; /* body에서 flex 속성 해제 */
+        align-items: stretch; 
     }
     .form-container {
         flex-direction: column; 
         width: 100%; 
         max-width: 500px; 
-        margin: 1rem auto; /* 상단 여백 제거 (스크롤 때문) */
+        margin: 1rem auto; 
     }
     .info-pane { display: none; }
     .form-pane { width: 100%; padding: 2rem 1.5rem; }
