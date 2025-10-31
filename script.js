@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showStep(currentStep);
 
 
-    // --- 5. [수정] 3D 틸트 & 빛 반사 효과 (복구 및 강도 하향) ---
+    // --- 5. 3D 틸트 & 빛 반사 효과 (강도 하향) ---
     const container = document.querySelector(".form-container");
     const glare = document.querySelector(".glare");
 
@@ -204,19 +204,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
-            // ========== 3D 틸트 (강도 하향) ==========
-            const maxRotate = 2; // 5 -> 2로 수정 (멀미 방지)
-            // =====================================
+            const maxRotate = 2; // 멀미 방지
             
             const tiltX = (y / rect.height - 0.5) * -maxRotate; 
             const tiltY = (x / rect.width - 0.5) * maxRotate * 2;
             container.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
             
-            // ========== 빛 반사 (강도 하향) ==========
-            // 0.4 -> 0.2로 수정 (은은하게)
-            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%)`;
-            // =====================================
-            
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%)`; // 은은하게
             glare.style.opacity = '1';
         });
 
@@ -225,5 +219,23 @@ document.addEventListener("DOMContentLoaded", () => {
             glare.style.opacity = '0';
         });
     }
+
+    // ========== 0. 슬라이더 기능 (복구됨) ==========
+    const testimonials = document.querySelectorAll(".testimonial-item");
+    let currentTestimonial = 0;
+
+    if (testimonials.length > 0) {
+        // 5초마다 슬라이드 변경 (5000ms)
+        setInterval(() => {
+            if (testimonials[currentTestimonial]) {
+                testimonials[currentTestimonial].classList.remove("active");
+            }
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            if (testimonials[currentTestimonial]) {
+                testimonials[currentTestimonial].classList.add("active");
+            }
+        }, 5000);
+    }
+    // ============================================
 
 }); // DOMContentLoaded 끝
