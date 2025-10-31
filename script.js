@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let currentStep = 1;
     const totalSteps = steps.length;
-    // [업그레이드 3] 프로그레스 바 원본 텍스트 저장
     const progressStepTexts = progressSteps.map(step => step.innerHTML);
 
 
@@ -50,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
         nextBtn.style.display = (stepNumber < totalSteps) ? "inline-block" : "none";
     }
 
-    // [업그레이드 3] 프로그레스 바 체크마크 업데이트
     function updateProgressCheckmark(stepNumber) {
         const stepToMark = progressSteps[stepNumber - 1];
         if (stepToMark && !stepToMark.classList.contains("check")) {
@@ -60,9 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // --- 3. [업그레이드 1] 인라인 유효성 검사 ---
+    // --- 3. 인라인 유효성 검사 ---
 
-    // 에러 메시지 표시 함수
     function showError(inputElement, message) {
         const formGroup = inputElement.closest('.form-group');
         const errorElement = formGroup.querySelector('.error-message');
@@ -70,14 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
         formGroup.classList.add('error');
         errorElement.textContent = message;
         
-        // 흔들림 효과
         formGroup.classList.add('shake');
         formGroup.addEventListener('animationend', () => {
             formGroup.classList.remove('shake');
         }, { once: true });
     }
 
-    // 모든 에러 초기화 함수
     function clearErrors() {
         document.querySelectorAll('.form-group.error').forEach(formGroup => {
             formGroup.classList.remove('error');
@@ -87,9 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 핵심 유효성 검사 로직
     function validateStep(stepNumber) {
-        clearErrors(); // 매번 검사 전에 초기화
+        clearErrors(); 
         let isValid = true;
         const currentStepElement = document.querySelector(`.form-step[data-step="${stepNumber}"]`);
         const inputs = Array.from(currentStepElement.querySelectorAll("input[required], select[required]"));
@@ -116,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // --- 4. [업그레이드 2] 폼 제출 및 리셋 로직 ---
+    // --- 4. 폼 제출 및 리셋 로직 ---
 
     function resetForm() {
         form.reset();
@@ -124,14 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
         currentStep = 1;
         showStep(currentStep);
         
-        // [업그레이드 3] 프로그레스 바 텍스트 복원
         progressSteps.forEach((step, index) => {
             step.innerHTML = progressStepTexts[index];
             step.classList.remove("check");
         });
-        progressSteps[0].classList.add("active"); // 첫 번째 스텝 활성화
+        progressSteps[0].classList.add("active"); 
         
-        // [업그레이드 2] 성공 메시지 숨기고 폼 다시 표시
         successMessage.style.display = "none";
         form.style.display = "block";
     }
@@ -139,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // "다음" 버튼 클릭
     nextBtn.addEventListener("click", () => {
         if (validateStep(currentStep)) {
-            // [업그레이드 3] 유효성 검사 통과 시 체크마크
             updateProgressCheckmark(currentStep);
             
             if (currentStep < totalSteps) {
@@ -161,15 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (e) => {
         e.preventDefault(); 
         
-        if (!validateStep(currentStep)) return; // 유효성 검사 실패 시 중단
+        if (!validateStep(currentStep)) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/여기에_복사한_URL_붙여넣기/exec";
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
-        // [업그레이드 2] 버튼을 '로딩' 상태로 변경
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
 
@@ -181,18 +171,14 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(response => {
             console.log('Success:', data);
-            
-            // [업그레이드 2] 성공 화면 표시
             form.style.display = "none";
             successMessage.style.display = "block";
         })
         .catch(error => {
             console.error('Error:', error);
-            // alert() 대신 인라인 에러 메시지 (선택 사항)
             showError(submitBtn, "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
         })
         .finally(() => {
-            // [업그레이드 2] 버튼 상태 복원 (성공 시에는 폼이 사라지므로 복원할 필요 없음)
             if (form.style.display !== "none") {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = "무료 상담 및 데모 신청";
@@ -208,31 +194,34 @@ document.addEventListener("DOMContentLoaded", () => {
     showStep(currentStep);
 
 
-    // --- 5. [업그레이드 4] 3D 틸트 & 빛 반사 효과 ---
+    // --- 5. [수정] 3D 틸트 & 빛 반사 효과 (복구 및 강도 하향) ---
     const container = document.querySelector(".form-container");
     const glare = document.querySelector(".glare");
 
     if (container && glare) {
         container.addEventListener("mousemove", (e) => {
             const rect = container.getBoundingClientRect();
-            // 마우스 위치 (카드 기준 상대 좌표)
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
-            // 3D 틸트 (기존 로직)
-            const tiltX = (y / rect.height - 0.5) * -10; // 최대 5도 (위아래)
-            const tiltY = (x / rect.width - 0.5) * 20;  // 최대 10도 (좌우)
+            // ========== 3D 틸트 (강도 하향) ==========
+            const maxRotate = 2; // 5 -> 2로 수정 (멀미 방지)
+            // =====================================
+            
+            const tiltX = (y / rect.height - 0.5) * -maxRotate; 
+            const tiltY = (x / rect.width - 0.5) * maxRotate * 2;
             container.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
             
-            // 빛 반사 (새 로직)
-            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 70%)`;
+            // ========== 빛 반사 (강도 하향) ==========
+            // 0.4 -> 0.2로 수정 (은은하게)
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%)`;
+            // =====================================
+            
             glare.style.opacity = '1';
         });
 
         container.addEventListener("mouseleave", () => {
-            // 3D 틸트 리셋
             container.style.transform = "rotateX(0deg) rotateY(0deg)";
-            // 빛 반사 리셋
             glare.style.opacity = '0';
         });
     }
