@@ -2,7 +2,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 /* ----------------------------------------------------
-   0) Reset & Theme (Copilot의 장점 1: 변수)
+   0) Reset & Theme
 ---------------------------------------------------- */
 :root {
     --ub-purple-700: #6d28d2;
@@ -45,8 +45,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 2rem; /* 폼 카드와 브라우저 가장자리 사이의 여백 */
-    box-sizing: border-box; /* padding이 100vh 안으로 포함됨 (스크롤 방지) */
+    padding: 2rem; 
+    box-sizing: border-box; 
     overflow-x: hidden; 
     perspective: 1500px; 
     padding-left:  env(safe-area-inset-left, 0);
@@ -83,17 +83,20 @@ body {
     max-width: 950px;
     display: flex;
     border-radius: var(--radius-xl);
-    overflow: hidden; /* Glare 효과를 위해 필수 */
+    overflow: hidden; 
     box-shadow: var(--shadow);
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
+    
+    /* ========== [수정] 3D 틸트 속성 (복구됨) ========== */
+    position: relative;
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
-    position: relative; /* Glare 효과를 위해 필수 */
+    /* ============================================= */
 }
 
-/* ========== [업그레이드 4] 3D 틸트 빛 반사 ========== */
+/* ========== [수정] 3D 틸트 빛 반사 (복구됨) ========== */
 .glare {
     position: absolute;
     top: 0;
@@ -102,12 +105,12 @@ body {
     height: 100%;
     background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 70%);
     opacity: 0;
-    pointer-events: none; /* 마우스가 폼을 클릭할 수 있도록 통과시킴 */
+    pointer-events: none; 
     transition: opacity 0.2s ease-out;
     z-index: 5;
     will-change: background;
 }
-/* ============================================= */
+/* ================================================= */
 
 
 /* ----------------------------------------------------
@@ -181,8 +184,10 @@ body {
 
 .info-pane .service-intro-link {
     margin-top: auto; 
-    padding-top: 2rem; 
     text-align: left;
+    /* ========== "한 줄 여백" 요청 (유지됨) ========== */
+    padding-top: 3rem; 
+    /* ========================================== */
 }
 .info-pane .service-intro-link a {
     color: var(--white);
@@ -250,13 +255,10 @@ body {
     transition: color 0.3s ease;
 }
 .progress-step.active { color: var(--ub-purple-700); }
-
-/* ========== [업그레이드 3] 체크마크 스타일 ========== */
 .progress-step.check {
     color: var(--text-green);
-    font-size: 1.1rem; /* 체크마크가 잘 보이도록 */
+    font-size: 1.1rem; 
 }
-/* ============================================= */
 
 
 .required-note {
@@ -286,7 +288,7 @@ body {
 .step-title strong { color: var(--ub-purple-700); }
 
 /* ----------------------------------------------------
-   5) Form Inputs (에러 스타일 추가)
+   5) Form Inputs (에러 스타일)
 ---------------------------------------------------- */
 .form-group {
     margin-bottom: 1.5rem;
@@ -313,19 +315,17 @@ body {
     margin-bottom: 0.5rem; 
 }
 
-/* ========== [업그레이드 1] 에러 메시지 스타일 ========== */
 .error-message {
     color: var(--text-red);
     font-size: 0.8rem;
     font-weight: 500;
-    margin-top: 0.35rem; /* 입력창과 에러 메시지 사이 간격 */
-    min-height: 1em; /* 에러 메시지가 없을 때도 공간 차지 (레이아웃 밀림 방지) */
+    margin-top: 0.35rem; 
+    min-height: 1em; 
 }
 .checkbox-error {
-    margin-left: 1.75rem; /* 체크박스 정렬 맞춤 */
+    margin-left: 1.75rem; 
 }
 
-/* 에러가 났을 때 입력창 스타일 */
 .form-group.error input,
 .form-group.error select,
 .form-group.error textarea {
@@ -338,7 +338,6 @@ body {
     color: var(--text-red);
 }
 
-/* 흔들림 애니메이션 */
 @keyframes shake {
   10%, 90% { transform: translateX(-1px); }
   20%, 80% { transform: translateX(2px); }
@@ -348,7 +347,6 @@ body {
 .shake {
     animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
 }
-/* ================================================== */
 
 
 input[type="text"],
@@ -386,7 +384,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .form-group input:focus ~ .icon { color: var(--ub-purple-700); }
 
 /* Floating Labels */
-.form-group.floating { margin-bottom: 0.5rem; } /* 에러 메시지 공간 고려해 간격 축소 */
+.form-group.floating { margin-bottom: 0.5rem; } 
 .form-group.floating label {
     position: absolute;
     top: 1rem;
@@ -410,7 +408,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .form-group.floating input:not(:placeholder-shown) { background: var(--white); }
 
 /* Checkbox */
-.checkbox-group { display: flex; align-items: flex-start; } /* start로 정렬 */
+.checkbox-group { display: flex; align-items: flex-start; } 
 .checkbox-group input[type="checkbox"] { width: auto; margin-right: 0.75rem; margin-top: 0.2rem; }
 .checkbox-group label { font-weight: normal; font-size: 0.85rem; color: var(--text-500); margin-bottom: 0; line-height: 1.5; }
 .checkbox-group label a {
@@ -424,7 +422,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 
 /* ----------------------------------------------------
-   6) Buttons (로딩 스피너 추가)
+   6) Buttons (로딩 스피너)
 ---------------------------------------------------- */
 .form-navigation { display: flex; justify-content: space-between; margin-top: 0; }
 .btn {
@@ -435,7 +433,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: inline-flex; /* 스피너 정렬을 위해 flex로 변경 */
+    display: inline-flex; 
     align-items: center;
     justify-content: center;
 }
@@ -462,9 +460,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     box-shadow: 0 5px 15px rgba(109, 40, 210, 0.4);
     transform: translateY(-2px);
 }
-.btn-prev, .btn-submit { display: none; } /* JS가 제어 */
+.btn-prev, .btn-submit { display: none; } 
 
-/* ========== [업그레이드 2] 로딩 스피너 ========== */
 .btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -482,8 +479,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
-/* ============================================= */
-
 
 /* ----------------------------------------------------
    7) Success Message
@@ -523,8 +518,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 ---------------------------------------------------- */
 @media (max-width: 768px) {
     body {
-        padding: 0; /* 모바일에서는 body 여백 0 */
-        display: block; /* 모바일에서는 flex 정렬 해제 */
+        padding: 0; 
+        display: block; 
         min-height: 100dvh; 
         align-items: stretch; 
     }
@@ -541,7 +536,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     .mobile-logo { display: block; }
     .step-title { font-size: 1.4rem; }
     .form-group .icon { top: 0.8rem; }
-    .form-group.floating label { top: 0.8rem; } /* 플로팅 레이블 위치도 아이콘과 맞춤 */
+    .form-group.floating label { top: 0.8rem; }
 }
 
 /* ----------------------------------------------------
