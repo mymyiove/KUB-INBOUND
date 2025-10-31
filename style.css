@@ -1,34 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-/* --- 0. 기본 및 동적 배경 --- */
-body {
-    font-family: 'Pretendard', 'Inter', sans-serif;
-    
-    /* ========== 1. 여백/스크롤 문제 최종 수정 ========== */
-    display: flex; /* 폼을 중앙 정렬하기 위해 flex 사용 */
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    min-height: 100vh;
-    
-    margin: 0; /* ★★★★★ "여기 여백" (하얀 줄) 제거 ★★★★★ */
-    
-    padding: 2rem; /* 폼 카드가 화면 가장자리에 붙지 않도록 여유 공간 */
-    box-sizing: border-box; /* padding이 100vh 안으로 포함됨 (스크롤 방지) */
-    
-    overflow-x: hidden; 
-    perspective: 1500px; 
-    /* ================================================= */
+/* ----------------------------------------------------
+   0) Reset & Theme (Copilot의 장점 1: 변수)
+---------------------------------------------------- */
+:root {
+    --ub-purple-700: #6d28d2;
+    --ub-purple-dark: #581c87;
+    --ub-accent:     #a435f0;
+    --ub-pink:       #d52a7c;
+    --ub-orange:     #f09435;
+
+    --glass-bg:      rgba(255, 255, 255, 0.75);
+    --glass-border:  rgba(255, 255, 255, 0.3);
+    --shadow:        0 25px 60px rgba(0,0,0,0.2);
+
+    --text-900: #111;
+    --text-700: #333;
+    --text-600: #555;
+    --text-500: #666;
+    --text-400: #999;
+    --text-red:   #d93025;
+    --text-green: #28a745;
+    --white:    #fff;
+
+    --radius-xl: 24px;
+    --radius-md: 8px;
+
+    --focus-ring: 0 0 0 3px rgba(109, 40, 210, 0.2);
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    color: var(--text-900);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem; /* 폼 카드와 브라우저 가장자리 사이의 여백 */
+    box-sizing: border-box; /* padding이 100vh 안으로 포함됨 (스크롤 방지) */
+    overflow-x: hidden; 
+    perspective: 1500px; 
+    padding-left:  env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ----------------------------------------------------
+   1) Animated Background
+---------------------------------------------------- */
 .animated-bg {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     z-index: -1;
-    background: linear-gradient(135deg, #6d28d2, #a435f0, #f09435, #d52a7c);
+    background: linear-gradient(135deg, var(--ub-purple-700), var(--ub-accent), var(--ub-orange), var(--ub-pink));
     background-size: 400% 400%;
     animation: gradient-flow 15s ease infinite;
 }
@@ -39,43 +75,63 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* --- 1. 메인 컨테이너 --- */
+/* ----------------------------------------------------
+   2) Main Card (Glassmorphism)
+---------------------------------------------------- */
 .form-container {
     width: 100%;
     max-width: 950px;
     display: flex;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.75);
+    border-radius: var(--radius-xl);
+    overflow: hidden; /* Glare 효과를 위해 필수 */
+    box-shadow: var(--shadow);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--glass-border);
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
-    
-    /* margin: 2rem; <-- 삭제 (body의 padding으로 대체) */
+    position: relative; /* Glare 효과를 위해 필수 */
 }
 
-/* --- 2. 왼쪽 정보 패널 --- */
+/* ========== [업그레이드 4] 3D 틸트 빛 반사 ========== */
+.glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 70%);
+    opacity: 0;
+    pointer-events: none; /* 마우스가 폼을 클릭할 수 있도록 통과시킴 */
+    transition: opacity 0.2s ease-out;
+    z-index: 5;
+    will-change: background;
+}
+/* ============================================= */
+
+
+/* ----------------------------------------------------
+   3) Left Info Pane
+---------------------------------------------------- */
 .info-pane {
     width: 40%;
-    background: #6d28d2;
-    color: white;
+    background: var(--ub-purple-700);
+    color: var(--white);
     padding: 3rem;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 왼쪽 패널 내부는 중앙 정렬 */
+    justify-content: center;
 }
+.info-content { width: 100%; }
 
-.info-pane .info-logo {
+.info-logo {
     width: 200px; 
     height: auto; 
     margin-bottom: 1.5rem; 
 }
 
 .info-pane p {
-    font-size: 1.2rem; 
+    font-size: clamp(1.05rem, 1.2vw, 1.2rem); 
     line-height: 1.6;
     opacity: 1; 
 }
@@ -84,7 +140,7 @@ body {
 }
 
 .info-pane .trusted-by-line {
-    font-size: 0.95rem;
+    font-size: clamp(0.9rem, 1vw, 0.95rem);
     font-weight: 500;
     opacity: 0.8;
     line-height: 1.5;
@@ -111,13 +167,13 @@ body {
     transform: translateY(0);
 }
 .testimonial-item h4 {
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
     font-weight: 700;
-    color: #fff;
+    color: var(--white);
     margin-bottom: 0.5rem;
 }
 .testimonial-item p {
-    font-size: 0.95rem;
+    font-size: clamp(0.9rem, 1vw, 0.95rem);
     font-style: italic;
     opacity: 0.85;
     line-height: 1.5;
@@ -129,9 +185,9 @@ body {
     text-align: left;
 }
 .info-pane .service-intro-link a {
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
     text-decoration: none;
     transition: all 0.3s ease;
     display: inline-block;
@@ -141,11 +197,12 @@ body {
     transform: scale(1.05);
 }
 
-/* --- 3. 오른쪽 폼 패널 --- */
+/* ----------------------------------------------------
+   4) Right Form Pane
+---------------------------------------------------- */
 .form-pane {
     width: 60%;
     padding: 3rem;
-    box-sizing: border-box;
     background: rgba(255, 255, 255, 0.85);
 }
 
@@ -157,18 +214,18 @@ body {
 }
 
 .form-intro {
-    font-size: 0.95rem;
-    color: #333;
+    font-size: clamp(0.9rem, 1.05vw, 0.95rem);
+    color: var(--text-700);
     text-align: center;
     margin-bottom: 2rem;
     line-height: 1.6;
     background-color: #f4f6f9;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     border: 1px solid #e0e0e0;
 }
 .form-intro strong {
-    color: #6d28d2;
+    color: var(--ub-purple-700);
     font-weight: 700;
 }
 
@@ -181,20 +238,35 @@ body {
 .progress-bar::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 3px; background-color: #e0e0e0; z-index: 1; }
 .progress-bar-fill { 
     position: absolute; top: 50%; left: 0; width: 0%; height: 3px; 
-    background-color: #6d28d2; z-index: 2; transition: width 0.4s ease; 
+    background-color: var(--ub-purple-700); z-index: 2; transition: width 0.4s ease; 
 }
-.progress-step { font-size: 0.85rem; font-weight: 600; color: #aaa; background: #fff; padding: 0 0.5rem; z-index: 3; }
-.progress-step.active { color: #6d28d2; }
+.progress-step { 
+    font-size: 0.85rem; 
+    font-weight: 600; 
+    color: #aaa; 
+    background: var(--white); 
+    padding: 0 0.5rem; 
+    z-index: 3;
+    transition: color 0.3s ease;
+}
+.progress-step.active { color: var(--ub-purple-700); }
+
+/* ========== [업그레이드 3] 체크마크 스타일 ========== */
+.progress-step.check {
+    color: var(--text-green);
+    font-size: 1.1rem; /* 체크마크가 잘 보이도록 */
+}
+/* ============================================= */
+
 
 .required-note {
     font-size: 0.8rem;
-    color: #d93025;
+    color: var(--text-red);
     text-align: right;
     margin-top: 1.5rem; 
     margin-bottom: 1rem;
 }
 
-/* --- 4. 폼 스텝 & 슬라이드 애니메이션 --- */
 .form-step {
     display: none;
     animation: slideInRight 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -206,14 +278,16 @@ body {
 }
 
 .step-title {
-    font-size: 1.6rem;
-    color: #111;
+    font-size: clamp(1.4rem, 1.8vw, 1.6rem);
+    color: var(--text-900);
     margin-bottom: 2rem;
     font-weight: 700;
 }
-.step-title strong { color: #6d28d2; }
+.step-title strong { color: var(--ub-purple-700); }
 
-/* --- 5. 폼 그룹 (아이콘 & 플로팅 레이블) --- */
+/* ----------------------------------------------------
+   5) Form Inputs (에러 스타일 추가)
+---------------------------------------------------- */
 .form-group {
     margin-bottom: 1.5rem;
     position: relative;
@@ -223,21 +297,58 @@ body {
     top: 0.9rem;
     left: 1rem;
     font-size: 1.1rem;
-    color: #999;
+    color: var(--text-400);
     transition: color 0.3s ease;
 }
 .form-group.required > label::after {
     content: ' *';
-    color: #d93025;
+    color: var(--text-red);
 }
 
 .form-group label {
     display: block;
     font-weight: 600;
     font-size: 0.9rem;
-    color: #555;
+    color: var(--text-600);
     margin-bottom: 0.5rem; 
 }
+
+/* ========== [업그레이드 1] 에러 메시지 스타일 ========== */
+.error-message {
+    color: var(--text-red);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.35rem; /* 입력창과 에러 메시지 사이 간격 */
+    min-height: 1em; /* 에러 메시지가 없을 때도 공간 차지 (레이아웃 밀림 방지) */
+}
+.checkbox-error {
+    margin-left: 1.75rem; /* 체크박스 정렬 맞춤 */
+}
+
+/* 에러가 났을 때 입력창 스타일 */
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: var(--text-red);
+}
+.form-group.error .icon {
+    color: var(--text-red);
+}
+.form-group.error.floating label {
+    color: var(--text-red);
+}
+
+/* 흔들림 애니메이션 */
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-3px); }
+  40%, 60% { transform: translateX(3px); }
+}
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+/* ================================================== */
 
 
 input[type="text"],
@@ -249,7 +360,7 @@ textarea {
     padding: 1rem;
     padding-left: 3rem; 
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     box-sizing: border-box;
     font-size: 1rem;
     background: #fdfdfd;
@@ -260,23 +371,27 @@ textarea {
 select { padding-left: 1rem; }
 textarea { padding-left: 1rem; resize: vertical; min-height: 100px; }
 
-/* 포커스 상태 */
+/* Focus */
 input:focus, select:focus, textarea:focus {
-    border-color: #6d28d2;
-    box-shadow: 0 0 0 3px rgba(109, 40, 210, 0.2);
+    border-color: var(--ub-purple-700);
+    box-shadow: var(--focus-ring);
     outline: none;
-    background: #fff;
+    background: var(--white);
 }
-.form-group input:focus + label { color: #6d28d2; }
-.form-group input:focus ~ .icon { color: #6d28d2; }
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: none;
+}
 
-/* 플로팅 레이블 */
-.form-group.floating { margin-bottom: 2rem; }
+.form-group input:focus + label { color: var(--ub-purple-700); }
+.form-group input:focus ~ .icon { color: var(--ub-purple-700); }
+
+/* Floating Labels */
+.form-group.floating { margin-bottom: 0.5rem; } /* 에러 메시지 공간 고려해 간격 축소 */
 .form-group.floating label {
     position: absolute;
     top: 1rem;
     left: 3rem; 
-    color: #999;
+    color: var(--text-400);
     background: #fdfdfd;
     padding: 0 0.25rem;
     transition: all 0.3s ease;
@@ -289,80 +404,148 @@ input:focus, select:focus, textarea:focus {
     left: 2.75rem;
     font-size: 0.8rem;
     font-weight: 600;
-    background: #fff;
-    color: #6d28d2;
+    background: var(--white);
+    color: var(--ub-purple-700);
 }
-.form-group.floating input:not(:placeholder-shown) { background: #fff; }
+.form-group.floating input:not(:placeholder-shown) { background: var(--white); }
 
-/* 체크박스 */
-.checkbox-group { display: flex; align-items: center; }
-.checkbox-group input[type="checkbox"] { width: auto; margin-right: 0.75rem; }
-.checkbox-group label { font-weight: normal; font-size: 0.85rem; color: #666; margin-bottom: 0; }
+/* Checkbox */
+.checkbox-group { display: flex; align-items: flex-start; } /* start로 정렬 */
+.checkbox-group input[type="checkbox"] { width: auto; margin-right: 0.75rem; margin-top: 0.2rem; }
+.checkbox-group label { font-weight: normal; font-size: 0.85rem; color: var(--text-500); margin-bottom: 0; line-height: 1.5; }
+.checkbox-group label a {
+    color: var(--ub-purple-700);
+    text-decoration: underline;
+    font-weight: 600;
+}
+.checkbox-group label a:hover {
+    color: var(--ub-purple-dark);
+}
 
-/* --- 6. 네비게이션 버튼 --- */
+
+/* ----------------------------------------------------
+   6) Buttons (로딩 스피너 추가)
+---------------------------------------------------- */
 .form-navigation { display: flex; justify-content: space-between; margin-top: 0; }
 .btn {
     padding: 0.85rem 1.75rem;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: inline-flex; /* 스피너 정렬을 위해 flex로 변경 */
+    align-items: center;
+    justify-content: center;
 }
-.btn-prev { background-color: #e0e0e0; color: #555; }
-.btn-prev:hover { background-color: #ccc; transform: scale(1.02); }
+.btn-prev { background-color: #e0e0e0; color: var(--text-700); }
+.btn-prev:hover { background-color: #ccc; }
 .btn-next { 
-    background-color: #6d28d2; 
-    color: white; 
+    background-color: var(--ub-purple-700); 
+    color: var(--white); 
 }
 .btn-next:hover { 
-    background-color: #581c87; 
+    background-color: var(--ub-purple-dark); 
     transform: translateY(-2px); 
     box-shadow: 0 4px 10px rgba(109, 40, 210, 0.3); 
 }
 
 .btn-submit {
-    background: #6d28d2;
-    color: white;
+    background: var(--ub-purple-700);
+    color: var(--white);
     overflow: hidden;
     position: relative;
 }
 .btn-submit:hover {
-    background: #581c87;
+    background: var(--ub-purple-dark);
     box-shadow: 0 5px 15px rgba(109, 40, 210, 0.4);
     transform: translateY(-2px);
 }
-.btn-prev, .btn-submit { display: none; }
+.btn-prev, .btn-submit { display: none; } /* JS가 제어 */
 
-/* --- 7. 모바일 반응형 --- */
+/* ========== [업그레이드 2] 로딩 스피너 ========== */
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+.spinner {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 1s ease-in-out infinite;
+    margin-left: 0.75em;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+/* ============================================= */
+
+
+/* ----------------------------------------------------
+   7) Success Message
+---------------------------------------------------- */
+#success-message {
+    text-align: center;
+    padding: 4rem 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+#success-message h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ub-purple-700);
+    margin-bottom: 1rem;
+}
+#success-message p {
+    font-size: 1rem;
+    color: var(--text-600);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+#success-message .btn {
+    background: var(--ub-purple-700);
+    color: var(--white);
+}
+#success-message .btn:hover {
+    background: var(--ub-purple-dark);
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ----------------------------------------------------
+   8) Responsive (모바일 화면 수정)
+---------------------------------------------------- */
 @media (max-width: 768px) {
     body {
         padding: 0; /* 모바일에서는 body 여백 0 */
-        display: block; 
+        display: block; /* 모바일에서는 flex 정렬 해제 */
         min-height: 100dvh; 
-        align-items: stretch; /* 모바일에서는 flex 정렬 해제 */
+        align-items: stretch; 
     }
     .form-container {
         flex-direction: column; 
         width: 100%; 
-        max-width: 100%; /* 모바일 화면 꽉 채움 */
-        margin: 0; /* 모바일 여백 0 */
-        border-radius: 0; /* 모바일 각진 모서리 */
+        max-width: 100%; 
+        margin: 0; 
+        border-radius: 0; 
+        box-shadow: none; 
     }
     .info-pane { display: none; }
     .form-pane { width: 100%; padding: 2rem 1.5rem; }
     .mobile-logo { display: block; }
     .step-title { font-size: 1.4rem; }
     .form-group .icon { top: 0.8rem; }
+    .form-group.floating label { top: 0.8rem; } /* 플로팅 레이블 위치도 아이콘과 맞춤 */
 }
 
-/* --- 개인정보보호정책 링크 스타일 --- */
-.checkbox-group label a {
-    color: #6d28d2;
-    text-decoration: underline;
-    font-weight: 600;
-}
-.checkbox-group label a:hover {
-    color: #581c87;
-}
+/* ----------------------------------------------------
+   9) Polishes (선택 효과)
+---------------------------------------------------- */
+::selection { background: rgba(164, 53, 240, 0.25); }
+img { max-width: 100%; height: auto; display: block; }
