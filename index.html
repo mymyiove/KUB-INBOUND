@@ -1,1 +1,130 @@
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미래를 준비하는 기업 교육 | Udemy Business</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="animated-bg"></div>
+
+    <div class="form-container">
+        
+        <div class="info-pane">
+            <div class="info-content">
+                <h2>Udemy Business</h2>
+                <p>미래를 준비하는 기업의<br><strong>첫 번째 선택.</strong></p>
+                
+                <div class="testimonial-slider">
+                    <div class="testimonial-item active">
+                        <h4>26,000+ 최신 콘텐츠</h4>
+                        <p>"현업 전문가가 매일 업데이트하는<br>가장 트렌디한 강의를 만나보세요."</p>
+                    </div>
+                    <div class="testimonial-item">
+                        <h4>글로벌 Top 1% 전문가</h4>
+                        <p>"Google, AWS, Microsoft의 현직자가<br>직접 강의하는 독점 콘텐츠."</p>
+                    </div>
+                    <div class="testimonial-item">
+                        <h4>검증된 파트너십</h4>
+                        <p>"도입 후 직원 L&D 참여율 180% 증가.<br>가장 확실한 교육 투자입니다."</p>
+                    </div>
+                </div>
+
+                <div class="trusted-logos">
+                    <p>Samsung · SK · Hyundai · LG · Lotte · KT · POSCO</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-pane">
+            <form id="pro-contact-form">
+                
+                <p class="form-intro">
+                    지금 문의하시면, <strong>1:1 전문 컨설팅</strong>과 함께<br>
+                    <strong>귀사만을 위한 맞춤형 데모</strong>를 무료로 제공합니다.
+                </p>
+
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                    <div class="progress-step active" data-step="1">기본 정보</div>
+                    <div class="progress-step" data-step="2">회사 정보</div>
+                    <div class="progress-step" data-step="3">문의</div>
+                </div>
+
+                <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
+                
+                <div class="form-step active" data-step="1">
+                    <h3 class="step-title">반갑습니다! <strong>담당자님</strong>을 알려주세요.</h3>
+                    <div class="form-group floating required">
+                        <span class="icon">👤</span>
+                        <input type="text" id="full-name" name="full_name" required placeholder=" ">
+                        <label for="full-name">이름 (성함)</label>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">📧</span>
+                        <input type="email" id="email" name="email" required placeholder=" ">
+                        <label for="email">회사 이메일</label>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">📞</span>
+                        <input type="tel" id="phone" name="phone" required placeholder=" ">
+                        <label for="phone">전화번호</label>
+                    </div>
+                </div>
+
+                <div class="form-step" data-step="2">
+                    <h3 class="step-title">귀사의 비전을 들려주세요.</h3>
+                    <div class="form-group floating required">
+                        <span class="icon">💼</span>
+                        <input type="text" id="company-name" name="company_name" required placeholder=" ">
+                        <label for="company-name">회사/기관명</label>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">🧑‍💻</span>
+                        <input type="text" id="job-title" name="job_title" required placeholder=" ">
+                        <label for="job-title">직급 / 직책</label>
+                    </div>
+                    <div class="form-group required">
+                        <label for="employee-count">예상 교육 인원</label>
+                        <select id="employee-count" name="employee_count" required>
+                            <option value="" disabled selected>인원을 선택하세요...</option>
+                            <option value="1-100">1-100명</option>
+                            <option value="101-500">101-500명</option>
+                            <option value="501-1000">501-1,000명</option>
+                            <option value="1000+">1,000명 이상</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-step" data-step="3">
+                    <h3 class="step-title">성장을 위한 마지막 단계입니다.</h3>
+                    <div class="form-group">
+                        <label for="inquiry">문의사항 (선택)</label>
+                        <textarea id="inquiry" name="inquiry" rows="5" placeholder="도입 비용, 특정 강의 커리큘럼, 데모 시연 등 무엇이든 문의하세요."></textarea>
+                    </div>
+                    
+                    <div class="form-group checkbox-group required">
+                        <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
+                        <label for="privacy-agree">
+                            위 박스에 체크하시면 <a href="https://www.udemy.com/terms/privacy/" target="_blank">Udemy 개인정보 보호 정책</a>에 동의하게 됩니다. Udemy, Inc.는 귀하에게 서비스 제공을 위해 귀하의 정보(예: 이름, 이메일, 전화번호)를 수집 및 이용할 수 있습니다.
+                        </label>
+                    </div>
+                    </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-prev" id="prev-btn">이전</button>
+                    <button type="button" class="btn btn-next" id="next-btn">다음</button>
+                    <button type="submit" class="btn btn-submit" id="submit-btn">
+                        무료 상담 및 데모 신청
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
