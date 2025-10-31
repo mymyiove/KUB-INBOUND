@@ -88,7 +88,6 @@ body {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
@@ -100,7 +99,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%); /* 은은하게 (0.2) */
     opacity: 0;
     pointer-events: none; 
     transition: opacity 0.2s ease-out;
@@ -180,7 +179,9 @@ body {
 .info-pane .service-intro-link {
     margin-top: auto; 
     text-align: left;
-    padding-top: 3rem; 
+    /* ========== 여백 추가 ========== */
+    padding-top: 4rem; /* 3rem -> 4rem */
+    /* ============================ */
 }
 .info-pane .service-intro-link a {
     color: var(--white);
@@ -210,6 +211,13 @@ body {
     height: auto;
     margin: 0 auto 1.5rem auto; 
 }
+
+/* ========== [업그레이드 2] 모바일 요약 정보 (데스크탑 숨김) ========== */
+.mobile-info-pane {
+    display: none;
+}
+/* ========================================================== */
+
 
 .form-intro {
     font-size: clamp(0.9rem, 1.05vw, 0.95rem);
@@ -242,9 +250,9 @@ body {
     font-size: 0.85rem; 
     font-weight: 600; 
     color: #aaa; 
-    /* ========== [수정] 체크모양 배경색 투명하게 변경 ========== */
+    /* ========== 체크마크 배경 수정 ========== */
     background: transparent; 
-    /* ================================================== */
+    /* ==================================== */
     padding: 0 0.5rem; 
     z-index: 3;
     transition: color 0.3s ease;
@@ -266,7 +274,9 @@ body {
 
 .form-step {
     display: none;
-    animation: slideInRight 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* ========== [업그레이드 3] 애니메이션 이징 수정 ========== */
+    animation: slideInRight 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); /* easeOutQuart */
+    /* ================================================= */
 }
 .form-step.active { display: block; }
 @keyframes slideInRight {
@@ -529,6 +539,33 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     .info-pane { display: none; }
     .form-pane { width: 100%; padding: 2rem 1.5rem; }
     .mobile-logo { display: block; }
+    
+    /* ========== [업그레이드 2] 모바일 요약 정보 (스타일) ========== */
+    .mobile-info-pane {
+        display: block;
+        background-color: #f7f3ff; /* 연한 보라색 배경 */
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    .mobile-info-pane p {
+        font-size: 0.95rem;
+        color: var(--text-700);
+        line-height: 1.5;
+        margin: 0;
+    }
+    .mobile-info-pane p strong {
+        color: var(--ub-purple-700);
+        font-weight: 700;
+    }
+    .mobile-info-pane .mobile-trusted-by {
+        font-size: 0.85rem;
+        color: var(--text-600);
+        margin-top: 0.5rem;
+    }
+    /* ======================================================== */
+
     .step-title { font-size: 1.4rem; }
     .form-group .icon { top: 0.8rem; }
     .form-group.floating label { top: 0.8rem; }
