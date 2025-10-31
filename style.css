@@ -343,3 +343,27 @@ input:focus, select:focus, textarea:focus {
 .checkbox-group label a:hover {
     color: #581c87; /* 더 어두운 보라색 */
 }
+
+
+/* --- 11월 01일 추가: 서비스 소개 링크 스타일 --- */
+
+.service-intro-link {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    text-align: center;
+}
+
+.service-intro-link a {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.service-intro-link a:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
