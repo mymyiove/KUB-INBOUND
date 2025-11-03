@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // --- 백엔드 전송 로직 시작 ---
         
         // ========== [수정 1] "httpsa"를 "https"로 수정! ==========
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyc97x_dZkQ2eY-XWwG91T5v_Kk61V5v_2f2fQf3f/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec"; 
         // ===================================================
         
         const formData = new FormData(form);
