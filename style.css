@@ -25,7 +25,7 @@
     --white:    #fff;
     
     --form-bg:  #fdfdfd; 
-    --form-bg-light: #f7f3ff; /* 연보라 배경 */
+    --form-bg-light: #f7f3ff; 
 
     --radius-xl: 24px;
     --radius-md: 8px;
@@ -121,6 +121,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative; /* 파티클 효과를 위해 추가 */
+    overflow: hidden; /* 파티클 효과를 위해 추가 */
 }
 .info-content { width: 100%; }
 
@@ -212,6 +214,8 @@ body {
     width: 60%;
     padding: 3rem;
     background: rgba(255, 255, 255, 0.85);
+    position: relative; /* 파티클 효과를 위해 추가 */
+    overflow: hidden; /* 파티클 효과를 위해 추가 */
 }
 
 .mobile-logo {
@@ -231,7 +235,7 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     line-height: 1.6;
-    background-color: var(--form-bg-light); /* 연보라색 */
+    background-color: var(--form-bg-light); 
     padding: 1rem;
     border-radius: var(--radius-md);
     border: 1px solid #e0e0e0;
@@ -298,7 +302,7 @@ body {
 .step-title strong { color: var(--ub-purple-700); }
 
 /* ----------------------------------------------------
-   5) Form Inputs (에러 스타일)
+   5) Form Inputs (에러/성공 스타일)
 ---------------------------------------------------- */
 .form-group {
     margin-bottom: 1.5rem;
@@ -336,6 +340,7 @@ body {
     margin-left: 1.75rem; 
 }
 
+/* 에러 상태 */
 .form-group.error input,
 .form-group.error select,
 .form-group.error textarea {
@@ -347,6 +352,36 @@ body {
 .form-group.error.floating label {
     color: var(--text-red);
 }
+
+.form-group .icon-feedback {
+    position: absolute;
+    right: 1rem;
+    top: 0.9rem;
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s ease;
+}
+.form-group .icon-feedback.success { color: var(--text-green); }
+.form-group .icon-feedback.error { color: var(--text-red); }
+
+.form-group.valid .icon-feedback.success,
+.form-group.error .icon-feedback.error {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 성공 시 입력창 스타일 */
+.form-group.valid input {
+    border-color: var(--text-green);
+}
+.form-group.valid .icon {
+    color: var(--text-green);
+}
+.form-group.valid.floating label {
+    color: var(--text-green);
+}
+
 
 @keyframes shake {
   10%, 90% { transform: translateX(-1px); }
@@ -375,6 +410,10 @@ textarea {
     transition: border-color 0.3s, box-shadow 0.3s;
     font-family: 'Pretendard', 'Inter', sans-serif;
 }
+input[type="email"] {
+    padding-right: 2.5rem; 
+}
+
 
 select { padding-left: 1rem; }
 textarea { padding-left: 1rem; resize: vertical; min-height: 100px; }
@@ -415,6 +454,15 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     background: var(--white);
     color: var(--ub-purple-700);
 }
+.form-group.floating.valid input:focus + label,
+.form-group.floating.valid input:not(:placeholder-shown) + label {
+    color: var(--text-green);
+}
+.form-group.floating.error input:focus + label,
+.form-group.floating.error input:not(:placeholder-shown) + label {
+    color: var(--text-red);
+}
+
 .form-group.floating input:not(:placeholder-shown) { background: var(--white); }
 
 /* Checkbox */
@@ -446,29 +494,32 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     display: inline-flex; 
     align-items: center;
     justify-content: center;
+    
+    /* ========== [업그레이드 3] 글림 효과 (준비) ========== */
+    position: relative;
+    overflow: hidden;
+    /* ============================================== */
 }
 .btn-prev { background-color: #e0e0e0; color: var(--text-700); }
 .btn-prev:hover { background-color: #ccc; }
-.btn-next { 
+
+.btn-next,
+.btn-submit,
+#success-message .btn {
     background-color: var(--ub-purple-700); 
     color: var(--white); 
 }
-.btn-next:hover { 
+.btn-next:hover,
+.btn-submit:hover,
+#success-message .btn:hover { 
     background-color: var(--ub-purple-dark); 
     transform: translateY(-2px); 
     box-shadow: 0 4px 10px rgba(109, 40, 210, 0.3); 
 }
 
 .btn-submit {
-    background: var(--ub-purple-700);
-    color: var(--white);
     overflow: hidden;
     position: relative;
-}
-.btn-submit:hover {
-    background: var(--ub-purple-dark);
-    box-shadow: 0 5px 15px rgba(109, 40, 210, 0.4);
-    transform: translateY(-2px);
 }
 .btn-prev, .btn-submit { display: none; } 
 
@@ -490,6 +541,28 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     to { transform: rotate(360deg); }
 }
 
+/* ========== [업그레이드 3] 버튼 글림(Gleam) 효과 ========== */
+.btn-next::before,
+.btn-submit::before,
+#success-message .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-30deg);
+    transition: left 0.7s ease;
+}
+.btn-next:hover::before,
+.btn-submit:hover::before,
+#success-message .btn:hover::before {
+    left: 150%;
+}
+/* ====================================================== */
+
+
 /* ----------------------------------------------------
    7) Success Message
 ---------------------------------------------------- */
@@ -509,13 +582,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     color: var(--text-600);
     line-height: 1.6;
     margin-bottom: 2rem;
-}
-#success-message .btn {
-    background: var(--ub-purple-700);
-    color: var(--white);
-}
-#success-message .btn:hover {
-    background: var(--ub-purple-dark);
 }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -545,14 +611,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     .form-pane { width: 100%; padding: 2rem 1.5rem; }
     .mobile-logo { display: block; }
     
-    /* ========== 모바일 박스 일관성 수정 ========== */
-    .form-intro {
-        font-size: 0.95rem; 
-        line-height: 1.5;  /* 줄 간격 통일 */
-        border: none;      /* 윤곽선 제거 */
-    }
-    /* ========================================= */
-
     .mobile-info-pane {
         display: block;
         background-color: var(--form-bg-light);
@@ -562,6 +620,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
         text-align: center;
         font-size: 0.95rem;
         line-height: 1.5;
+        border: none; 
     }
     .mobile-info-pane p {
         color: var(--text-700);
@@ -576,14 +635,42 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
         color: var(--text-600);
         margin-top: 0.5rem;
     }
+    
+    .form-intro {
+        line-height: 1.5;
+        border: none; 
+    }
 
     .step-title { font-size: 1.4rem; }
     .form-group .icon { top: 0.8rem; }
     .form-group.floating label { top: 0.8rem; }
+    
+    .form-group .icon-feedback { display: none; }
+    input[type="email"] { padding-right: 3rem; }
 }
 
 /* ----------------------------------------------------
-   9) Polishes (선택 효과)
+   9) Polishes (선택 효과 & 마우스 파티클)
 ---------------------------------------------------- */
 ::selection { background: rgba(164, 53, 240, 0.25); }
 img { max-width: 100%; height: auto; display: block; }
+
+/* ========== [업그레이드 2] 마우스 파티클 효과 ========== */
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ub-purple-700);
+    opacity: 0;
+    pointer-events: none;
+    animation: fadeOut 1s forwards;
+    z-index: 10;
+}
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+/* ================================================= */
