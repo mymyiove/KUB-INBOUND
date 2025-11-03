@@ -75,8 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // --- 백엔드 전송 로직 시작 ---
         
-        // ========== [수정 1] "httpsa"를 "https"로 수정! ==========
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyc97x_dZkQ2eY-XWwG91T5v_Kk61V5v_2f2fQf3f/exec";
+        // ========== [수정] 선생님의 실제 URL로 변경! ==========
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec";
         // ===================================================
         
         const formData = new FormData(form);
@@ -90,11 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors', 
-            // ========== [수정 2] 엣지(Edge) 오류 해결 ==========
             headers: {
                 'Content-Type': 'text/plain;charset=utf-8',
             },
-            // ==============================================
             body: JSON.stringify(data) 
         })
         .then(response => {
@@ -104,9 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => {
             console.error('Error:', error);
-            // ========== [수정 3] showError -> alert로 변경 ==========
             alert("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-            // ================================================
             submitBtn.disabled = false;
             submitBtn.innerHTML = "무료 자료 다운로드";
         });
