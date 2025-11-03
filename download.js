@@ -74,7 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateForm()) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyc97x_dZkQ2eY-XWwG91T5v_Kk61V5v_2f2fQf3f/exec"; // ★ 선생님 URL로 다시 채워넣었습니다!
+        
+        // ========== [수정 1] "httpsa"를 "https"로 수정! ==========
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyc97x_dZkQ2eY-XWwG91T5v_Kk61V5v_2f2fQf3f/exec";
+        // ===================================================
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
@@ -87,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors', 
-            // ========== [수정] 엣지(Edge) 오류 해결 ==========
+            // ========== [수정 2] 엣지(Edge) 오류 해결 ==========
             headers: {
                 'Content-Type': 'text/plain;charset=utf-8',
             },
@@ -101,7 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => {
             console.error('Error:', error);
-            showError(submitBtn, "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+            // ========== [수정 3] showError -> alert로 변경 ==========
+            alert("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+            // ================================================
             submitBtn.disabled = false;
             submitBtn.innerHTML = "무료 자료 다운로드";
         });
