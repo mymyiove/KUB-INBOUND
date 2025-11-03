@@ -29,31 +29,45 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ========== [수정] 전화번호 유효성 검사 추가 ==========
     function validateForm() {
         clearErrors(); 
         let isValid = true;
         const inputs = Array.from(form.querySelectorAll("input[required], select[required]"));
         
         for (const input of inputs) {
+            const value = input.value.trim();
+            
             if (input.type === "checkbox") {
                 if (!input.checked) {
                     isValid = false;
                     showError(input, "개인정보 수집 및 이용에 동의해주세요.");
                 }
             } 
-            else if (!input.value.trim()) {
+            else if (!value) {
                 isValid = false;
                 const label = input.closest('.form-group').querySelector('label');
                 const fieldName = label ? label.innerText.replace(' *', '') : '필수 항목';
                 showError(input, `${fieldName} 항목을 입력해주세요.`);
             }
-            else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+            else if (input.id === 'phone') { // input의 id로 'phone'을 특정
+                const phoneValue = value.replace(/-/g, ""); // 하이픈 제거
+                if (!/^\d+$/.test(phoneValue)) { // 숫자만 있는지 확인
+                    isValid = false;
+                    showError(input, "전화번호는 숫자만 입력해주세요.");
+                } else if (phoneValue.length < 10 || phoneValue.length > 11) { // 자리수 확인
+                    isValid = false;
+                    showError(input, "전화번호 10자리 또는 11자리를 입력해주세요.");
+                }
+            }
+            else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                 isValid = false;
                 showError(input, "유효한 이메일 주소를 입력해주세요.");
             }
         }
         return isValid;
     }
+    // ==================================================
 
 
     // --- 3. 폼 제출 및 리셋 로직 ---
@@ -74,13 +88,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateForm()) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        
-        // ========== [수정] 선생님의 실제 URL로 변경! ==========
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec";
-        // ===================================================
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
+        
+        // ========== [수정] 전화번호 하이픈 제거 ==========
+        if (data.phone) {
+            data.phone = data.phone.replace(/-/g, "");
+        }
+        // ===========================================
         
         data.lead_source = "자료 다운로드";
 
