@@ -155,14 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateStep(currentStep)) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        
-        // ========== [수정 1] "httpsa"를 "https"로 수정! ==========
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec"; 
-        // ===================================================
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec"; // 선생님 실제 URL
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
+        
+        // ========== [수정] 이 줄이 다시 추가되었습니다! ==========
         data.lead_source = "상담 요청";
+        // ===============================================
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
@@ -182,9 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => {
             console.error('Error:', error);
-            // ========== [수정 2] showError -> alert로 변경 ==========
             alert("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-            // ================================================
         })
         .finally(() => {
             if (form.style.display !== "none") {
