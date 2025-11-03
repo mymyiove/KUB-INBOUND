@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무료 백서 다운로드 | Udemy Business</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="animated-bg"></div>
+
+    <div class="form-container">
+        
+        <div class="glare"></div>
+
+        <div class="info-pane">
+            <div class="info-content">
+                
+                <img src="udemy-logo-white.png" alt="Udemy Business Logo" class="info-logo">
+                
+                <p>성공하는 기업의<br><strong>러닝 트렌드 2026</strong></p>
+                
+                <p class="trusted-by-line">
+                    AI 시대, 성공적인 조직 성장을 위한<br>
+                    핵심 전략 리포트를 지금 확인하세요.
+                </p>
+                
+                <div class="testimonial-slider">
+                    <div class="testimonial-item active">
+                        <h4>주요 내용</h4>
+                        <p>"1. 생성형 AI가 조직에 미치는 영향<br>2. 2026년 리더십의 새로운 정의<br>3. 스킬 기반 조직으로의 전환"</p>
+                    </div>
+                </div>
+
+                <div class="service-intro-link">
+                    <a href="index.html">
+                        &larr; 전문 컨설팅 문의하기
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-pane">
+
+            <img src="udemy-logo-purple.png" alt="Udemy Business Logo" class="mobile-logo">
+
+            <div class="mobile-info-pane">
+                <p>성공하는 기업의 <strong>러닝 트렌드 2026</strong></p>
+                <p class="mobile-trusted-by">핵심 전략 리포트를 지금 확인하세요.</p>
+            </div>
+
+            <form id="pro-contact-form">
+                
+                <p class="form-intro">
+                    리포트를 받아보실 정보를 입력해주세요.<br>
+                    입력하신 이메일로 <strong>즉시</strong> 발송됩니다.
+                </p>
+
+                <div class="form-step active" data-step="1">
+                    <h3 class="step-title"><strong>무료 리포트</strong> 다운로드</h3>
+                    
+                    <div class="form-group floating required">
+                        <span class="icon">👤</span>
+                        <input type="text" id="full-name" name="full_name" required placeholder=" ">
+                        <label for="full-name">이름 (성함)</label>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">📧</span>
+                        <input type="email" id="email" name="email" required placeholder=" ">
+                        <label for="email">회사 이메일</label>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">💼</span>
+                        <input type="text" id="company-name" name="company_name" required placeholder=" ">
+                        <label for="company-name">회사/기관명</label>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group checkbox-group required">
+                        <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
+                        <label for="privacy-agree">
+                            <a href="https://www.udemy.com/terms/privacy/" target="_blank">개인정보 보호 정책</a> 및 마케팅 정보 수신에 동의합니다.
+                        </label>
+                        <div class="error-message checkbox-error"></div>
+                    </div>
+
+                </div>
+
+                <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
+
+                <div class="form-navigation" style="justify-content: flex-end;">
+                    <button type="submit" class="btn btn-submit" id="submit-btn" style="display: inline-flex;">
+                        무료 자료 다운로드
+                    </button>
+                </div>
+            </form>
+
+            <div id="success-message" style="display: none;">
+                <h3>🎉 감사합니다!</h3>
+                <p>입력하신 이메일로 리포트가 발송되었습니다.<br>(실제 발송 로직은 백엔드에 추가해야 합니다)</p>
+                <button type="button" class="btn" id="reset-form-btn">확인</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="download.js"></script>
+    </body>
+</html>
