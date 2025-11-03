@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const successMessage = document.getElementById("success-message");
     const submitBtn = document.getElementById("submit-btn");
     const resetBtn = document.getElementById("reset-form-btn");
+
+    // 업그레이드용 필드 선택
+    const phoneInput = document.getElementById("phone");
+    const emailInput = document.getElementById("email");
+    const fullNameInput = document.getElementById("full-name");
+    const companyInput = document.getElementById("company-name");
     
 
     // --- 2. 인라인 유효성 검사 ---
@@ -13,23 +19,35 @@ document.addEventListener("DOMContentLoaded", () => {
         const formGroup = inputElement.closest('.form-group');
         const errorElement = formGroup.querySelector('.error-message');
         formGroup.classList.add('error');
+        formGroup.classList.remove('valid');
         errorElement.textContent = message;
         formGroup.classList.add('shake');
         formGroup.addEventListener('animationend', () => {
             formGroup.classList.remove('shake');
         }, { once: true });
     }
+    
+    function showSuccess(inputElement) {
+        const formGroup = inputElement.closest('.form-group');
+        const errorElement = formGroup.querySelector('.error-message');
+        
+        formGroup.classList.remove('error');
+        formGroup.classList.add('valid');
+        errorElement.textContent = ''; 
+    }
 
     function clearErrors() {
         document.querySelectorAll('.form-group.error').forEach(formGroup => {
             formGroup.classList.remove('error');
+        });
+         document.querySelectorAll('.form-group.valid').forEach(formGroup => {
+            formGroup.classList.remove('valid');
         });
         document.querySelectorAll('.error-message').forEach(errorElement => {
             errorElement.textContent = '';
         });
     }
 
-    // ========== [수정] 전화번호 유효성 검사 추가 ==========
     function validateForm() {
         clearErrors(); 
         let isValid = true;
@@ -50,24 +68,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 const fieldName = label ? label.innerText.replace(' *', '') : '필수 항목';
                 showError(input, `${fieldName} 항목을 입력해주세요.`);
             }
-            else if (input.id === 'phone') { // input의 id로 'phone'을 특정
-                const phoneValue = value.replace(/-/g, ""); // 하이픈 제거
-                if (!/^\d+$/.test(phoneValue)) { // 숫자만 있는지 확인
+            else if (input.id === 'phone') { 
+                const phoneValue = value.replace(/-/g, ""); 
+                if (!/^\d+$/.test(phoneValue)) { 
                     isValid = false;
                     showError(input, "전화번호는 숫자만 입력해주세요.");
-                } else if (phoneValue.length < 10 || phoneValue.length > 11) { // 자리수 확인
+                } else if (phoneValue.length < 10 || phoneValue.length > 11) { 
                     isValid = false;
                     showError(input, "전화번호 10자리 또는 11자리를 입력해주세요.");
+                } else {
+                    showSuccess(input); // [추가] 전화번호도 성공 시 피드백
                 }
             }
             else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                 isValid = false;
                 showError(input, "유효한 이메일 주소를 입력해주세요.");
             }
+             else if (input.type === "email") { // 이메일 통과 시
+                showSuccess(input);
+            }
         }
         return isValid;
     }
-    // ==================================================
 
 
     // --- 3. 폼 제출 및 리셋 로직 ---
@@ -79,6 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
         form.style.display = "block";
         submitBtn.disabled = false;
         submitBtn.innerHTML = "무료 자료 다운로드";
+        
+        loadSavedInfo();
     }
 
     // "제출" 버튼 클릭
@@ -93,13 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         
-        // ========== [수정] 전화번호 하이픈 제거 ==========
         if (data.phone) {
             data.phone = data.phone.replace(/-/g, "");
         }
-        // ===========================================
         
         data.lead_source = "자료 다운로드";
+        
+        saveInfoToStorage(data); // 정보 저장
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
@@ -116,6 +140,12 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log('Success:', data);
             form.style.display = "none";
             successMessage.style.display = "block";
+            
+            // ========== [업그레이드 1] 축하 폭죽! ==========
+            triggerConfetti();
+            // ==========================================
+            
+            localStorage.removeItem('udemyLeadInfo'); 
         })
         .catch(error => {
             console.error('Error:', error);
@@ -130,7 +160,91 @@ document.addEventListener("DOMContentLoaded", () => {
     resetBtn.addEventListener("click", resetForm);
 
 
-    // --- 4. 3D 틸트 & 빛 반사 효과 ---
+    // --- 4. "극도의 업그레이드" 기능들 ---
+    
+    // [업그레이드 1] 축하 폭죽 함수
+    function triggerConfetti() {
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    }
+    
+    // [업그레이드] 전화번호 자동 포맷
+    function autoFormatPhone(e) {
+        let value = e.target.value.replace(/\D/g, ""); 
+        let length = value.length;
+        
+        if (length > 11) value = value.substring(0, 11);
+        
+        if (length < 4) {
+             e.target.value = value;
+        } else if (length < 7) {
+             e.target.value = `${value.substring(0,3)}-${value.substring(3)}`;
+        } else if (length < 11) {
+             e.target.value = `${value.substring(0,3)}-${value.substring(3,6)}-${value.substring(6)}`;
+        } else {
+             e.target.value = `${value.substring(0,3)}-${value.substring(3,7)}-${value.substring(7)}`;
+        }
+    }
+    
+    // [업그레이드] 실시간 이메일 유효성 검사
+    function validateEmailRealtime(e) {
+        const value = e.target.value.trim();
+        const formGroup = e.target.closest('.form-group');
+
+        if (value === "") { 
+            formGroup.classList.remove('valid', 'error');
+            formGroup.querySelector('.error-message').textContent = '';
+            return;
+        }
+        
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            showSuccess(e.target);
+            formGroup.querySelector('.error-message').textContent = ''; 
+        } else {
+            formGroup.classList.add('error');
+            formGroup.classList.remove('valid');
+            formGroup.querySelector('.error-message').textContent = '유효한 이메일 주소를 입력해주세요.';
+        }
+    }
+    
+    // [업그레이드] 로컬스토리지 정보 저장
+    function saveInfoToStorage(data) {
+        try {
+            const info = {
+                fullName: data.full_name,
+                email: data.email,
+                companyName: data.company_name
+            };
+            localStorage.setItem('udemyLeadInfo', JSON.stringify(info));
+        } catch (e) {
+            console.warn("LocalStorage: " + e.message);
+        }
+    }
+    
+    // [업그레이드] 로컬스토리지 정보 로드
+    function loadSavedInfo() {
+         try {
+            const savedInfo = localStorage.getItem('udemyLeadInfo');
+            if (savedInfo) {
+                const info = JSON.parse(savedInfo);
+                if (info.fullName && fullNameInput) fullNameInput.value = info.fullName;
+                if (info.email && emailInput) {
+                    emailInput.value = info.email;
+                    validateEmailRealtime({ target: emailInput }); 
+                }
+                if (info.companyName && companyInput) companyInput.value = info.companyName;
+            }
+        } catch (e) {
+            console.warn("LocalStorage: " + e.message);
+        }
+    }
+
+    // --- 5. 3D 틸트 & 빛 반사 효과 ---
     const container = document.querySelector(".form-container");
     const glare = document.querySelector(".glare");
 
@@ -152,5 +266,10 @@ document.addEventListener("DOMContentLoaded", () => {
             glare.style.opacity = '0';
         });
     }
+    
+    // --- 6. 초기화 실행 ---
+    loadSavedInfo(); 
+    if (phoneInput) phoneInput.addEventListener('input', autoFormatPhone); 
+    if (emailInput) emailInput.addEventListener('blur', validateEmailRealtime); 
 
 }); // DOMContentLoaded 끝
