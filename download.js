@@ -79,9 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         
-        // ========== [수정] 리드 소스 변경! ==========
         data.lead_source = "자료 다운로드";
-        // =======================================
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
@@ -97,8 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
             form.style.display = "none";
             successMessage.style.display = "block";
             
-            // (선택 사항) 실제 파일 다운로드 로직
-            // window.location.href = "YOUR_FILE_URL.pdf";
+            // (실제 다운로드 로직은 백엔드 메일에 포함됩니다)
         })
         .catch(error => {
             console.error('Error:', error);
@@ -113,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetBtn.addEventListener("click", resetForm);
 
 
-    // --- 4. 3D 틸트 & 빛 반사 효과 (단순화된 버전) ---
+    // --- 4. 3D 틸트 & 빛 반사 효과 ---
     const container = document.querySelector(".form-container");
     const glare = document.querySelector(".glare");
 
