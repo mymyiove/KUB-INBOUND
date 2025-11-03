@@ -6,7 +6,20 @@
     <title>무료 백서 다운로드 | Udemy Business</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
-</head>
+    
+    <style>
+        /* 1. 슬라이더 높이를 자동으로 조절해 "주요 내용"이 쏠리지 않게 함 */
+        .testimonial-slider {
+            height: auto;
+            min-height: 120px;
+        }
+        /* 2. "컨설팅 문의" 링크를 하단에 고정 (여백 문제 해결) */
+        .info-pane .service-intro-link {
+            margin-top: auto;
+            padding-top: 3rem; 
+        }
+    </style>
+    </head>
 <body>
     
     <div class="animated-bg"></div>
@@ -74,6 +87,19 @@
                         <label for="email">회사 이메일</label>
                         <div class="error-message"></div>
                     </div>
+                    
+                    <div class="form-group floating required">
+                        <span class="icon">📞</span>
+                        <input type="text" id="phone" name="phone" required placeholder=" ">
+                        <label for="phone">전화번호</label>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">🧑‍💻</span>
+                        <input type="text" id="job-title" name="job_title" required placeholder=" ">
+                        <label for="job-title">직책 (직함)</label>
+                        <div class="error-message"></div>
+                    </div>
                     <div class="form-group floating required">
                         <span class="icon">💼</span>
                         <input type="text" id="company-name" name="company_name" required placeholder=" ">
@@ -102,7 +128,7 @@
 
             <div id="success-message" style="display: none;">
                 <h3>🎉 감사합니다!</h3>
-                <p>입력하신 이메일로 리포트가 발송되었습니다.<br>(실제 발송 로직은 백엔드에 추가해야 합니다)</p>
+                <p>입력하신 이메일로 리포트가 발송되었습니다.<br>잠시 후 메일함을 확인해주세요!</p>
                 <button type="button" class="btn" id="reset-form-btn">확인</button>
             </div>
 
@@ -110,5 +136,5 @@
     </div>
 
     <script src="download.js"></script>
-    </body>
+</body>
 </html>
