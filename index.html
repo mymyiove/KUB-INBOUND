@@ -81,18 +81,24 @@
                         <span class="icon">👤</span>
                         <input type="text" id="full-name" name="full_name" required placeholder=" ">
                         <label for="full-name">이름 (성함)</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
                         <div class="error-message"></div>
                     </div>
                     <div class="form-group floating required">
                         <span class="icon">📧</span>
                         <input type="email" id="email" name="email" required placeholder=" ">
                         <label for="email">회사 이메일</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
                         <div class="error-message"></div>
                     </div>
                     <div class="form-group floating required">
                         <span class="icon">📞</span>
                         <input type="text" id="phone" name="phone" required placeholder=" ">
                         <label for="phone">전화번호</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
                         <div class="error-message"></div>
                     </div>
 
@@ -105,12 +111,16 @@
                         <span class="icon">💼</span>
                         <input type="text" id="company-name" name="company_name" required placeholder=" ">
                         <label for="company-name">회사/기관명</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
                         <div class="error-message"></div>
                     </div>
                     <div class="form-group floating required">
                         <span class="icon">🧑‍💻</span>
                         <input type="text" id="job-title" name="job_title" required placeholder=" ">
-                        <label for="job-title">직급 / 직책</label>
+                        <label for="job-title">직책 (직함)</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
                         <div class="error-message"></div>
                     </div>
                     <div class="form-group required">
@@ -137,7 +147,7 @@
                     <div class="form-group checkbox-group required">
                         <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
                         <label for="privacy-agree">
-                            위 박스에 체크하시면 <a href="https://www.udemy.com/terms/privacy/" target="_blank">Udemy 개인정보 보호 정책</a>에 동의하게 됩니다. Udemy, Inc.는 귀하에게 서비스 제공을 위해 귀하의 정보(예: 이름, 이메일, 전화번호)를 수집 및 이용할 수 있습니다.
+                            <a href="https://www.udemy.com/terms/privacy/" target="_blank">개인정보 보호 정책</a> 및 마케팅 정보 수신에 동의합니다.
                         </label>
                         <div class="error-message checkbox-error"></div>
                     </div>
@@ -164,6 +174,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
