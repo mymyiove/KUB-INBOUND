@@ -155,14 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateStep(currentStep)) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        const GOOGLE_SCRIPT_URL = "httpsA://script.google.com/macros/s/여기에_복사한_URL_붙여넣기/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyc97x_dZkQ2eY-XWwG91T5v_Kk61V5v_2f2fQf3f/exec"; // ★ 선생님 URL로 다시 채워넣었습니다!
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         
-        // ========== [수정] 이 줄을 추가하세요! ==========
+        // ========== [수정 1] 이 줄이 추가되었습니다! ==========
         data.lead_source = "상담 요청";
-        // ============================================
+        // ===============================================
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
@@ -170,7 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/json' },
+            // ========== [수정 2] 엣지(Edge) 오류 해결 ==========
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            // ==============================================
             body: JSON.stringify(data) 
         })
         .then(response => {
@@ -207,14 +211,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const rect = container.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-
-            const maxRotate = 2; // 멀미 방지
-            
+            const maxRotate = 2; 
             const tiltX = (y / rect.height - 0.5) * -maxRotate; 
             const tiltY = (x / rect.width - 0.5) * maxRotate * 2;
             container.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-            
-            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%)`; // 은은하게
+            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%)`;
             glare.style.opacity = '1';
         });
 
