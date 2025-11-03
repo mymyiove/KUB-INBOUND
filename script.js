@@ -155,10 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateStep(currentStep)) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec";
+        const GOOGLE_SCRIPT_URL = "httpsA://script.google.com/macros/s/여기에_복사한_URL_붙여넣기/exec";
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
+        
+        // ========== [수정] 이 줄을 추가하세요! ==========
+        data.lead_source = "상담 요청";
+        // ============================================
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
@@ -220,12 +224,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ========== 0. 슬라이더 기능 (복구됨) ==========
+    // --- 6. 자동 롤링 슬라이더 기능 ---
     const testimonials = document.querySelectorAll(".testimonial-item");
     let currentTestimonial = 0;
 
     if (testimonials.length > 0) {
-        // 5초마다 슬라이드 변경 (5000ms)
         setInterval(() => {
             if (testimonials[currentTestimonial]) {
                 testimonials[currentTestimonial].classList.remove("active");
@@ -236,6 +239,5 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }, 5000);
     }
-    // ============================================
 
 }); // DOMContentLoaded 끝
