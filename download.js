@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateForm()) return; 
 
         // --- 백엔드 전송 로직 시작 ---
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/여기에_복사한_URL_붙여넣기/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyc97x_dZkQ2eY-XWwG91T5v_Kk61V5v_2f2fQf3f/exec"; // ★ 선생님 URL로 다시 채워넣었습니다!
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
@@ -87,15 +87,17 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/json' },
+            // ========== [수정] 엣지(Edge) 오류 해결 ==========
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            // ==============================================
             body: JSON.stringify(data) 
         })
         .then(response => {
             console.log('Success:', data);
             form.style.display = "none";
             successMessage.style.display = "block";
-            
-            // (실제 다운로드 로직은 백엔드 메일에 포함됩니다)
         })
         .catch(error => {
             console.error('Error:', error);
