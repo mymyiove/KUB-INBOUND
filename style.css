@@ -121,8 +121,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative; /* 파티클 효과를 위해 추가 */
-    overflow: hidden; /* 파티클 효과를 위해 추가 */
+    position: relative; 
+    overflow: hidden; 
 }
 .info-content { width: 100%; }
 
@@ -214,8 +214,8 @@ body {
     width: 60%;
     padding: 3rem;
     background: rgba(255, 255, 255, 0.85);
-    position: relative; /* 파티클 효과를 위해 추가 */
-    overflow: hidden; /* 파티클 효과를 위해 추가 */
+    position: relative; 
+    overflow: hidden; 
 }
 
 .mobile-logo {
@@ -494,11 +494,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     display: inline-flex; 
     align-items: center;
     justify-content: center;
-    
-    /* ========== [업그레이드 3] 글림 효과 (준비) ========== */
     position: relative;
     overflow: hidden;
-    /* ============================================== */
 }
 .btn-prev { background-color: #e0e0e0; color: var(--text-700); }
 .btn-prev:hover { background-color: #ccc; }
@@ -541,7 +538,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     to { transform: rotate(360deg); }
 }
 
-/* ========== [업그레이드 3] 버튼 글림(Gleam) 효과 ========== */
 .btn-next::before,
 .btn-submit::before,
 #success-message .btn::before {
@@ -560,7 +556,6 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 #success-message .btn:hover::before {
     left: 150%;
 }
-/* ====================================================== */
 
 
 /* ----------------------------------------------------
@@ -655,14 +650,15 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 ::selection { background: rgba(164, 53, 240, 0.25); }
 img { max-width: 100%; height: auto; display: block; }
 
-/* ========== [업그레이드 2] 마우스 파티클 효과 ========== */
 .particle {
     position: absolute;
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: var(--ub-purple-700);
-    opacity: 0;
+    /* ========== [수정] 파티클 버그 수정 ========== */
+    opacity: 1; /* 0 -> 1로 수정 (보이게 시작) */
+    /* ========================================= */
     pointer-events: none;
     animation: fadeOut 1s forwards;
     z-index: 10;
@@ -673,4 +669,3 @@ img { max-width: 100%; height: auto; display: block; }
         transform: scale(0.5);
     }
 }
-/* ================================================= */
