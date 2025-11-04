@@ -77,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     isValid = false;
                     showError(input, "전화번호 10자리 또는 11자리를 입력해주세요.");
                 } else {
-                    showSuccess(input); // [추가] 전화번호도 성공 시 피드백
+                    showSuccess(input); 
                 }
             }
             else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                 isValid = false;
                 showError(input, "유효한 이메일 주소를 입력해주세요.");
             }
-             else if (input.type === "email") { // 이메일 통과 시
+             else if (input.type === "email") { 
                 showSuccess(input);
             }
         }
@@ -112,7 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!validateForm()) return; 
 
         // --- 백엔드 전송 로직 시작 ---
+        // ========== [확인] 선생님의 실제 URL ==========
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzazRqPAItheJMgc3vCCcGkhtnePiPlC-EMhRLd0GO0MCmTIp0_EAaGrQPBq3gxfIWw/exec";
+        // ==========================================
         
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
@@ -121,9 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
             data.phone = data.phone.replace(/-/g, "");
         }
         
+        // ========== [확인] "자료 다운로드"가 정확히 전송됩니다 ==========
         data.lead_source = "자료 다운로드";
+        // ====================================================
         
-        saveInfoToStorage(data); // 정보 저장
+        saveInfoToStorage(data); 
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
@@ -131,9 +135,11 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors', 
+            // ========== [확인] 엣지(Edge) 오류 해결된 헤더 ==========
             headers: {
                 'Content-Type': 'text/plain;charset=utf-8',
             },
+            // =================================================
             body: JSON.stringify(data) 
         })
         .then(response => {
@@ -141,9 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
             form.style.display = "none";
             successMessage.style.display = "block";
             
-            // ========== [업그레이드 1] 축하 폭죽! ==========
             triggerConfetti();
-            // ==========================================
             
             localStorage.removeItem('udemyLeadInfo'); 
         })
@@ -162,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- 4. "극도의 업그레이드" 기능들 ---
     
-    // [업그레이드 1] 축하 폭죽 함수
     function triggerConfetti() {
         if (typeof confetti === 'function') {
             confetti({
@@ -173,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // [업그레이드] 전화번호 자동 포맷
     function autoFormatPhone(e) {
         let value = e.target.value.replace(/\D/g, ""); 
         let length = value.length;
@@ -191,7 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // [업그레이드] 실시간 이메일 유효성 검사
     function validateEmailRealtime(e) {
         const value = e.target.value.trim();
         const formGroup = e.target.closest('.form-group');
@@ -212,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // [업그레이드] 로컬스토리지 정보 저장
     function saveInfoToStorage(data) {
         try {
             const info = {
@@ -226,7 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // [업그레이드] 로컬스토리지 정보 로드
     function loadSavedInfo() {
          try {
             const savedInfo = localStorage.getItem('udemyLeadInfo');
