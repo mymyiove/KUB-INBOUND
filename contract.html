@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웅진씽크빅 글로벌 파트너십 계약 현황</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 9999px;
+        }
+        .badge-green { color: #065F46; background-color: #ECFDF5; border: 1px solid #34D399; }
+        .badge-yellow { color: #92400E; background-color: #FFFBEB; border: 1px solid #FBBF24; }
+        .badge-red { color: #991B1B; background-color: #FEF2F2; border: 1px solid #F87171; }
+        .badge-blue { color: #1E40AF; background-color: #EFF6FF; border: 1px solid #60A5FA; }
+
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .tab-button.active {
+            color: #1D4ED8;
+            background-color: #EFF6FF;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .section-card {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            margin-bottom: 2.5rem;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .section-card:hover {
+             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+             transform: translateY(-5px);
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 1rem;
+            z-index: 50;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .gradient-text {
+            background: -webkit-linear-gradient(45deg, #3B82F6, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        th { background-color: #F9FAFB; }
+        
+        /* Horizontal Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            overflow-x: auto;
+        }
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+            min-width: 100px;
+        }
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 1.25rem;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: #E5E7EB;
+            z-index: 1;
+        }
+        .timeline-dot {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: #E5E7EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            border: 4px solid white;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        .timeline-step.active .timeline-dot {
+            background-color: #3B82F6;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .timeline-step.completed .timeline-dot {
+            background-color: #6B7280;
+            color: white;
+        }
+        .timeline-step.active:not(:last-child)::after {
+            background: linear-gradient(to right, #6B7280, #3B82F6);
+        }
+         .timeline-step.active.coursera .timeline-dot {
+            background-color: #10B981;
+             box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+        .timeline-step.active.coursera:not(:last-child)::after {
+            background: linear-gradient(to right, #6B7280, #10B981);
+        }
+        .timeline-step.completed:not(:last-child)::after {
+            background-color: #6B7280;
+        }
+        .timeline-label {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .overview-card {
+            background-color: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-color: #93C5FD;
+        }
+        .overview-card .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .overview-card .title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #6B7280;
+        }
+        .overview-card .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1F2937;
+        }
+        .value-green { color: #059669 !important; }
+        .value-blue { color: #2563EB !important; }
+        .value-red { color: #DC2626 !important; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <!-- 전체 컨테이너 -->
+    <div class="container mx-auto p-4 sm:p-6 lg:p-10">
+        
+        <!-- 헤더 -->
+        <header class="text-center mb-12">
+            <div class="inline-block bg-white py-6 px-10 rounded-2xl shadow-xl mb-4 transform hover:scale-105 transition-transform duration-300">
+                <h1 class="text-4xl md:text-5xl font-black tracking-tight gradient-text">웅진씽크빅 글로벌 파트너십 계약 현황</h1>
+            </div>
+            <p class="mt-4 text-xl text-gray-600">Degreed & Coursera 최종 계약 상세 비교 및 전략적 평가</p>
+        </header>
+
+        <!-- 소개 섹션 -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-4 text-center text-gray-700 flex items-center justify-center gap-3"><i class="fas fa-globe-americas text-2xl text-gray-400"></i>글로벌 파트너십의 의의 및 현황</h2>
+            <div class="grid md:grid-cols-2 gap-8 mt-6">
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 transform hover:shadow-lg transition-all duration-300">
+                    <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2"><i class="fas fa-bullseye"></i>필요성 및 목표</h3>
+                    <p class="mt-2 text-sm text-blue-700">글로벌 Top-tier 교육 기술 기업과의 파트너십을 통해, 국내 B2B 교육 시장에 최신 LXP 및 MOOC 솔루션을 공급하고 시장 리더십을 확보하는 것을 목표로 합니다. 이는 당사의 기존 교육 사업 포트폴리오를 혁신하고 미래 성장 동력을 창출하는 핵심 전략입니다.</p>
+                </div>
+                <div class="bg-green-50 p-6 rounded-lg border border-green-200 transform hover:shadow-lg transition-all duration-300">
+                    <h3 class="font-bold text-lg text-green-800 flex items-center gap-2"><i class="fas fa-chart-line"></i>현재 상황 요약</h3>
+                    <p class="mt-2 text-sm text-green-700">LXP 분야의 Degreed, MOOC 분야의 Coursera와 각각 파트너십 계약 협상을 진행하였습니다. 본 보고서는 첨부된 양사 최종 계약서(Degreed 10/31, Coursera 10/22)를 기준으로, 각 계약의 최종 조건과 리스크를 종합적으로 분석하여 성공적인 런칭을 지원하기 위해 작성되었습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 탭 네비게이션 -->
+        <div class="sticky-nav bg-white/80 rounded-full p-2 mb-12 shadow-lg ring-1 ring-gray-200">
+            <nav class="flex justify-center items-center flex-wrap gap-x-2" aria-label="Tabs">
+                <button onclick="changeTab('degreed')" class="tab-button active text-lg font-bold py-3 px-6 rounded-full">
+                    <i class="fas fa-microchip mr-2 text-blue-500"></i>Degreed 계약 분석
+                </button>
+                <button onclick="changeTab('coursera')" class="tab-button text-lg font-bold py-3 px-6 rounded-full">
+                    <i class="fas fa-graduation-cap mr-2 text-green-500"></i>Coursera 계약 분석
+                </button>
+                <button onclick="changeTab('comparison')" class="tab-button text-lg font-bold py-3 px-6 rounded-full">
+                    <i class="fas fa-balance-scale mr-2 text-purple-500"></i>종합 비교 및 결론
+                </button>
+            </nav>
+        </div>
+
+        <main>
+            <!-- Degreed 탭 컨텐츠 -->
+            <div id="degreed" class="tab-content active">
+                <section class="section-card">
+                    <h2 class="text-3xl font-bold mb-8 text-center text-gray-800 flex items-center justify-center"><i class="fas fa-microchip mr-4 text-blue-600 text-4xl"></i>Degreed 파트너십 계약 상세 분석</h2>
+                    
+                    <!-- 타임라인 -->
+                    <div class="mb-10">
+                        <h3 class="text-xl font-bold text-center mb-6 text-gray-600">계약 진행 단계 (2025-10-31 기준)</h3>
+                        <div class="timeline">
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-file-alt"></i></div><p class="timeline-label">초안</p></div>
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-edit"></i></div><p class="timeline-label">내부 수정안</p></div>
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-exchange-alt"></i></div><p class="timeline-label">Degreed 수정안</p></div>
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-gavel"></i></div><p class="timeline-label">법무팀 수정안</p></div>
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-users"></i></div><p class="timeline-label">양측 검토</p></div>
+                            <div class="timeline-step active"><div class="timeline-dot"><i class="fas fa-check-double animate-pulse"></i></div><p class="timeline-label font-bold">최종 검토 (현재)</p></div>
+                            <div class="timeline-step"><div class="timeline-dot"><i class="fas fa-flag-checkered"></i></div><p class="timeline-label text-gray-400">최종 계약</p></div>
+                        </div>
+                    </div>
+
+                    <!-- 계약 개요 -->
+                    <div class="mb-10 p-8 bg-gray-50 rounded-xl border border-gray-200">
+                        <h3 class="text-2xl font-bold text-gray-700 mb-4 flex items-center"><i class="fas fa-file-alt mr-3 text-gray-500"></i>계약 개요 (Reseller Agreement)</h3>
+                        <p class="text-base mb-6">LXP(학습 경험 플랫폼) 기업 Degreed의 대한민국 내 비독점 리셀러(Reseller) 계약. 웅진씽크빅은 영업/마케팅/1차지원을, Degreed는 제품/기술을 지원함. 계약은 ①기본 계약(Main Agreement), ②AI 부록(AI Addendum), ③개별 주문서(Order Form)로 구성됨.</p>
+                        
+                        <div class="overview-grid">
+                            <div class="overview-card"><div class="icon text-blue-500"><i class="fas fa-globe-asia"></i></div><p class="title">영업 지역</p><p class="value">대한민국</p></div>
+                            <div class="overview-card"><div class="icon text-blue-500"><i class="fas fa-users"></i></div><p class="title">대상 고객</p><p class="value">기업/기관</p></div>
+                            <div class="overview-card"><div class="icon text-blue-500"><i class="fas fa-handshake-slash"></i></div><p class="title">독점권</p><p class="value">없음</p></div>
+                            <div class="overview-card"><div class="icon text-blue-500"><i class="fas fa-tags"></i></div><p class="title">파트너 할인율</p><p class="value value-blue">25% (라이선스)</p></div>
+                            <div class="overview-card"><div class="icon text-red-500"><i class="fas fa-tools"></i></div><p class="title">P.S 할인율</p><p class="value">0%</p></div>
+                            <div class="overview-card"><div class="icon text-red-500"><i class="fas fa-money-bill-wave"></i></div><p class="title">최소 구매(신규)</p><p class="value value-red">$95,000</p></div>
+                        </div>
+                    </div>
+
+                    <!-- 조항별 상세 분석 -->
+                    <h3 class="text-2xl font-bold text-gray-700 mb-6 border-b-2 border-gray-200 pb-3">주요 조항별 상세 분석 (최신 계약서 기준)</h3>
+                    <div class="table-responsive rounded-lg border">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider w-1/6">조항 (Section)</th>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider w-2/5">최종 계약 내용 상세</th>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider w-2/5">초안 대비 변경사항 & 법무팀 의견</th>
+                                    <th class="px-5 py-4 text-center text-sm font-bold text-gray-600 uppercase tracking-wider">결과</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                                <tr><td colspan="4" class="px-5 py-2 font-bold bg-blue-100 text-blue-800">기본 계약 (Main Agreement)</td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">1. 정의</td><td class="px-5 py-3">계약서 내 주요 용어 (Affiliate, Customer, Territory 등) 정의.</td><td class="px-5 py-3">영업 지역(Territory)은 '대한민국'으로 한정.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">2. 파트너 임명</td><td class="px-5 py-3">(2.1) 웅진씽크빅을 대한민국 내 비독점(Non-exclusive) 리셀러로 임명. <br>(2.2~2.4) 상표 사용, 광고, 기능에 대한 정책 규정.</td><td class="px-5 py-3">표준적인 비독점 파트너 임명 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">3.1 수수료 및 지급</td><td class="px-5 py-3">① 고객사 수금 여부와 무관하게 인보이스 발행 후 30일(NET 30) 내에 Degreed에 수수료 지급 (Pay-on-Invoice). <br>② 연체이자는 월 1.0%.</td><td class="px-5 py-3"><strong>[연체이자]</strong> 월 1.5% → <strong>월 1.0%로 인하</strong> (개선). <br><strong>[법무팀 의견]</strong> 대금 선지급 리스크는 유데미 사업과 동일. 고객사 신용 평가 등 내부 통제 필요.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">3.2 최소 구매</td><td class="px-5 py-3">최소 연간 계약 금액(ACV) 규정: <br> - 신규 고객: $95,000 <br> - 갱신: $30,000 <br> - 확장: $15,000 <br> - AI(Maestro) 제품: 최소 250 유저 구매 필요.</td><td class="px-5 py-3"><strong>[의견]</strong> (기존 $120k의 Maestro 의무 계약 조항 대비) 특정 제품 의무가 사라지고 일반 최소 구매 금액으로 변경되어 <strong>영업 유연성 확보.</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">부분 개선</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">3.3 세금</td><td class="px-5 py-3">원천징수세 발생 시, 파트너(웅진)가 세금 부담액만큼 구독료를 인상하여(Gross-up) Degreed에 지급해야 함.</td><td class="px-5 py-3"><strong>[의견]</strong> 당사 요청(세금 협의) <strong>반려</strong>됨. <br>이는 당사의 세무 리스크를 증가시키는 <strong>매우 불리한 독소 조항임.</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-red">리스크 잔존</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">3.4 기록 및 감사</td><td class="px-5 py-3">Degreed는 파트너의 계약 이행 관련 기록을 감사할 권리를 가짐.</td><td class="px-5 py-3">표준 감사 권한 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">4. 파트너 의무</td><td class="px-5 py-3">(4.1) 고객 계약 시, Degreed의 표준 약관(Exhibit B)과 유사한 수준의 계약을 체결해야 함. <br>(4.2) 하위 리셀러 임명 금지. <br>(4.3) 리버스 엔지니어링 등 제품 제한 사항 준수. <br>(4.4) 전문적인 방식의 마케팅 수행.</td><td class="px-5 py-3">고객 계약 시 Degreed 약관을 Flow-down 해야 하는 의무 발생.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">5. 지원 서비스</td><td class="px-5 py-3">Degreed는 파트너(웅진)에게 2차 기술 지원을 제공. 웅진은 고객 대상 1차 지원(1st line support)을 담당.</td><td class="px-5 py-3">당사의 1차 고객 지원 의무 명시.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">6. 계약 기간 및 해지</td><td class="px-5 py-3">(6.1) 최초 1년 계약. <br> <strong>[갱신]</strong> 자동 갱신되지 않으며, 연장을 위해서는 **양측의 서면 합의(written amendment)가 별도로 필요함.** <br>(6.2) 중대 위반 시 30일의 시정 기간 후 해지 가능.</td><td class="px-5 py-3"><strong>[의견]</strong> 1년마다 갱신 협상이 필요하여 사업 안정성은 다소 낮음.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">7. 비밀유지</td><td class="px-5 py-3">표준적인 상호 비밀유지 조항. 계약 종료 후 2년간 유효.</td><td class="px-5 py-3">표준 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">8. IP 소유권</td><td class="px-5 py-3">(8.1) Degreed 제품의 IP는 Degreed 소유. <br>(8.2) 웅진씽크빅이 독립적으로 개발/제공한 기술, 데이터, 노하우 등(Reseller Data)은 명시적으로 웅진씽크빅의 소유임.</td><td class="px-5 py-3"><strong>[의견]</strong> (초안 불분명) 당사 고유 IP 소유권을 보호하는 <strong>"Proprietary Rights of Partner" 조항 신설. (핵심 성과)</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">9. 보증 및 면책</td><td class="px-5 py-3">(9.3) Degreed는 자사 제품 외의 'Freemium Content'에 대해 보증하지 않음. <br>(9.4) 미국 수출 통제 법률 준수 의무.</td><td class="px-5 py-3">표준 보증 부인 및 법률 준수 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">10. 손해배상</td><td class="px-5 py-3">(10.1) 파트너(웅진)의 귀책 시 파트너가 Degreed를 면책. <br>(10.2) Degreed 제품이 제3자의 IP를 침해할 경우, Degreed가 파트너를 면책하고 법적으로 방어해야 함.</td><td class="px-5 py-3"><strong>[의견]</strong> (초안 당사만 부담) Degreed의 면책 의무를 추가하여 <strong>상호 면책 구조 마련. (핵심 성과)</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">11. 책임 제한</td><td class="px-5 py-3">간접 손실(수익 손실 등)에 대한 책임은 상호 배제. (단, IP 침해, 비밀유지 위반 등은 예외)</td><td class="px-5 py-3">표준적인 상호 책임 제한 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">12. 일반 조항</td><td class="px-5 py-3">(12.1~12.10) 독립 계약자 관계, 통지, 양도 제한, 불가항력 등 표준 조항. <br>(12.11) <strong>준거법 및 관할: 미국 캘리포니아 주 법률 및 캘리포니아 주 법원.</strong></td><td class="px-5 py-3"><strong>[12.11 의견]</strong> 당사 요청(중재) <strong>반려</strong>됨. <br>분쟁 발생 시 막대한 소송 비용 및 시간 부담. <strong>가장 큰 법적 리스크.</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-red">리스크 (높음)</span></td></tr>
+                                
+                                <tr><td colspan="4" class="px-5 py-2 font-bold bg-blue-100 text-blue-800">AI 부록 (AI Addendum)</td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">1~2. 정의 및 사용</td><td class="px-5 py-3">AI 제품(Maestro) 정의. 사용 시 Microsoft Azure 및 OpenAI의 서비스 약관을 준수해야 함.</td><td class="px-5 py-3">Third-party 약관 준수 의무 발생.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">3~4. 소유권 및 제한</td><td class="px-5 py-3">고객(웅진/최종고객)이 AI에 입력한 'Input' 및 'Output'의 소유권은 고객에게 있음. 단, AI가 생성한 Output은 정확성 검증(인간 리뷰)이 필요.</td><td class="px-5 py-3">AI 생성물의 정확성 보증 불가.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">5. EU AI Act</td><td class="px-5 py-3">현재 EU 내 AI 제품 배포 금지. (향후 배포 시 별도 통지 및 협의)</td><td class="px-5 py-3">당사 영업 지역(대한민국)과 무관.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">6. SLA</td><td class="px-5 py-3">AI 제품(Maestro)의 성능, 안정성, 가용성에 대한 어떠한 **서비스 수준 협약(SLA)도 제공되지 않음.**</td><td class="px-5 py-3"><strong>[의견]</strong> <strong>변경 없음.</strong> <br>고객 계약 시 SLA 부재를 명확히 고지하고, 고객 클레임 발생 시 당사가 방어해야 함.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-red">리스크 잔존</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">7. 데이터 개인정보</td><td class="px-5 py-3">Degreed는 고객 Input을 AI 모델 학습에 사용하지 않음을 명시. (Exhibit D에 하위 처리자-Sub-processor- 목록 명시)</td><td class="px-5 py-3">고객 데이터가 AI 학습에 활용되지 않음을 보장.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용</span></td></tr>
+                                
+                                <tr><td colspan="4" class="px-5 py-2 font-bold bg-blue-100 text-blue-800">별첨 (Exhibits)</td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit A</td><td class="px-5 py-3">주문서 (Order Form) 양식.</td><td class="px-5 py-3">표준 양식.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit B</td><td class="px-5 py-3">최종 고객 T&C (서비스 약관) 링크. (파트너가 고객 계약 시 이와 유사하게 적용해야 함)</td><td class="px-5 py-3">당사(웅진)의 고객 계약서에 해당 내용을 반영(Flow-down)할 의무.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit C</td><td class="px-5 py-3">AI 제품에 대한 기술적/조직적 보안 조치 (TOMs).</td><td class="px-5 py-3">데이터 암호화(TLS 1.2, AES-256), 접근 제어 등 표준 보안 조치 명시.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit D</td><td class="px-5 py-3">AI 제품 데이터 처리 상세 및 하위 처리자(Sub-processors) 목록. <br> - Microsoft (Azure OpenAI) <br> - OpenAI (Voice) <br> - Livekit (WebRTC)</td><td class="px-5 py-3">AI 기능 제공을 위한 필수 업체 목록.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Coursera 탭 컨텐츠 -->
+            <div id="coursera" class="tab-content">
+                <section class="section-card">
+                    <h2 class="text-3xl font-bold mb-8 text-center text-gray-800 flex items-center justify-center"><i class="fas fa-graduation-cap mr-4 text-green-600 text-4xl"></i>Coursera 파트너십 계약 상세 분석</h2>
+
+                    <!-- 타임라인 -->
+                    <div class="mb-10">
+                        <h3 class="text-xl font-bold text-center mb-6 text-gray-600">계약 진행 단계 (2025-10-22 기준)</h3>
+                        <div class="timeline">
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-file-alt"></i></div><p class="timeline-label">초안</p></div>
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-edit"></i></div><p class="timeline-label">내부<br>수정안</p></div>
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-exchange-alt"></i></div><p class="timeline-label">Coursera<br>수정안</p></div>
+                            <div class="timeline-step completed"><div class="timeline-dot"><i class="fas fa-gavel"></i></div><p class="timeline-label">법무팀<br>수정안</p></div>
+                            <div class="timeline-step active coursera"><div class="timeline-dot"><i class="fas fa-users-cog animate-pulse"></i></div><p class="timeline-label font-bold">최종 검토<br>(현재)</p></div>
+                            <div class="timeline-step"><div class="timeline-dot"><i class="fas fa-pen-nib"></i></div><p class="timeline-label text-gray-400">최종<br>수정</s</p></div>
+                            <div class="timeline-step"><div class="timeline-dot"><i class="fas fa-flag-checkered"></i></div><p class="timeline-label text-gray-400">최종<br>계약</p></div>
+                        </div>
+                    </div>
+
+                    <!-- 계약 개요 -->
+                    <div class="mb-10 p-8 bg-gray-50 rounded-xl border border-gray-200">
+                        <h3 class="text-2xl font-bold text-gray-700 mb-4 flex items-center"><i class="fas fa-file-alt mr-3 text-gray-500"></i>계약 개요 (MSP Addendum)</h3>
+                        <p class="text-base mb-6">글로벌 MOOC 플랫폼 Coursera의 대한민국 내 비독점 MSP(Managed Service Provider) 계약. 웅진씽크빅은 영업, 계약, 1차 지원, 대금 수납 등 포괄적인 고객 관리 역할을 수행함. 계약은 ①기본 계약(Main Agreement), ②MSP 부록(MSP Addendum) 등으로 구성됨.</p>
+                        
+                        <div class="overview-grid">
+                            <div class="overview-card"><div class="icon text-green-500"><i class="fas fa-globe-asia"></i></div><p class="title">영업 지역</p><p class="value">대한민국</p></div>
+                            <div class="overview-card"><div class="icon text-green-500"><i class="fas fa-building"></i></div><p class="title">대상 고객</p><p class="value">기업/학술/정부</p></div>
+                            <div class="overview-card"><div class="icon text-green-500"><i class="fas fa-tags"></i></div><p class="title">파트너 할인율</p><p class="value value-green">20%</p></div>
+                            <div class="overview-card"><div class="icon text-green-500"><i class="fas fa-cash-register"></i></div><p class="title">최소 주문(최초)</p><p class="value value-green">$25,000</p></div>
+                            <div class="overview-card"><div class="icon text-green-500"><i class="fas fa-level-up-alt"></i></div><p class="title">최소 주문(확장)</p><p class="value">$10,000</p></div>
+                             <div class="overview-card"><div class="icon text-red-500"><i class="fas fa-user-clock"></i></div><p class="title">갱신 관리 기한</p><p class="value value-red">만료 30일 전</p></div>
+                        </div>
+                    </div>
+
+                    <!-- 조항별 상세 분석 -->
+                    <h3 class="text-2xl font-bold text-gray-700 mb-6 border-b-2 border-gray-200 pb-3">주요 조항별 상세 분석 (최신 계약서 기준)</h3>
+                    <div class="table-responsive rounded-lg border">
+                        <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider w-1/6">조항 (Section)</th>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider w-2/5">최종 계약 내용 상세</th>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider w-2/5">초안 대비 변경사항 & 법무팀 의견</th>
+                                    <th class="px-5 py-4 text-center text-sm font-bold text-gray-600 uppercase tracking-wider">결과</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                                <tr><td colspan="4" class="px-5 py-2 font-bold bg-green-100 text-green-800">기본 계약 (Main Agreement)</td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">1~2. 정의 및 임명</td><td class="px-5 py-3">웅진씽크빅을 Coursera Enterprise Partner Program의 비독점 파트너로 임명.</td><td class="px-5 py-3">표준 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">3. 라이선스/상표</td><td class="px-5 py-3">마케팅 목적의 상호 상표 사용 라이선스 부여.</td><td class="px-5 py-3">표준 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">4. 파트너 의무</td><td class="px-5 py-3">(4.2) 고객 불만(CS) 이슈가 웅진의 '중대한 계약 위반'으로 '직접 야기'된 경우에만 30일 시정 요구 가능. <br>(4.5) <strong>경업 금지 (유사 제품 개발):</strong> 계약 종료 후 **6개월**간, Coursera의 **'비밀정보(Confidential Information)'**를 부당하게 사용하여 경쟁 제품을 개발하는 행위만 금지됨.</td><td class="px-5 py-3"><strong>[4.5 의견]</strong> (초안 '12개월', '제품 지식/경험'에서) <strong>대폭 완화.</strong> <br>당사의 타 LXP/MOOC 사업 자율성 확보. <strong>(핵심 성과)</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">5. 비밀유지</td><td class="px-5 py-3">표준적인 상호 비밀유지 조항.</td><td class="px-5 py-3">표준 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">6.1 IP 권리 (당사)</td><td class="px-5 py-3">웅진씽크빅이 독립적으로 개발한 IP, 기술, 사업 모델 등은 Coursera에 대한 라이선스 부여 대상에서 **명확히 제외됨 (Carve-out).**</td><td class="px-5 py-3"><strong>[의견]</strong> (초안 불분명) 당사 고유 자산을 보호하는 조항을 신설하여 <strong>법적 리스크 완전 해소. (핵심 성과)</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">8. 손해배상</td><td class="px-5 py-3">(8.1) Coursera 제품이 제3자 IP 침해 시 Coursera가 웅진을 방어. <br>(8.3) 웅진의 귀책 시 웅진이 Coursera를 방어. (상호 면책)</td><td class="px-5 py-3">초안부터 합리적인 상호 면책 조항이었음.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">9. 계약 기간 및 종료</td><td class="px-5 py-3">(9.1) 최초 1년 계약. <br> <strong>[갱신]</strong> 1년 후 만료 45일 전 통지로 해지하지 않으면 **자동 갱신됨.** <br>(9.3) 계약 종료 시 파트너(웅진)는 3개월의 'Wind-Down Period' (정리 기간)를 가짐.</td><td class="px-5 py-3"><strong>[의견]</strong> Degreed(서면 합의 갱신)와 달리 자동 갱신 조항이 포함되어 <strong>안정적 사업 운영에 유리함.</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">유리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">10. 책임 제한</td><td class="px-5 py-3">상호 간 책임 한도는 '직전 12개월간 지급한 금액'으로 제한됨. (IP, 비밀유지, 손해배상 의무 등은 예외)</td><td class="px-5 py-3">표준적인 상호 책임 제한 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">11. 일반 조항</td><td class="px-5 py-3">(11.2) <strong>준거법 및 관할: '싱가포르 법'</strong>에 따라 **'싱가포르 국제중재센터(SIAC)'**의 중재를 통해 해결함. <br>(11.5) 반부패 및 자금세탁 방지 조항.</td><td class="px-5 py-3"><strong>[11.2 의견]</strong> (초안 미국 캘리포니아 법원) <strong>변경 수용.</strong> <br>중립적인 국제 중재로 변경되어, <strong>미국 소송 리스크를 완벽하게 해소한 가장 큰 협상 성과.</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용 (핵심)</span></td></tr>
+                                
+                                <tr><td colspan="4" class="px-5 py-2 font-bold bg-green-100 text-green-800">MSP 부록 (MSP Addendum) - *운영 핵심*</td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">1~3. 정의 및 라이선스</td><td class="px-5 py-3">웅진을 MSP(Managed Service Provider)로 지정하고, 국내 고객에게 제품을 판매(Distribute and sell)할 수 있는 라이선스 부여.</td><td class="px-5 py-3">리셀러(Degreed)보다 포괄적인 MSP 역할 규정.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">4. MSP 의무</td><td class="px-5 py-3">(4.1) 고객 계약 시, Coursera의 표준 약관(Exhibit B)을 반드시 포함(Flow-down)해야 함.</td><td class="px-5 py-3">Degreed와 동일. 고객 계약서에 독소조항 방어 필요.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">5. 주문</td><td class="px-5 py-3">(5.1) 모든 계약은 개별 주문서(Order Form)를 통해 확정되며, 취소/환불 불가.</td><td class="px-5 py-3">표준 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">6.1~6.2 대금 지급</td><td class="px-5 py-3">고객사로부터 대금을 수령했는지 여부와 관계없이, 약정된 시점(NET 30/60)에 Coursera에 수수료를 지급해야 함 (Pay-on-Invoice).</td><td class="px-5 py-3"><strong>[의견]</strong> <strong>변경 없음.</strong> <br>Degreed와 동일한 리스크. 유데미 사업과 동일한 방식으로 내부 통제 필요.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">6.3 세금</td><td class="px-5 py-3">원천징수세 발생 시, 웅진(MSP)은 Coursera가 **세금 감면 혜택을 받도록 '지원'**하고, 유효한 서류(예: Form 6166)를 제공받아 낮은 세율을 적용함.</td><td class="px-5 py-3"><strong>[의견]</strong> <strong>Degreed의 'Gross-up' (세금 전액 보전) 조항이 없음.</strong> <br>표준적인 세무 처리 절차로, 당사에 <strong>매우 유리한 조항. (핵심 성과)</strong></td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용 (핵심)</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">7~9. 기타</td><td class="px-5 py-3">분기별 계획 공유, 계약 기간(메인과 동일), 일반 조항.</td><td class="px-5 py-3">표준 조항.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+
+                                <tr><td colspan="4" class="px-5 py-2 font-bold bg-green-100 text-green-800">별첨 (Exhibits) - *상업/운영 핵심*</td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit A.1~3</td><td class="px-5 py-3">영업 지역 (대한민국), 대상 고객 (기업/학술/정부), 판매 가능 제품 (가격표 내 모든 제품) 정의.</td><td class="px-5 py-3">포괄적인 영업 권한 확보.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit A.4 할인율</td><td class="px-5 py-3">Coursera 공식 가격표(Rate Card)에서 **20% 할인**된 파트너 가로 상품을 공급받음.</td><td class="px-5 py-3"><strong>[의견]</strong> (초안 10%의 낮은 할인율) <strong>20%로 상향</strong>하여 수익성 개선 및 마케팅 재원 확보.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit A.5 최소 주문</td><td class="px-5 py-3">개별 주문(Order Form)의 최소 금액은 **$25,000 USD**임. (확장 시 $10,000)</td><td class="px-5 py-3"><strong>[의견]</strong> (초안 $50,000의 높은 장벽) <strong>$25,000로 하향</strong>하여 초기 영업 부담 대폭 완화.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-green">수용</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit A.6 R&R</td><td class="px-5 py-3"><strong>[갱신 권한]</strong> 고객 계약이 만료되기 **30일 전**까지 갱신이 안 되면, Coursera가 직접 고객과 갱신 계약을 체결할 수 있음. <br><strong>[지원]</strong> 웅진(MSP)이 1차 고객 지원 담당.</td><td class="px-5 py-3"><strong>[갱신]</strong> (기존 90일 논의와 상이) <strong>최신 계약서 기준 30일 조항임.</strong> <br>갱신 우선권 기간이 30일로 짧으므로, 고객 관리를 놓칠 경우 계약을 뺏길 위험.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit B, D</td><td class="px-5 py-3">최종 고객 T&C (서비스 약관) 및 MSP T&C. (파트너가 고객 계약 시 이와 유사하게 적용해야 함)</td><td class="px-5 py-3">당사(웅진)의 고객 계약서에 해당 내용을 반영(Flow-down)할 의무.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-yellow">운영 관리</span></td></tr>
+                                <tr class="hover:bg-gray-50/50"><td class="px-5 py-3 font-semibold">Exhibit C</td><td class="px-5 py-3">주문서 (Order Form) 샘플 양식.</td><td class="px-5 py-3">표준 양식.</td><td class="px-5 py-4 text-center align-middle"><span class="badge badge-blue">표준</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- 종합 비교 탭 컨텐츠 -->
+            <div id="comparison" class="tab-content">
+                <section class="section-card">
+                     <h2 class="text-3xl font-bold mb-6 text-center text-gray-800 flex items-center justify-center"><i class="fas fa-balance-scale mr-4 text-purple-600 text-4xl"></i>종합 비교 및 최종 결론</h2>
+
+                    <div class="mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200">
+                        <h3 class="text-2xl font-bold text-gray-700 mb-3 flex items-center"><i class="fas fa-handshake mr-3 text-gray-500"></i>양사 협상 태도 및 결과 비교</h3>
+                        <p class="text-base">두 파트너십 협상은 매우 다른 양상과 결과를 보였습니다. **Coursera**는 파트너와의 상생을 중시하는 유연하고 협조적인 태도를 보인 반면, **Degreed**는 자사의 글로벌 정책을 고수하며 핵심 리스크 조항(준거법, 세금)을 양보하지 않는 강경한 입장을 취했습니다.</p>
+                    </div>
+                        
+                    <div class="table-responsive rounded-lg border">
+                        <table class="min-w-full divide-y divide-gray-200">
+                             <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider">핵심 비교 항목</th>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider">Degreed (LXP)</th>
+                                    <th class="px-5 py-4 text-left text-sm font-bold text-gray-600 uppercase tracking-wider">Coursera (MOOC)</th>
+                                </tr>
+                            </thead>
+                             <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                                <tr class="hover:bg-gray-50/50">
+                                    <td class="px-5 py-4 font-semibold align-top">법적 리스크 (준거법)</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-red">매우 높음</span><br>미국 **캘리포니아 법원** 관할. <br>분쟁 시 막대한 소송 비용 및 패소 리스크.</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-green">리스크 해소</span><br>중립적인 **싱가포르 국제 중재**로 변경. <br>가장 큰 법적 리스크를 완벽하게 해결.</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50">
+                                    <td class="px-5 py-4 font-semibold align-top">재무 리스크 (세금)</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-red">매우 높음</span><br>**'Gross-up' (세금 전액 보전)** 의무 조항. <br>당사의 세무 리스크가 매우 큼.</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-green">낮음</span><br>세금 감면 '지원' 및 협조 의무만 있음. <br>표준적인 세무 처리로 리스크 없음.</td>
+                                </tr>
+                                 <tr class="hover:bg-gray-50/50">
+                                    <td class="px-5 py-4 font-semibold align-top">재무 리스크 (대금)</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-yellow">운영 관리</span><br>**Pay-on-Invoice (선지급)** 방식. <br>고객사 미수금 리스크 존재 (내부 통제).</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-yellow">운영 관리</span><br>**Pay-on-Invoice (선지급)** 방식. <br>고객사 미수금 리스크 존재 (내부 통제).</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50">
+                                    <td class="px-5 py-4 font-semibold align-top">수익성 (할인율)</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-blue">유리 (25%)</span><br>라이선스 기준 25%의 높은 할인율. (단, P.S 0%)</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-green">수용 (20%)</span><br>초안 10% → 20%로 상향. 안정적 수익 확보.</td>
+                                </tr>
+                                 <tr class="hover:bg-gray-50/50">
+                                    <td class="px-5 py-4 font-semibold align-top">초기 진입 (최소주문)</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-red">높음 ($95,000)</span><br>신규 고객 최소 $95k로 진입 장벽이 높음.</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-green">낮음 ($25,000)</span><br>초안 $50k → $25k로 하향. 초기 영업에 매우 유리.</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50">
+                                    <td class="px-5 py-4 font-semibold align-top">계약 갱신 (안정성)</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-yellow">보통 (서면 합의)</span><br>1년마다 재협상 및 서면 합의 필요.</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-green">높음 (자동 갱신)</span><br>별도 통지 없으면 자동 갱신되어 안정적.</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50">
+                                    <td class="px-5 py-4 font-semibold align-top">AI 제품 리스크</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-red">높음 (SLA 없음)</span><br>AI 제품(Maestro)에 대한 SLA가 없어 고객 클레임 리스크.</td>
+                                    <td class="px-5 py-4 align-top"><span class="badge badge-blue">N/A</span><br>(해당 계약에 포함되지 않음)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 최종 결론 -->
+                    <div class="mt-12 bg-gradient-to-r from-blue-800 to-indigo-900 text-white p-10 rounded-2xl shadow-2xl">
+                        <h3 class="text-3xl font-bold mb-6 flex items-center"><i class="fas fa-flag-checkered mr-4"></i>최종 결론 및 전략적 권고</h3>
+                        <div class="space-y-8 mt-6">
+                            <div class="p-6 bg-white/10 rounded-xl transform hover:scale-105 transition-transform duration-300">
+                                <h4 class="font-bold text-2xl text-green-300 flex items-center"><i class="fas fa-rocket mr-3"></i>Coursera (MOOC): <span class="ml-2">최적의 조건, 즉시 런칭 권고</span></h4>
+                                <p class="text-blue-100 mt-3">
+                                    협상을 통해 **핵심 법적 리스크(준거법)와 재무 리스크(세금)를 완벽하게 해소**한 **'매우 유리하고 이상적인'** 계약입니다. $25,000의 낮은 초기 진입 장벽과 자동 갱신 조항으로 안정적인 사업 운영이 가능합니다. 확보된 20%의 마진을 바탕으로 즉각적인 시장 공략 및 런칭을 권고합니다.
+                                </p>
+                            </div>
+                            <div class="p-6 bg-white/10 rounded-xl transform hover:scale-105 transition-transform duration-300">
+                                <h4 class="font-bold text-2xl text-yellow-300 flex items-center"><i class="fas fa-shield-alt mr-3"></i>Degreed (LXP): <span class="ml-2">전략적 가치 보유, 리스크 관리 필수</span></h4>
+                                <p class="text-blue-100 mt-3">
+                                    LXP 시장 선점을 위한 전략적 가치는 분명하나, **①캘리포니아 재판 관할, ②세금 Gross-up, ③AI SLA 부재**라는 명확하고 치명적인 리스크 3가지를 안고 가는 계약입니다. 25%의 높은 할인율은 긍정적이나, $95,000의 높은 최소 주문 금액이 부담입니다. <br>
+                                    <strong>[권고]</strong> 계약 추진 시, 반드시 법무팀/세무팀과 연계하여 3대 리스크에 대한 철저한 내부 통제 및 고객 계약서 방어 전략 수립이 선행되어야 합니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- 탭 변경 스크립트 -->
+    <script>
+        function changeTab(tabId) {
+            // 모든 탭 컨텐츠 숨기기
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            // 모든 탭 버튼 비활성화
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+
+            // 요청된 탭 컨텐츠 보이기
+            document.getElementById(tabId).classList.add('active');
+            // 요청된 탭 버튼 활성화
+            const activeButton = document.querySelector(`button[onclick="changeTab('${tabId}')"]`);
+            activeButton.classList.add('active');
+        }
+        
+        // 페이지 로드 시 첫 번째 탭(Degreed) 활성화
+        document.addEventListener('DOMContentLoaded', () => {
+            changeTab('degreed');
+        });
+    </script>
+
+</body>
+</html>
