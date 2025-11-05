@@ -1,20 +1,3 @@
-네\! 캡처 화면(`image_fd7743.png`) 잘 봤습니다.
-
-선생님 말씀이 맞습니다. 왼쪽 패널의 문구(`info-pane`)가 너무 길고 딱딱해서, 사용자의 시선을 사로잡는 CTA(행동 유도) 문구로 다듬을 필요가 있었습니다.
-
-요청하신 대로 \*\*"꼭 저렇게 표현하라는 것은 아님, 텍스트는 고민해서 좀 더 멋있게"\*\*를 반영하여, 롯데이노베이트와 AI의 연관성을 강조하는 전문적인 마케팅 카피로 업그레이드했습니다.
-
-  * **[수정 1]** 메인 헤드라인을 더 짧고 임팩트 있게 변경
-  * **[수정 2]** 부제목(본문)을 "귀사"의 입장에서 얻을 수 있는 혜택을 강조
-  * **[수정 3]** 오른쪽 폼의 제목도 리포트 내용과 일치하도록 변경
-
-`download-lotte.html` 파일만 아래의 **전체 코드**로 덮어쓰기(또는 깃헙에 푸시)하시면 됩니다.
-
------
-
-### `download-lotte.html` (수정된 풀 코드)
-
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -36,6 +19,20 @@
             margin-top: auto; 
             padding-top: 7rem; 
         }
+
+        /* ========== [추가] 오른쪽 화살표 애니메이션 스타일 ========== */
+        .info-pane .service-intro-link .link-arrow {
+            display: inline-block;
+            margin-left: 0.5rem;
+            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .info-pane .service-intro-link a:hover .link-arrow {
+            transform: translateX(5px);
+        }
+        .info-pane .service-intro-link a:hover {
+            opacity: 0.8;
+        }
+        /* ===================================================== */
     </style>
 </head>
 <body>
@@ -67,12 +64,13 @@
 
                 <div class="service-intro-link">
                     <a href="index.html">
-                        &larr; 전문 컨설팅 문의하기
+                        전문 컨설팅 문의하기 <span class="link-arrow">&rarr;</span>
                     </a>
-                </div>
+                    </div>
 
             </div>
         </div>
+
         <div class="form-pane">
 
             <img src="udemy-logo-purple.png" alt="Udemy Business Logo" class="mobile-logo">
@@ -81,6 +79,7 @@
                 <p>AI로 혁신하는 기업: <strong>롯데이노베이트의 AI 활용법</strong></p>
                 <p class="mobile-trusted-by">귀사의 AI 학습 전략 힌트를 확인하세요.</p>
             </div>
+
             <form id="pro-contact-form">
                 
                 <p class="form-intro">
@@ -90,6 +89,7 @@
 
                 <div class="form-step active" data-step="1">
                     <h3 class="step-title"><strong>롯데이노베이트 AI 활용법</strong> 리포트</h3>
+                    
                     <div class="form-group floating required">
                         <span class="icon">👤</span>
                         <input type="text" id="full-name" name="full_name" required placeholder=" ">
@@ -166,4 +166,3 @@
     <script src="download-lotte.js"></script>
 </body>
 </html>
-```
