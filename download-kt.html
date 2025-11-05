@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT 활용 사례 | Udemy Business</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .info-pane {
+            justify-content: center;
+        }
+        .testimonial-slider {
+            height: auto;
+            min-height: 120px;
+        }
+        .info-pane .service-intro-link {
+            margin-top: auto; 
+            padding-top: 7rem; 
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="animated-bg"></div>
+
+    <div class="form-container">
+        
+        <div class="glare"></div>
+
+        <div class="info-pane">
+            <div class="info-content">
+                
+                <img src="udemy-logo-white.png" alt="Udemy Business Logo" class="info-logo">
+                
+                <p>전사적 AI 리터러시 강화:<br><strong>KT의 AI/CT 학습 로드맵</strong></p>
+                
+                <p class="trusted-by-line">
+                    전략자격증 교육과 직무별 AI/CT 로드맵을 설계한<br>
+                    KT의 전사 AI 역량 강화 전략을 확인하세요.
+                </p>
+                
+                <div class="testimonial-slider">
+                    <div class="testimonial-item active">
+                        <h4>주요 내용</h4>
+                        <p>"1. 전략자격증 교육으로 전사 AI 리터러시 강화<br>2. Udemy 기반 직무별 AI/CT 학습 로드맵 설계<br>3. 맞춤 큐레이션+라이브 특강으로 학습 효율 극대화"</p>
+                    </div>
+                </div>
+
+                <div class="service-intro-link">
+                    <a href="index.html">
+                        &larr; 전문 컨설팅 문의하기
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-pane">
+
+            <img src="udemy-logo-purple.png" alt="Udemy Business Logo" class="mobile-logo">
+
+            <div class="mobile-info-pane">
+                <p>전사적 AI 리터러시 강화: <strong>KT의 AI/CT 학습 로드맵</strong></p>
+                <p class="mobile-trusted-by">KT의 전사 AI 역량 강화 전략을 확인하세요.</p>
+            </div>
+            <form id="pro-contact-form">
+                
+                <p class="form-intro">
+                    리포트를 받아보실 정보를 입력해주세요.<br>
+                    입력하신 이메일로 <strong>즉시</strong> 발송됩니다.
+                </p>
+
+                <div class="form-step active" data-step="1">
+                    <h3 class="step-title"><strong>KT AI/CT 학습 로드맵</strong> 리포트</h3>
+                    <div class="form-group floating required">
+                        <span class="icon">👤</span>
+                        <input type="text" id="full-name" name="full_name" required placeholder=" ">
+                        <label for="full-name">이름 (성함)</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group floating required">
+                        <span class="icon">📧</span>
+                        <input type="email" id="email" name="email" required placeholder=" ">
+                        <label for="email">회사 이메일</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
+                        <div class="error-message"></div>
+                    </div>
+                    
+                    <div class="form-group floating required">
+                        <span class="icon">📞</span>
+                        <input type="text" id="phone" name="phone" required placeholder=" ">
+                        <label for="phone">전화번호</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group floating required">
+                        <span class="icon">🧑‍💻</span>
+                        <input type="text" id="job-title" name="job_title" required placeholder=" ">
+                        <label for="job-title">직책 (직함)</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
+                        <div class="error-message"></div>
+                    </div>
+                    
+                    <div class="form-group floating required">
+                        <span class="icon">💼</span>
+                        <input type="text" id="company-name" name="company_name" required placeholder=" ">
+                        <label for="company-name">회사/기관명</label>
+                        <span class="icon-feedback success">✔️</span>
+                        <span class="icon-feedback error">❌</span>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group checkbox-group required">
+                        <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
+                        <label for="privacy-agree">
+                            <a href="https://www.udemy.com/terms/privacy/" target="_blank">개인정보 보호 정책</a> 및 마케팅 정보 수신에 동의합니다.
+                        </label>
+                        <div class="error-message checkbox-error"></div>
+                    </div>
+
+                </div>
+
+                <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
+
+                <div class="form-navigation" style="justify-content: flex-end;">
+                    <button type="submit" class="btn btn-submit" id="submit-btn" style="display: inline-flex;">
+                        무료 자료 다운로드
+                    </button>
+                </div>
+            </form>
+
+            <div id="success-message" style="display: none;">
+                <h3>🎉 감사합니다!</h3>
+                <p>입력하신 이메일로 리포트가 발송되었습니다.<br>잠시 후 메일함을 확인해주세요!</p>
+                <button type="button" class="btn" id="reset-form-btn">확인</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="download-kt.js"></script>
+    </body>
+</html>
