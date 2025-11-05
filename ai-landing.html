@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udemy Business AI 활용 사례</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    
+    <style>
+        :root {
+            --brand-purple: #6d28d2;
+            --brand-purple-dark: #581c87;
+        }
+        
+        /* === 폰트 및 기본 버튼 === */
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f3f4f6; /* 회색 배경 */
+            overflow: hidden; /* 원페이지 스크롤을 위해 body 스크롤 제거 */
+        }
+        .btn-primary {
+            background-color: var(--brand-purple);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* === 원페이지 스크롤링 컨테이너 === */
+        #fullpage-container {
+            height: 100vh;
+            width: 100%;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory; /* "슉슉" 스크롤의 핵심 */
+        }
+
+        /* === 원페이지 스크롤링 섹션 === */
+        .full-page-section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            scroll-snap-align: start; /* 각 섹션이 스크롤에 걸리도록 함 */
+            padding-top: 80px;  /* 상단 고정 헤더 높이만큼 여백 */
+            padding-bottom: 60px; /* 하단 고정 푸터 높이만큼 여백 */
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .section-container {
+             width: 100%;
+             max-width: 1100px; /* 폼과 통일감을 위해 1100px로 조정 */
+             padding: 0 24px;
+             margin-left: auto;
+             margin-right: auto;
+        }
+
+        /* === 사이드 네비게이션 도트 === */
+        #page-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        #page-nav a {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #page-nav a.active {
+            background-color: var(--brand-purple);
+            transform: scale(1.5);
+        }
+        #page-nav a .nav-tooltip {
+            position: absolute;
+            top: 50%;
+            right: 150%;
+            transform: translateY(-50%);
+            background-color: #334155;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        #page-nav a:hover .nav-tooltip {
+            opacity: 1;
+        }
+
+        /* === 스크롤 애니메이션 === */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition-delay: 0.2s;
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-xl z-50 shadow-lg">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#intro">
+                <img src="https://raw.githubusercontent.com/mymyiove/KUB-INBOUND/main/udemy-logo-purple.png" alt="Udemy Business Logo" class="h-8 md:h-10">
+            </a>
+            <a href="index.html" class="btn-primary text-white font-bold py-3 px-6 rounded-full shadow-lg text-sm md:text-base">
+                 상담 신청하기
+            </a>
+        </div>
+    </header>
+    
+    <nav id="page-nav"></nav>
+
+    <div id="fullpage-container">
+
+        <section id="intro" class="full-page-section bg-gray-100">
+            <div class="section-container text-center">
+                <div class="scroll-reveal">
+                    <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+                        "AI가 가미된 경쟁력을 학습시킨다"
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                        AI 시대, 경쟁력 있는 임직원은 학습하는 AI 활용 방식이 다릅니다.<br>
+                        실제 기업 사례를 통해 AI-Powered Upskilling을 위한 구체적인 힌트를 확인해 보시길 바랍니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="cases" class="full-page-section" style="overflow-y: auto; justify-content: flex-start;">
+            <main class="section-container p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="bg-white border border-gray-200 rounded-lg p-6 flex flex-col scroll-reveal">
+                    <div class="mb-4 h-40 bg-gray-200 rounded flex items-center justify-center">
+                        <span class="text-gray-500">(롯데 자료 일부 이미지)</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">[롯데이노베이트]</h2>
+                    <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm flex-grow">
+                        <li>직무 기반 스킬셋 및 Udemy 콘텐츠 매핑</li>
+                        <li>AI 맞춤형 강의 로드맵 추천</li>
+                        <li>AI 어시스턴트로 개인 학습 효율 극대화</li>
+                    </ul>
+                    <a href="download-lotte.html" class="btn-primary text-white font-bold py-3 px-5 rounded-full inline-flex items-center justify-center w-full mt-4">
+                        사례 다운받기 &rarr;
+                    </a>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 flex flex-col scroll-reveal" style="transition-delay: 0.3s;">
+                    <div class="mb-4 h-40 bg-gray-200 rounded flex items-center justify-center">
+                        <span class="text-gray-500">(LG전자 자료 일부 이미지)</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">[LG전자]</h2>
+                    <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm flex-grow">
+                        <li>Udemy+LG콘텐츠 기반 스킬별 러닝 패스</li>
+                        <li>이수 단계별 뱃지(Badge) 시스템</li>
+                        <li>19개 언어 지원, 글로벌 공통 교육 운영</li>
+                    </ul>
+                    <a href="download-lg.html" class="btn-primary text-white font-bold py-3 px-5 rounded-full inline-flex items-center justify-center w-full mt-4">
+                        사례 다운받기 &rarr;
+                    </a>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-lg p-6 flex flex-col scroll-reveal" style="transition-delay: 0.4s;">
+                    <div class="mb-4 h-40 bg-gray-200 rounded flex items-center justify-center">
+                        <span class="text-gray-500">(우리은행 자료 일부 이미지)</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">[우리은행]</h2>
+                    <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm flex-grow">
+                        <li>팀별 맞춤형 큐레이션, 자율 CDP 학습</li>
+                        <li>직군 전환자 대상 AI/IT 역량 강화 커리큘럼</li>
+                        <li>학습-평가-승진까지 연계되는 장기 교육</li>
+                    </ul>
+                    <a href="download-woori.html" class="btn-primary text-white font-bold py-3 px-5 rounded-full inline-flex items-center justify-center w-full mt-4">
+                        사례 다운받기 &rarr;
+                    </a>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 flex flex-col scroll-reveal" style="transition-delay: 0.5s;">
+                    <div class="mb-4 h-40 bg-gray-200 rounded flex items-center justify-center">
+                        <span class="text-gray-500">(SK AX 자료 일부 이미지)</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">[SK AX]</h2>
+                    <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm flex-grow">
+                        <li>'기본-실무-전문가' 3단계 AI 커리큘럼</li>
+                        <li>단계별 이수 시 AI 리터러시 인증</li>
+                        <li>프로젝트형 학습(PBL)으로 실무 역량 강화</li>
+                    </ul>
+                    <a href="download-sk.html" class="btn-primary text-white font-bold py-3 px-5 rounded-full inline-flex items-center justify-center w-full mt-4">
+                        사례 다운받기 &rarr;
+                    </a>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg p-6 flex flex-col scroll-reveal" style="transition-delay: 0.6s;">
+                    <div class="mb-4 h-40 bg-gray-200 rounded flex items-center justify-center">
+                        <span class="text-gray-500">(KT 자료 일부 이미지)</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">[KT]</h2>
+                    <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1 text-sm flex-grow">
+                        <li>전략자격증 교육으로 전사 AI 리터러시 강화</li>
+                        <li>Udemy 기반 직무별 AICT 학습 로드맵 설계</li>
+                        <li>맞춤 큐레이션+라이브 특강으로 학습 효율 극대화</li>
+                    </ul>
+                    <a href="download-kt.html" class="btn-primary text-white font-bold py-3 px-5 rounded-full inline-flex items-center justify-center w-full mt-4">
+                        사례 다운받기 &rarr;
+                    </a>
+                </div>
+                
+                <div class="md:col-span-2 lg:col-span-3 text-center p-6 bg-gray-100 rounded-lg scroll-reveal" style="transition-delay: 0.7s;">
+                    <p class="text-gray-800 font-medium">
+                        LG, SK AX, 롯데이노베이트, KT, 우리은행 등 국내 주요 대기업들이 Udemy를 활용해 AI 기반 학습과 AX 전환을 성공적으로 이끌고 있습니다.<br>
+                        각 사의 AI 학습 로드맵, 직무별 스킬셋 매핑, AI Starter Path를 통한 맞춤형 조직 역량 AX 구현 방법을 지금 바로 확인해보세요.
+                    </p>
+                </div>
+
+            </main>
+        </section>
+
+        <section id="contact" class="full-page-section bg-gray-800 text-white">
+            <div class="section-container text-center">
+                <div class="scroll-reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        지금 Udemy 도입 문의 시<br>특별한 혜택을 제공합니다.
+                    </h2>
+                    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+                        AI 기능을 직접 체험할 수 있는 **무료 체험**과 함께<br>
+                        **성공 HRD 전략 가이드북 서적**을 무료로 제공해 드립니다.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
+                        <div class="bg-gray-700 h-40 rounded-lg flex items-center justify-center">
+                            <span class="text-gray-400">(무료 체험 내용 이미지)</span>
+                        </div>
+                        <div class="bg-gray-700 h-40 rounded-lg flex items-center justify-center">
+                            <span class="text-gray-400">(조직관리와 HR전략 도서 이미지)</span>
+                        </div>
+                    </div>
+                    <a href="index.html" class="btn-primary text-white font-bold py-4 px-8 rounded-full inline-flex items-center justify-center text-lg">
+                        Udemy 기업교육 도입 문의하기 ⭐️
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = Array.from(document.querySelectorAll('.full-page-section'));
+            const navContainer = document.getElementById('page-nav');
+            const scrollContainer = document.getElementById('fullpage-container');
+            let currentSection = 0;
+            
+            // === 1. 네비게이션 도트 생성 ===
+            const sectionTooltips = {
+                'intro': '소개',
+                'cases': '활용 사례',
+                'contact': '도입 문의'
+            };
+
+            sections.forEach((section, index) => {
+                const dot = document.createElement('a');
+                dot.href = `#${section.id}`;
+                dot.dataset.index = index;
+                
+                const tooltip = document.createElement('span');
+                tooltip.className = 'nav-tooltip';
+                tooltip.textContent = sectionTooltips[section.id] || '섹션';
+                
+                dot.appendChild(tooltip);
+                navContainer.appendChild(dot);
+            });
+            
+            const navDots = navContainer.querySelectorAll('a');
+
+            function updateNav(index) {
+                navDots.forEach(dot => dot.classList.remove('active'));
+                if(navDots[index]) navDots[index].classList.add('active');
+            }
+            
+            navDots.forEach(dot => {
+                dot.addEventListener('click', e => {
+                    e.preventDefault();
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    sections[index].scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // === 2. 스크롤 위치 감지 (네비게이션 + 애니메이션) ===
+            const intersectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    const el = entry.target;
+                    
+                    if (entry.isIntersecting) {
+                        // (A) 네비게이션 도트 활성화
+                        const index = sections.findIndex(sec => sec.id === el.id);
+                        if (index > -1) {
+                            currentSection = index;
+                            updateNav(index);
+                        }
+                        
+                        // (B) 스크롤 애니메이션 (하위 요소 포함)
+                        const revealElements = el.querySelectorAll('.scroll-reveal');
+                        revealElements.forEach(revealEl => {
+                            revealEl.classList.add('visible');
+                        });
+
+                    } else {
+                        // (C) 화면 밖으로 나갈 때 애니메이션 리셋 (선택사항)
+                        const revealElements = el.querySelectorAll('.scroll-reveal');
+                        revealElements.forEach(revealEl => {
+                            // revealEl.classList.remove('visible');
+                        });
+                    }
+                });
+            }, { 
+                root: scrollContainer, // 스크롤 컨테이너 기준
+                threshold: 0.5 // 섹션이 50% 보일 때
+            });
+
+            sections.forEach(sec => intersectionObserver.observe(sec));
+            
+            // [초기 로드] 첫 번째 섹션의 애니메이션은 바로 실행
+            setTimeout(() => {
+                document.querySelectorAll('#intro .scroll-reveal').forEach(el => {
+                    el.classList.add('visible');
+                });
+                if (navDots[0]) navDots[0].classList.add('active');
+            }, 300);
+
+        });
+    </script>
+</body>
+</html>
