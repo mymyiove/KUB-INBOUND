@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStep = 1;
     const totalSteps = steps.length;
-    // [수정] 프로그레스 바 원본 숫자 저장
     const progressStepNumbers = progressSteps.map(step => step.querySelector('.step-circle').innerHTML);
 
 
@@ -63,9 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
-        // (0%, 50%, 100%)
-        const progressPercent = ((stepNumber - 1) / (totalSteps - 1)) * 100;
-        progressFill.style.width = `${progressPercent}%`;
+        // ========== [수정] "뚫림" 버그 수정 (width -> transform) ==========
+        // (0, 0.5, 1)
+        const progressScale = (stepNumber - 1) / (totalSteps - 1); 
+        progressFill.style.transform = `scaleX(${progressScale})`;
+        // ==========================================================
     }
 
     function updateButtons(stepNumber) {
@@ -94,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
         formGroup.classList.remove('valid'); 
         errorElement.textContent = message;
         
-        // [수정] 아코디언이 닫혀있으면 강제로 연다
         if (formGroup.classList.contains('privacy-group') && !formGroup.classList.contains('is-open')) {
             formGroup.classList.add('is-open');
             formGroup.querySelector('.arrow').innerHTML = '▲';
@@ -180,14 +180,12 @@ document.addEventListener("DOMContentLoaded", () => {
         currentStep = 1;
         showStep(currentStep);
         
-        // [수정] 프로그레스 바 숫자 복원
         progressSteps.forEach((step, index) => {
             step.querySelector('.step-circle').innerHTML = progressStepNumbers[index];
             step.classList.remove("check");
         });
         progressSteps[0].classList.add("active"); 
         
-        // [수정] 아코디언 닫기
         document.querySelectorAll('.privacy-group.is-open').forEach(group => {
             group.classList.remove('is-open');
             group.querySelector('.arrow').innerHTML = '▼';
