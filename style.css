@@ -1,234 +1,846 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>미래를 준비하는 기업 교육 | Udemy Business</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+/* ----------------------------------------------------
+   0) Reset & Theme
+---------------------------------------------------- */
+:root {
+    --ub-purple-700: #6d28d2;
+    --ub-purple-dark: #581c87;
+    --ub-accent:     #a435f0;
+    --ub-pink:       #d52a7c;
+    --ub-orange:     #f09435;
+
+    --glass-bg:      rgba(255, 255, 255, 0.75);
+    --glass-border:  rgba(255, 255, 255, 0.3);
+    --shadow:        0 25px 60px rgba(0,0,0,0.2);
+
+    --text-900: #111;
+    --text-700: #333;
+    --text-600: #555;
+    --text-500: #666;
+    --text-400: #999;
+    --text-red:   #d93025;
+    --text-green: #28a745;
+    --white:    #fff;
     
-    <div class="animated-bg"></div>
+    --form-bg:  #fdfdfd; 
+    --form-bg-light: #f7f3ff; 
 
-    <div class="form-container">
-        
-        <div class="glare"></div>
+    --radius-xl: 24px;
+    --radius-md: 8px;
 
-        <div class="info-pane">
-            <div class="info-content">
-                
-                <img src="udemy-logo-white.png" alt="Udemy Business Logo" class="info-logo">
-                
-                <p>미래를 준비하는 기업들의<br><strong>마지막 선택!</strong></p>
-                
-                <p class="trusted-by-line">
-                    삼성, SK, 현대, LG, 롯데, KT, POSCO 등<br>
-                    국내의 대기업이 이미 함께 성장하고 있습니다.
-                </p>
-                
-                <div class="testimonial-slider">
-                    <div class="testimonial-item active">
-                        <h4>26,000+ 최신 콘텐츠의 무한학습</h4>
-                        <p>"매일 업데이트되는 가장 트렌디한 강의를<br>지금 바로 만나보세요."</p>
-                    </div>
-                    <div class="testimonial-item">
-                        <h4>Top 1% 현업 전문가의 독점 강의</h4>
-                        <p>"Google, AWS, Microsoft 현직자의<br>실무 노하우를 직접 배웁니다."</p>
-                    </div>
-                    <div class="testimonial-item">
-                        <h4>데이터로 증명된 학습 ROI</h4>
-                        <p>"직원의 성장이 어떻게 비즈니스 성과로<br>이어지는지 데이터로 증명합니다."</p>
-                    </div>
-                </div>
+    --focus-ring: 0 0 0 3px rgba(109, 40, 210, 0.2);
+}
 
-                <div class="service-intro-link">
-                    <a href="UBCSM.html" target="_blank" rel="noopener noreferrer">
-                        UB KOREA 서비스 소개 <span class="link-arrow">&rarr;</span>
-                    </a>
-                </div>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: inherit; }
 
-            </div>
-        </div>
+body {
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    color: var(--text-900);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem; 
+    box-sizing: border-box; 
+    overflow-x: hidden; 
+    perspective: 1500px; 
+    padding-left:  env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
+}
 
-        <div class="form-pane">
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
 
-            <img src="udemy-logo-purple.png" alt="Udemy Business Logo" class="mobile-logo">
+/* ----------------------------------------------------
+   1) Animated Background
+---------------------------------------------------- */
+.animated-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--ub-purple-700), var(--ub-accent), var(--ub-orange), var(--ub-pink));
+    background-size: 400% 400%;
+    animation: gradient-flow 15s ease infinite;
+}
 
-            <div class="mobile-info-pane">
-                <p>미래를 준비하는 기업들의 <strong>마지막 선택!</strong></p>
-                <p class="mobile-trusted-by">삼성, SK, 현대, LG 등과 함께 성장하세요.</p>
-            </div>
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-            <form id="pro-contact-form">
-                
-                <p class="form-intro">
-                    지금 문의하시면, 1:1 전문 컨설팅과 함께<br>
-                    귀사만을 위한 맞춤형 데모를 <strong>무료</strong>로 제공합니다.
-                </p>
+/* ----------------------------------------------------
+   2) Main Card (Glassmorphism)
+---------------------------------------------------- */
+.form-container {
+    width: 100%;
+    max-width: 950px;
+    display: flex;
+    border-radius: var(--radius-xl);
+    overflow: hidden; 
+    box-shadow: var(--shadow);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+}
 
-                <div class="progress-bar">
-                    <div class="progress-bar-fill" id="progress-fill"></div>
-                    
-                    <div class="progress-step active" data-step="1">
-                        <div class="step-circle">
-                            <span class="step-number">1</span>
-                            <span class="step-checkmark">✔️</span>
-                        </div>
-                        <div class="step-label">기본 정보</div>
-                    </div>
-                    <div class="progress-step" data-step="2">
-                        <div class="step-circle">
-                            <span class="step-number">2</span>
-                            <span class="step-checkmark">✔️</span>
-                        </div>
-                        <div class="step-label">회사 정보</div>
-                    </div>
-                    <div class="progress-step" data-step="3">
-                        <div class="step-circle">
-                            <span class="step-number">3</span>
-                            <span class="step-checkmark">✔️</span>
-                        </div>
-                        <div class="step-label">문의</div>
-                    </div>
-                </div>
-                <div class="form-step active" data-step="1">
-                    <h3 class="step-title">반갑습니다! <strong>담당자님</strong>을 알려주세요.</h3>
-                    
-                    <div class="form-group floating required">
-                        <span class="icon">👤</span>
-                        <input type="text" id="full-name" name="full_name" required placeholder=" ">
-                        <label for="full-name">이름 (성함)</label>
-                        <span class="icon-feedback success">✔️</span>
-                        <span class="icon-feedback error">❌</span>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group floating required">
-                        <span class="icon">📧</span>
-                        <input type="email" id="email" name="email" required placeholder=" ">
-                        <label for="email">회사 이메일</label>
-                        <span class="icon-feedback success">✔️</span>
-                        <span class="icon-feedback error">❌</span>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group floating required">
-                        <span class="icon">📞</span>
-                        <input type="text" id="phone" name="phone" required placeholder=" ">
-                        <label for="phone">전화번호</label>
-                        <span class="icon-feedback success">✔️</span>
-                        <span class="icon-feedback error">❌</span>
-                        <div class="error-message"></div>
-                    </div>
+.glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%); 
+    opacity: 0;
+    pointer-events: none; 
+    transition: opacity 0.2s ease-out;
+    z-index: 5;
+    will-change: background;
+}
 
-                </div>
+/* ----------------------------------------------------
+   3) Left Info Pane
+---------------------------------------------------- */
+.info-pane {
+    width: 40%;
+    background: var(--ub-purple-700);
+    color: var(--white);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative; 
+    overflow: hidden; 
+}
+.info-content { width: 100%; }
 
-                <div class="form-step" data-step="2">
-                    <h3 class="step-title">귀사의 <strong>교육 목표</strong>를 들려주세요.</h3>
-                    
-                    <div class="form-group floating required">
-                        <span class="icon">💼</span>
-                        <input type="text" id="company-name" name="company_name" required placeholder=" ">
-                        <label for="company-name">회사/기관명</label>
-                        <span class="icon-feedback success">✔️</span>
-                        <span class="icon-feedback error">❌</span>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group floating required">
-                        <span class="icon">🧑‍💻</span>
-                        <input type="text" id="job-title" name="job_title" required placeholder=" ">
-                        <label for="job-title">직책 (직함)</label>
-                        <span class="icon-feedback success">✔️</span>
-                        <span class="icon-feedback error">❌</span>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group required">
-                        <label for="employee-count">예상 교육 인원</label>
-                        <select id="employee-count" name="employee_count" required>
-                            <option value="" disabled selected>인원을 선택하세요...</option>
-                            <option value="1-100">1-100명</option>
-                            <option value="101-500">101-500명</option>
-                            <option value="501-1000">501-1,000명</option>
-                            <option value="1000+">1,000명 이상</option>
-                        </select>
-                        <div class="error-message"></div>
-                    </div>
+.info-logo {
+    width: 200px; 
+    height: auto; 
+    margin-bottom: 1.5rem; 
+}
 
-                </div>
+.info-pane p {
+    font-size: clamp(1.05rem, 1.2vw, 1.2rem); 
+    line-height: 1.6;
+    opacity: 1; 
+}
+.info-pane p strong {
+    font-weight: 700;
+}
 
-                <div class="form-step" data-step="3">
-                    <h3 class="step-title">성장을 위한 <strong>마지막 단계</strong>입니다.</h3>
-                    <div class="form-group">
-                        <label for="inquiry">문의사항 (선택)</label>
-                        <textarea id="inquiry" name="inquiry" rows="5" placeholder="도입 비용, 특정 강의 커리큘럼, 데모 시연 등 무엇이든 문의하세요."></textarea>
-                    </div>
+.info-pane .trusted-by-line {
+    font-size: clamp(0.9rem, 1vw, 0.95rem);
+    font-weight: 500;
+    opacity: 0.8;
+    line-height: 1.5;
+    margin-top: 1rem;
+}
 
-                    <div class="form-group privacy-group required">
-                        <div class="privacy-group-header">
-                            <input type="checkbox" id="privacy-agree" name="privacy_agree" value="Y" required>
-                            <label for="privacy-agree">(필수) 개인정보 수집·이용 동의</label>
-                            <a class="privacy-toggle-link">[자세히 보기 <span class="arrow">▼</span>]</a>
-                        </div>
-                        <div class="privacy-content">
-                            <div class="privacy-box">
-                                <p>주식회사 웅진씽크빅(이하 '회사')은 유데미 코리아 서비스의 자료 제공 및 상담 신청을 위해 아래와 같이 개인정보를 수집·이용합니다.</p>
-                                <p><strong>1. 수집하는 개인정보 항목</strong><br>
-                                    - [필수] 이름, 회사 이메일, 전화번호, 직책(직함), 회사/기관명<br>
-                                    - [선택] 문의사항</p>
-                                <p><strong>2. 개인정보의 수집 및 이용 목적</strong><br>
-                                    - 신청자 본인 확인, 요청 자료(PDF 등) 발송<br>
-                                    - 상담 신청 접수 및 진행, 관련 문의 응대</p>
-                                <p><strong>3. 개인정보 처리 위탁</strong><br>
-                                    - 회사는 원활한 서비스 제공을 위해 아래와 같이 개인정보 처리 업무를 위탁합니다.<br>
-                                    - <strong>수탁사: Odoo (Odoo S.A.)</strong><br>
-                                    - <strong>위탁업무: 고객정보 관리 및 상담 이력 저장 (CRM 솔루션 운영)</strong></p>
-                                <p><strong>4. 개인정보의 보유 및 이용 기간</strong><br>
-                                    - 원칙: 수집·이용 목적 달성 시(자료 제공 완료, 상담 종료 시) 지체 없이 파기<br>
-                                    - 단, 관계 법령의 규정에 따라 보관할 필요가 있는 경우 해당 기간까지 보관합니다.</p>
-                                <p><strong>5. 동의 거부 권리 및 불이익</strong><br>
-                                    - 귀하는 위 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.<br>
-                                    - 단, 필수 항목의 수집·이용에 동의하지 않으실 경우, 자료 다운로드 및 상담 신청 서비스 이용이 제한될 수 있습니다.</p>
-                            </div>
-                        </div>
-                        <div class="error-message checkbox-error"></div>
-                    </div>
+.testimonial-slider {
+    margin-top: 2.5rem;
+    height: 120px;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 2.5rem;
+}
 
-                    <div class="form-group privacy-group">
-                        <div class="privacy-group-header">
-                            <input type="checkbox" id="agree_optional" name="agree_optional" value="Y">
-                            <label for="agree_optional">(선택) 광고성 정보 수신 동의</label>
-                            <a class="privacy-toggle-link">[자세히 보기 <span class="arrow">▼</span>]</a>
-                        </div>
-                        <div class="privacy-content">
-                            <div class="privacy-box">
-                              <p>유데미 코리아의 신규 서비스, 이벤트, 웨비나, 할인 혜택 등 유용한 정보를 (이메일, SMS, 전화 등)으로 수신하는 데 동의합니다.</p>
-                              <p>- <strong>보유 및 이용 기간:</strong> 동의 철회 시 또는 회원 탈퇴 시까지<br>
-                              - ※ 선택 동의를 거부하셔도 자료 다운로드 및 상담 신청은 가능합니다.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+.testimonial-item {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.testimonial-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+.testimonial-item h4 {
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+.testimonial-item p {
+    font-size: clamp(0.9rem, 1vw, 0.95rem);
+    font-style: italic;
+    opacity: 0.85;
+    line-height: 1.5;
+}
 
-                <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
+.info-pane .service-intro-link {
+    margin-top: auto; 
+    text-align: left;
+    padding-top: 4rem; 
+}
+.info-pane .service-intro-link a {
+    color: var(--white);
+    font-weight: 700;
+    font-size: clamp(1rem, 1.1vw, 1.1rem);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex; 
+    align-items: center;
+}
+.info-pane .service-intro-link .link-arrow {
+    display: inline-block;
+    margin-left: 0.5rem;
+    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.info-pane .service-intro-link a:hover .link-arrow {
+    transform: translateX(5px);
+}
+.info-pane .service-intro-link a:hover {
+    opacity: 0.8;
+}
 
-                <div class="form-navigation">
-                    <button type="button" class="btn btn-prev" id="prev-btn">이전</button>
-                    <button type="button" class="btn btn-next" id="next-btn">다음</button>
-                    <button type="submit" class="btn btn-submit" id="submit-btn">
-                        무료 상담 및 데모 신청
-                    </button>
-                </div>
-            </form>
+/* ----------------------------------------------------
+   4) Right Form Pane
+---------------------------------------------------- */
+.form-pane {
+    width: 60%;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.85);
+    position: relative; 
+    overflow: hidden; 
+}
 
-            <div id="success-message" style="display: none;">
-                <h3>🎉 제출이 완료되었습니다!</h3>
-                <p>신속하게 검토 후 24시간 내에 연락드리겠습니다.<br>감사합니다.</p>
-                <button type="button" class="btn" id="reset-form-btn">새로운 문의하기</button>
-            </div>
+.mobile-logo {
+    display: none;
+    width: 180px;
+    height: auto;
+    margin: 0 auto 1.5rem auto; 
+}
 
-        </div>
-    </div>
+.mobile-info-pane {
+    display: none;
+}
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+.form-intro {
+    font-size: clamp(0.9rem, 1.05vw, 0.95rem);
+    color: var(--text-700);
+    text-align: center;
+    margin-bottom: 2rem;
+    line-height: 1.5; 
+    background-color: var(--form-bg-light); 
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: none; 
+}
+.form-intro strong {
+    color: var(--ub-purple-700);
+    font-weight: 700;
+}
+
+
+/* ========== "스텝 서클" 프로그레스 바 ========== */
+.progress-bar { 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: relative; 
+    margin-bottom: 2.5rem;
+    align-items: start; 
+}
+.progress-bar::before { 
+    content: ''; 
+    position: absolute; 
+    top: 15px; 
+    left: 16.66%; 
+    width: 66.66%;
+    height: 3px; 
+    background-color: #e0e0e0; 
+    z-index: 1;
+}
+.progress-bar-fill { 
+    position: absolute; 
+    top: 15px;
+    left: 16.66%; 
+    width: 66.66%; 
+    height: 3px; 
+    background-color: var(--ub-purple-700); 
+    z-index: 2; 
+    transform: scaleX(0); 
+    transform-origin: left;
+    transition: transform 0.4s ease; 
+}
+.progress-step { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem; 
+    z-index: 3;
+    cursor: default;
+}
+.step-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: #e0e0e0; 
+    color: var(--text-400);
+    transition: all 0.4s ease;
+    border: 2px solid #e0e0e0;
+    position: relative; /* [추가] "스르륵" 효과를 위해 */
+}
+.step-label {
+    font-size: 0.85rem; 
+    font-weight: 600; 
+    color: #aaa;
+    transition: color 0.4s ease;
+}
+
+/* ========== [추가] "스르륵" V자 변환 스타일 ========== */
+.step-number, .step-checkmark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.step-number {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+.step-checkmark {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+/* ============================================== */
+
+
+/* 활성 스텝 */
+.progress-step.active .step-circle {
+    background: var(--white);
+    color: var(--ub-purple-700);
+    border-color: var(--ub-purple-700);
+    transform: scale(1.1);
+}
+.progress-step.active .step-label {
+    color: var(--ub-purple-700);
+}
+
+/* 완료된 스텝 */
+.progress-step.check .step-circle {
+    background: var(--white);
+    color: var(--ub-purple-700);
+    border-color: var(--ub-purple-700);
+    transform: scale(1);
+}
+.progress-step.check .step-label {
+    color: var(--text-600);
+}
+/* ========== [추가] V자 보이기 / 숫자 숨기기 ========== */
+.progress-step.check .step-number {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+}
+.progress-step.check .step-checkmark {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+/* ============================================= */
+
+
+.required-note {
+    font-size: 0.8rem;
+    color: var(--text-red);
+    text-align: right;
+    margin-top: 1.5rem; 
+    margin-bottom: 1rem;
+}
+
+.form-step {
+    display: none;
+    animation: slideInRight 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); /* easeOutQuart */
+}
+.form-step.active { display: block; }
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.step-title {
+    font-size: clamp(1.4rem, 1.8vw, 1.6rem);
+    color: var(--text-900);
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+.step-title strong { color: var(--ub-purple-700); }
+
+/* ----------------------------------------------------
+   5) Form Inputs (에러/성공 스타일)
+---------------------------------------------------- */
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+.form-group .icon {
+    position: absolute;
+    top: 0.9rem;
+    left: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-400);
+    transition: color 0.3s ease;
+}
+.form-group.required > label::after {
+    content: ' *';
+    color: var(--text-red);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-600);
+    margin-bottom: 0.5rem; 
+}
+
+.error-message {
+    color: var(--text-red);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.35rem; 
+    min-height: 1em; 
+}
+.checkbox-error {
+    margin-left: 1.75rem; 
+}
+
+/* 에러 상태 */
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: var(--text-red);
+}
+.form-group.error .icon {
+    color: var(--text-red);
+}
+.form-group.error.floating label {
+    color: var(--text-red);
+}
+
+.form-group .icon-feedback {
+    position: absolute;
+    right: 1rem;
+    top: 0.9rem;
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s ease;
+}
+.form-group .icon-feedback.success { color: var(--text-green); }
+.form-group .icon-feedback.error { color: var(--text-red); }
+
+.form-group.valid .icon-feedback.success,
+.form-group.error .icon-feedback.error {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 성공 시 입력창 스타일 */
+.form-group.valid input {
+    border-color: var(--text-green);
+}
+.form-group.valid .icon {
+    color: var(--text-green);
+}
+.form-group.valid.floating label {
+    color: var(--text-green);
+}
+
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-3px); }
+  40%, 60% { transform: translateX(3px); }
+}
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 1rem;
+    padding-left: 3rem; 
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    box-sizing: border-box;
+    font-size: 1rem;
+    background: var(--form-bg); 
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+}
+input[type="email"] {
+    padding-right: 2.5rem; 
+}
+
+
+select { padding-left: 1rem; }
+textarea { padding-left: 1rem; resize: vertical; min-height: 100px; }
+
+/* Focus */
+input:focus, select:focus, textarea:focus {
+    border-color: var(--ub-purple-700);
+    box-shadow: var(--focus-ring);
+    outline: none;
+    background: var(--white);
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: none;
+}
+
+.form-group input:focus + label { color: var(--ub-purple-700); }
+.form-group input:focus ~ .icon { color: var(--ub-purple-700); }
+
+/* Floating Labels */
+.form-group.floating { margin-bottom: 0.5rem; } 
+.form-group.floating label {
+    position: absolute;
+    top: 1rem;
+    left: 3rem; 
+    color: var(--text-400);
+    background: var(--form-bg); 
+    padding: 0 0.25rem;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    margin-bottom: 0; 
+}
+.form-group.floating input:focus + label,
+.form-group.floating input:not(:placeholder-shown) + label {
+    top: -0.7rem;
+    left: 2.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: var(--white);
+    color: var(--ub-purple-700);
+}
+.form-group.floating.valid input:focus + label,
+.form-group.floating.valid input:not(:placeholder-shown) + label {
+    color: var(--text-green);
+}
+.form-group.floating.error input:focus + label,
+.form-group.floating.error input:not(:placeholder-shown) + label {
+    color: var(--text-red);
+}
+
+.form-group.floating input:not(:placeholder-shown) { background: var(--white); }
+
+/* ----------------------------------------------------
+   6) Privacy (아코디언)
+---------------------------------------------------- */
+.privacy-group {
+    margin-bottom: 1rem;
+}
+.privacy-group-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.privacy-group-header input[type="checkbox"] {
+    margin-right: 0.5rem;
+    width: auto;
+}
+.privacy-group-header label {
+    font-weight: 700; 
+    font-size: 0.9rem;
+    color: var(--text-700);
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+.privacy-toggle-link {
+    font-size: 0.8rem;
+    color: var(--ub-purple-700);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+.privacy-toggle-link .arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+.privacy-group.is-open .privacy-toggle-link .arrow {
+    transform: rotate(180deg);
+}
+
+.privacy-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+.privacy-group.is-open .privacy-content {
+    max-height: 200px; 
+    overflow-y: auto; 
+}
+
+.privacy-box {
+    background-color: var(--white);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    padding: 10px;
+    font-size: 0.8rem;
+    color: var(--text-600);
+    line-height: 1.5;
+    margin-top: 0.25rem;
+}
+.privacy-box p {
+    font-size: 0.8rem;
+    color: var(--text-600);
+    line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.privacy-box strong {
+    font-weight: 600;
+    color: var(--text-700);
+}
+
+
+/* ----------------------------------------------------
+   7) Buttons (로딩 스피너)
+---------------------------------------------------- */
+.form-navigation { display: flex; justify-content: space-between; margin-top: 0; }
+.btn {
+    padding: 0.85rem 1.75rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.btn-prev { background-color: #e0e0e0; color: var(--text-700); }
+.btn-prev:hover { background-color: #ccc; }
+
+.btn-next,
+.btn-submit,
+#success-message .btn {
+    background-color: var(--ub-purple-700); 
+    color: var(--white); 
+}
+.btn-next:hover,
+.btn-submit:hover,
+#success-message .btn:hover { 
+    background-color: var(--ub-purple-dark); 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(109, 40, 210, 0.3); 
+}
+
+.btn-submit {
+    overflow: hidden;
+    position: relative;
+}
+.btn-prev, .btn-submit { display: none; } 
+
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+.spinner {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 1s ease-in-out infinite;
+    margin-left: 0.75em;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.btn-next::before,
+.btn-submit::before,
+#success-message .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-30deg);
+    transition: left 0.7s ease;
+}
+.btn-next:hover::before,
+.btn-submit:hover::before,
+#success-message .btn:hover::before {
+    left: 150%;
+}
+
+
+/* ----------------------------------------------------
+   8) Success Message
+---------------------------------------------------- */
+#success-message {
+    text-align: center;
+    padding: 4rem 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+#success-message h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ub-purple-700);
+    margin-bottom: 1rem;
+}
+#success-message p {
+    font-size: 1rem;
+    color: var(--text-600);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ----------------------------------------------------
+   9) Responsive (모바일 화면 수정)
+---------------------------------------------------- */
+@media (max-width: 768px) {
+    body {
+        padding: 0; 
+        display: block; 
+        min-height: 100dvh; 
+        align-items: stretch; 
+    }
+    .form-container {
+        flex-direction: column; 
+        width: 100%; 
+        max-width: 100%; 
+        margin: 0; 
+        border-radius: 0; 
+        box-shadow: none; 
+    }
+    .info-pane { display: none; }
+    .form-pane { width: 100%; padding: 2rem 1.5rem; }
+    .mobile-logo { display: block; }
+    
+    .mobile-info-pane {
+        display: block;
+        background-color: var(--form-bg-light);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        border: none; 
+    }
+    .mobile-info-pane p {
+        color: var(--text-700);
+        margin: 0;
+    }
+    .mobile-info-pane p strong {
+        color: var(--ub-purple-700);
+        font-weight: 700;
+    }
+    .mobile-info-pane .mobile-trusted-by {
+        font-size: 0.85rem;
+        color: var(--text-600);
+        margin-top: 0.5rem;
+    }
+    
+    .form-intro {
+        line-height: 1.5;
+        border: none; 
+    }
+
+    /* [수정] 모바일 프로그레스 바 */
+    .progress-bar {
+        grid-template-columns: 1fr; /* 세로로 쌓음 */
+        gap: 0;
+        margin-bottom: 1.5rem;
+    }
+    .progress-bar::before, .progress-bar-fill {
+        display: none; /* 선 제거 */
+    }
+    .progress-step {
+        flex-direction: row; /* 가로 정렬 */
+        justify-content: center;
+        padding: 0.5rem;
+    }
+    .progress-step.active {
+        background: var(--form-bg-light); /* 활성 스텝 배경색 */
+        border-radius: var(--radius-md);
+    }
+    .progress-step:not(.active) {
+        display: none; /* 활성 스텝만 보임 */
+    }
+    .step-circle {
+        width: 24px; /* 모바일에서 원 크기 살짝 줄임 */
+        height: 24px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem; /* 숫자와 라벨 사이 간격 */
+    }
+    .progress-step.check .step-circle {
+        font-size: 0.9rem;
+    }
+    .step-checkmark {
+        font-size: 1rem; /* 모바일 V자 크기 */
+    }
+
+
+    .step-title { font-size: 1.4rem; }
+    .form-group .icon { top: 0.8rem; }
+    .form-group.floating label { top: 0.8rem; }
+    
+    .form-group .icon-feedback { display: none; }
+    input[type="email"] { padding-right: 3rem; }
+}
+
+/* ----------------------------------------------------
+   10) Polishes (선택 효과 & 마우스 파티클)
+---------------------------------------------------- */
+::selection { background: rgba(164, 53, 240, 0.25); }
+img { max-width: 100%; height: auto; display: block; }
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ub-purple-700);
+    opacity: 1; 
+    pointer-events: none;
+    animation: fadeOut 1s forwards;
+    z-index: 10;
+}
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
