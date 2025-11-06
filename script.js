@@ -20,7 +20,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStep = 1;
     const totalSteps = steps.length;
-    const progressStepTexts = progressSteps.map(step => step.innerHTML);
+    // [수정] 프로그레스 바 원본 숫자 저장
+    const progressStepNumbers = progressSteps.map(step => step.querySelector('.step-circle').innerHTML);
+
+
+    // --- [극도 업그레이드 1] "아코디언" 동의란 ---
+    document.querySelectorAll('.privacy-toggle-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const parentGroup = link.closest('.privacy-group');
+            parentGroup.classList.toggle('is-open');
+            const arrow = link.querySelector('.arrow');
+            arrow.innerHTML = parentGroup.classList.contains('is-open') ? '▲' : '▼';
+        });
+    });
+    // ------------------------------------------
 
 
     // --- 2. 폼 스텝 제어 함수 ---
@@ -35,15 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
         updateButtons(stepNumber);
     }
 
+    // [수정] "스텝 서클" UI 업데이트
     function updateProgressUI(stepNumber) {
         progressSteps.forEach((step, index) => {
-            if (index < stepNumber) {
-                step.classList.add("active");
-            } else {
+            if (index < stepNumber - 1) { // 완료된 스텝
+                step.classList.add("check");
                 step.classList.remove("active");
+            } else if (index === stepNumber - 1) { // 현재 스텝
+                step.classList.remove("check");
+                step.classList.add("active");
+            } else { // 남은 스텝
+                step.classList.remove("check", "active");
             }
         });
         
+        // (0%, 50%, 100%)
         const progressPercent = ((stepNumber - 1) / (totalSteps - 1)) * 100;
         progressFill.style.width = `${progressPercent}%`;
     }
@@ -54,10 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
         nextBtn.style.display = (stepNumber < totalSteps) ? "inline-block" : "none";
     }
 
+    // [수정] "스텝 서클" 체크마크 업데이트
     function updateProgressCheckmark(stepNumber) {
         const stepToMark = progressSteps[stepNumber - 1];
         if (stepToMark && !stepToMark.classList.contains("check")) {
-            stepToMark.innerHTML = "✔️";
+            stepToMark.querySelector('.step-circle').innerHTML = "✔️";
             stepToMark.classList.add("check");
         }
     }
@@ -72,6 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
         formGroup.classList.add('error');
         formGroup.classList.remove('valid'); 
         errorElement.textContent = message;
+        
+        // [수정] 아코디언이 닫혀있으면 강제로 연다
+        if (formGroup.classList.contains('privacy-group') && !formGroup.classList.contains('is-open')) {
+            formGroup.classList.add('is-open');
+            formGroup.querySelector('.arrow').innerHTML = '▲';
+        }
         
         formGroup.classList.add('shake');
         formGroup.addEventListener('animationend', () => {
@@ -112,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (input.type === "checkbox") {
                 if (!input.checked) {
                     isValid = false;
-                    showError(input, "개인정보 수집 및 이용에 동의해주세요.");
+                    showError(input, "필수 항목에 동의해주세요.");
                 }
             } 
             else if (!value) {
@@ -130,14 +157,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     isValid = false;
                     showError(input, "전화번호 10자리 또는 11자리를 입력해주세요.");
                 } else {
-                    showSuccess(input); // [추가] 전화번호도 성공 시 피드백
+                    showSuccess(input);
                 }
             }
             else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                 isValid = false;
                 showError(input, "유효한 이메일 주소를 입력해주세요.");
             }
-             else if (input.type === "email") { // 이메일 통과 시
+             else if (input.type === "email") { 
                 showSuccess(input);
             }
         }
@@ -153,11 +180,18 @@ document.addEventListener("DOMContentLoaded", () => {
         currentStep = 1;
         showStep(currentStep);
         
+        // [수정] 프로그레스 바 숫자 복원
         progressSteps.forEach((step, index) => {
-            step.innerHTML = progressStepTexts[index];
+            step.querySelector('.step-circle').innerHTML = progressStepNumbers[index];
             step.classList.remove("check");
         });
         progressSteps[0].classList.add("active"); 
+        
+        // [수정] 아코디언 닫기
+        document.querySelectorAll('.privacy-group.is-open').forEach(group => {
+            group.classList.remove('is-open');
+            group.querySelector('.arrow').innerHTML = '▼';
+        });
         
         successMessage.style.display = "none";
         form.style.display = "block";
@@ -202,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         data.lead_source = "상담 요청";
 
-        saveInfoToStorage(data); // 정보 저장
+        saveInfoToStorage(data); 
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '전송 중... <span class="spinner"></span>';
@@ -220,9 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
             form.style.display = "none";
             successMessage.style.display = "block";
             
-            // ========== [업그레이드 1] 축하 폭죽! ==========
             triggerConfetti();
-            // ==========================================
             
             localStorage.removeItem('udemyLeadInfo'); 
         })
@@ -245,7 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- 5. "극도의 업그레이드" 기능들 ---
 
-    // [업그레이드 1] 축하 폭죽 함수
     function triggerConfetti() {
         if (typeof confetti === 'function') {
             confetti({
@@ -256,7 +287,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // [업그레이드] 전화번호 자동 포맷
     function autoFormatPhone(e) {
         let value = e.target.value.replace(/\D/g, ""); 
         let length = value.length;
@@ -274,7 +304,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // [업그레이드] 실시간 이메일 유효성 검사
     function validateEmailRealtime(e) {
         const value = e.target.value.trim();
         const formGroup = e.target.closest('.form-group');
@@ -295,7 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // [업그레이드] 로컬스토리지 정보 저장
     function saveInfoToStorage(data) {
         try {
             const info = {
@@ -309,7 +337,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // [업그레이드] 로컬스토리지 정보 로드
     function loadSavedInfo() {
         try {
             const savedInfo = localStorage.getItem('udemyLeadInfo');
@@ -366,11 +393,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 5000);
     }
     
-    // --- 8. [업그레이드 2] 마우스 파티클 효과 ---
+    // --- 8. 마우스 파티클 효과 ---
     const formPanes = document.querySelectorAll('.info-pane, .form-pane');
     formPanes.forEach(pane => {
         pane.addEventListener('mousemove', (e) => {
-            // pane의 로컬 좌표 계산
             const rect = pane.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -384,14 +410,9 @@ document.addEventListener("DOMContentLoaded", () => {
         particle.classList.add('particle');
         particle.style.left = `${x}px`;
         particle.style.top = `${y}px`;
-        
-        // 색상 랜덤 (보라색 계열)
         const color = `hsl(${260 + Math.random() * 40}, 100%, ${70 + Math.random() * 20}%)`;
         particle.style.background = color;
-        
         parent.appendChild(particle);
-        
-        // 1초 뒤 DOM에서 제거
         setTimeout(() => {
             particle.remove();
         }, 1000);
