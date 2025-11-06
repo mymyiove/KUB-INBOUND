@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStep = 1;
     const totalSteps = steps.length;
-    const progressStepNumbers = progressSteps.map(step => step.querySelector('.step-circle').innerHTML);
+    // [수정] progressStepNumbers 변수 삭제 (더 이상 필요 없음)
 
 
-    // --- [극도 업그레이드 1] "아코디언" 동의란 ---
+    // --- "아코디언" 동의란 ---
     document.querySelectorAll('.privacy-toggle-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateButtons(stepNumber);
     }
 
-    // [수정] "스텝 서클" UI 업데이트
     function updateProgressUI(stepNumber) {
         progressSteps.forEach((step, index) => {
             if (index < stepNumber - 1) { // 완료된 스텝
@@ -62,11 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
-        // ========== [수정] "뚫림" 버그 수정 (width -> transform) ==========
-        // (0, 0.5, 1)
         const progressScale = (stepNumber - 1) / (totalSteps - 1); 
         progressFill.style.transform = `scaleX(${progressScale})`;
-        // ==========================================================
     }
 
     function updateButtons(stepNumber) {
@@ -75,12 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
         nextBtn.style.display = (stepNumber < totalSteps) ? "inline-block" : "none";
     }
 
-    // [수정] "스텝 서클" 체크마크 업데이트
+    // [수정] "스르륵" 효과를 위해 innerHTML 변경 코드 삭제
     function updateProgressCheckmark(stepNumber) {
         const stepToMark = progressSteps[stepNumber - 1];
         if (stepToMark && !stepToMark.classList.contains("check")) {
-            stepToMark.querySelector('.step-circle').innerHTML = "✔️";
-            stepToMark.classList.add("check");
+            // stepToMark.querySelector('.step-circle').innerHTML = "✔️"; // <-- 이 줄 삭제
+            stepToMark.classList.add("check"); // 클래스 추가만으로 CSS가 애니메이션 처리
         }
     }
 
@@ -180,8 +176,9 @@ document.addEventListener("DOMContentLoaded", () => {
         currentStep = 1;
         showStep(currentStep);
         
+        // [수정] 프로그레스 바 V자 제거 (innerHTML 변경 코드 삭제)
         progressSteps.forEach((step, index) => {
-            step.querySelector('.step-circle').innerHTML = progressStepNumbers[index];
+            // step.querySelector('.step-circle').innerHTML = progressStepNumbers[index]; // <-- 이 줄 삭제
             step.classList.remove("check");
         });
         progressSteps[0].classList.add("active"); 
