@@ -234,11 +234,11 @@ body {
     color: var(--text-700);
     text-align: center;
     margin-bottom: 2rem;
-    line-height: 1.5; /* 일관성 수정 */
+    line-height: 1.5; 
     background-color: var(--form-bg-light); 
     padding: 1rem;
     border-radius: var(--radius-md);
-    border: none; /* 일관성 수정 */
+    border: none; 
 }
 .form-intro strong {
     color: var(--ub-purple-700);
@@ -246,42 +246,46 @@ body {
 }
 
 
-/* ========== [극도 업그레이드 2] "스텝 서클" 프로그레스 바 ========== */
+/* ========== "스텝 서클" 프로그레스 바 ========== */
 .progress-bar { 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     position: relative; 
     margin-bottom: 2.5rem;
-    align-items: start; /* 위쪽 정렬 */
+    align-items: start; 
 }
 /* 회색 배경선 */
 .progress-bar::before { 
     content: ''; 
     position: absolute; 
-    top: 15px; /* 원 중앙 */
-    left: 16.66%; /* 1번 원 중앙 ~ 3번 원 중앙 */
+    top: 15px; 
+    left: 16.66%; 
     width: 66.66%;
     height: 3px; 
     background-color: #e0e0e0; 
     z-index: 1;
 }
-/* 보라색 활성선 */
+/* ========== [수정] "뚫림" 버그 수정 ========== */
 .progress-bar-fill { 
     position: absolute; 
     top: 15px;
     left: 16.66%; 
-    width: 0%; /* JS가 제어 (0%, 50%, 100%) */
+    width: 66.66%; /* JS가 0, 50, 100%로 제어할 최대 너비 */
     height: 3px; 
     background-color: var(--ub-purple-700); 
     z-index: 2; 
-    transition: width 0.4s ease;
+    transform: scaleX(0); /* JS가 0, 0.5, 1로 제어 */
+    transform-origin: left;
+    transition: transform 0.4s ease; /* width -> transform */
 }
+/* ========================================= */
+
 /* 스텝 (원 + 라벨) */
 .progress-step { 
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem; /* 원과 라벨 사이 간격 */
+    gap: 0.5rem; 
     z-index: 3;
     cursor: default;
 }
@@ -294,7 +298,7 @@ body {
     justify-content: center;
     font-weight: 700;
     font-size: 0.9rem;
-    background: #e0e0e0; /* 비활성 */
+    background: #e0e0e0; 
     color: var(--text-400);
     transition: all 0.4s ease;
     border: 2px solid #e0e0e0;
@@ -319,16 +323,15 @@ body {
 
 /* 완료된 스텝 */
 .progress-step.check .step-circle {
-    background: var(--text-green);
+    background: var(--ub-purple-700);
     color: var(--white);
-    border-color: var(--text-green);
+    border-color: var(--ub-purple-700);
     transform: scale(1);
     font-size: 1rem;
 }
 .progress-step.check .step-label {
     color: var(--text-600);
 }
-/* ======================================================== */
 
 
 .required-note {
@@ -521,11 +524,79 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 .form-group.floating input:not(:placeholder-shown) { background: var(--white); }
 
-/* Checkbox (이전 스타일 삭제) */
+/* ----------------------------------------------------
+   6) Privacy (아코디언)
+---------------------------------------------------- */
+.privacy-group {
+    margin-bottom: 1rem;
+}
+.privacy-group-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.privacy-group-header input[type="checkbox"] {
+    margin-right: 0.5rem;
+    width: auto;
+}
+.privacy-group-header label {
+    font-weight: 700; 
+    font-size: 0.9rem;
+    color: var(--text-700);
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+.privacy-toggle-link {
+    font-size: 0.8rem;
+    color: var(--ub-purple-700);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+.privacy-toggle-link .arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+.privacy-group.is-open .privacy-toggle-link .arrow {
+    transform: rotate(180deg);
+}
+
+.privacy-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+.privacy-group.is-open .privacy-content {
+    max-height: 200px; 
+    overflow-y: auto; 
+}
+
+.privacy-box {
+    background-color: var(--white);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    padding: 10px;
+    font-size: 0.8rem;
+    color: var(--text-600);
+    line-height: 1.5;
+    margin-top: 0.25rem;
+}
+.privacy-box p {
+    font-size: 0.8rem;
+    color: var(--text-600);
+    line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.privacy-box strong {
+    font-weight: 600;
+    color: var(--text-700);
+}
 
 
 /* ----------------------------------------------------
-   6) Buttons (로딩 스피너)
+   7) Buttons (로딩 스피너)
 ---------------------------------------------------- */
 .form-navigation { display: flex; justify-content: space-between; margin-top: 0; }
 .btn {
@@ -604,7 +675,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 
 /* ----------------------------------------------------
-   7) Success Message
+   8) Success Message
 ---------------------------------------------------- */
 #success-message {
     text-align: center;
@@ -630,7 +701,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 
 /* ----------------------------------------------------
-   8) Responsive (모바일 화면 수정)
+   9) Responsive (모바일 화면 수정)
 ---------------------------------------------------- */
 @media (max-width: 768px) {
     body {
@@ -702,6 +773,16 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     .progress-step:not(.active) {
         display: none; /* 활성 스텝만 보임 */
     }
+    .step-circle {
+        width: 24px; /* 모바일에서 원 크기 살짝 줄임 */
+        height: 24px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem; /* 숫자와 라벨 사이 간격 */
+    }
+    .progress-step.check .step-circle {
+        font-size: 0.9rem;
+    }
+
 
     .step-title { font-size: 1.4rem; }
     .form-group .icon { top: 0.8rem; }
@@ -712,7 +793,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 }
 
 /* ----------------------------------------------------
-   9) Polishes (선택 효과 & 마우스 파티클)
+   10) Polishes (선택 효과 & 마우스 파티클)
 ---------------------------------------------------- */
 ::selection { background: rgba(164, 53, 240, 0.25); }
 img { max-width: 100%; height: auto; display: block; }
@@ -734,73 +815,3 @@ img { max-width: 100%; height: auto; display: block; }
         transform: scale(0.5);
     }
 }
-
-/* ========== [극도 업그레이드 1] 새 개인정보 동의 박스 스타일 ========== */
-.privacy-group {
-    margin-bottom: 1rem;
-}
-.privacy-group-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-.privacy-group-header input[type="checkbox"] {
-    margin-right: 0.5rem;
-    width: auto;
-}
-.privacy-group-header label {
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--text-700);
-    margin-bottom: 0;
-    flex-grow: 1;
-}
-.privacy-toggle-link {
-    font-size: 0.8rem;
-    color: var(--ub-purple-700);
-    text-decoration: underline;
-    cursor: pointer;
-    margin-left: 10px;
-    white-space: nowrap;
-}
-.privacy-toggle-link .arrow {
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-.privacy-group.is-open .privacy-toggle-link .arrow {
-    transform: rotate(180deg);
-}
-
-.privacy-content {
-    /* [수정] 스크롤 박스 -> 아코디언 */
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-}
-.privacy-group.is-open .privacy-content {
-    max-height: 200px; /* 펼쳐질 최대 높이 */
-    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
-}
-
-.privacy-box {
-    background-color: var(--white);
-    border: 1px solid #ccc;
-    border-radius: var(--radius-md);
-    padding: 10px;
-    font-size: 0.8rem;
-    color: var(--text-600);
-    line-height: 1.5;
-    margin-top: 0.25rem;
-}
-.privacy-box p {
-    font-size: 0.8rem;
-    color: var(--text-600);
-    line-height: 1.5;
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-}
-.privacy-box strong {
-    font-weight: 600;
-    color: var(--text-700);
-}
-/* =================================================== */
