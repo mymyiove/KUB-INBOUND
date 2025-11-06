@@ -13,6 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullNameInput = document.getElementById("full-name");
     const companyInput = document.getElementById("company-name");
     
+    
+    // --- [극도 업그레이드 1] "아코디언" 동의란 ---
+    document.querySelectorAll('.privacy-toggle-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const parentGroup = link.closest('.privacy-group');
+            parentGroup.classList.toggle('is-open');
+            const arrow = link.querySelector('.arrow');
+            arrow.innerHTML = parentGroup.classList.contains('is-open') ? '▲' : '▼';
+        });
+    });
+    // ------------------------------------------
+    
 
     // --- 2. 인라인 유효성 검사 ---
     function showError(inputElement, message) {
@@ -21,6 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
         formGroup.classList.add('error');
         formGroup.classList.remove('valid');
         errorElement.textContent = message;
+        
+        // [수정] 아코디언이 닫혀있으면 강제로 연다
+        if (formGroup.classList.contains('privacy-group') && !formGroup.classList.contains('is-open')) {
+            formGroup.classList.add('is-open');
+            formGroup.querySelector('.arrow').innerHTML = '▲';
+        }
+        
         formGroup.classList.add('shake');
         formGroup.addEventListener('animationend', () => {
             formGroup.classList.remove('shake');
@@ -59,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (input.type === "checkbox") {
                 if (!input.checked) {
                     isValid = false;
-                    showError(input, "개인정보 수집 및 이용에 동의해주세요.");
+                    showError(input, "필수 항목에 동의해주세요.");
                 }
             } 
             else if (!value) {
@@ -102,6 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = "무료 자료 다운로드";
         
+        // [수정] 아코디언 닫기
+        document.querySelectorAll('.privacy-group.is-open').forEach(group => {
+            group.classList.remove('is-open');
+            group.querySelector('.arrow').innerHTML = '▼';
+        });
+        
         loadSavedInfo();
     }
 
@@ -121,9 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
             data.phone = data.phone.replace(/-/g, "");
         }
         
-        // ========== [수정] 리드 소스 변경! ==========
         data.lead_source = "롯데이노베이트";
-        // =======================================
         
         saveInfoToStorage(data); 
 
@@ -262,7 +286,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-    // --- 6. 초기화 실행 ---
+    // --- 6. 마우스 파티클 효과 ---
+    const formPanes = document.querySelectorAll('.info-pane, .form-pane');
+    formPanes.forEach(pane => {
+        pane.addEventListener('mousemove', (e) => {
+            const rect = pane.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            createParticle(x, y, pane);
+        });
+    });
+
+    function createParticle(x, y, parent) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        const color = `hsl(${260 + Math.random() * 40}, 100%, ${70 + Math.random() * 20}%)`;
+        particle.style.background = color;
+        parent.appendChild(particle);
+        setTimeout(() => {
+            particle.remove();
+        }, 1000);
+    }
+    
+    // --- 7. 초기화 실행 ---
     loadSavedInfo(); 
     if (phoneInput) phoneInput.addEventListener('input', autoFormatPhone); 
     if (emailInput) emailInput.addEventListener('blur', validateEmailRealtime); 
