@@ -297,7 +297,7 @@ body {
     color: var(--text-400);
     transition: all 0.4s ease;
     border: 2px solid #e0e0e0;
-    position: relative; /* [추가] "스르륵" 효과를 위해 */
+    position: relative; 
 }
 .step-label {
     font-size: 0.85rem; 
@@ -306,7 +306,6 @@ body {
     transition: color 0.4s ease;
 }
 
-/* ========== [추가] "스르륵" V자 변환 스타일 ========== */
 .step-number, .step-checkmark {
     position: absolute;
     top: 50%;
@@ -324,7 +323,6 @@ body {
     font-size: 1.1rem;
     font-weight: 900;
 }
-/* ============================================== */
 
 
 /* 활성 스텝 */
@@ -340,15 +338,14 @@ body {
 
 /* 완료된 스텝 */
 .progress-step.check .step-circle {
-    background: var(--white);
-    color: var(--ub-purple-700);
-    border-color: var(--ub-purple-700);
+    background: var(--white); 
+    color: var(--ub-purple-700); 
+    border-color: var(--ub-purple-700); 
     transform: scale(1);
 }
 .progress-step.check .step-label {
     color: var(--text-600);
 }
-/* ========== [추가] V자 보이기 / 숫자 숨기기 ========== */
 .progress-step.check .step-number {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0);
@@ -357,7 +354,6 @@ body {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
 }
-/* ============================================= */
 
 
 .required-note {
@@ -608,13 +604,15 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     line-height: 1.5;
     margin-top: 0.25rem;
 }
+/* ========== [수정] 줄 간격 여유 있게 ========== */
 .privacy-box p {
     font-size: 0.8rem;
     color: var(--text-600);
     line-height: 1.5;
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem; /* 0.5rem -> 1rem */
 }
+/* ========================================= */
 .privacy-box strong {
     font-weight: 600;
     color: var(--text-700);
@@ -843,4 +841,77 @@ img { max-width: 100%; height: auto; display: block; }
         opacity: 0;
         transform: scale(0.5);
     }
+}
+
+/* ========== "아코디언" 동의란 스타일 ========== */
+.privacy-group {
+    margin-bottom: 1rem;
+}
+.privacy-group-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.privacy-group-header input[type="checkbox"] {
+    margin-right: 0.5rem;
+    width: auto;
+}
+.privacy-group-header label {
+    font-weight: 700; 
+    font-size: 0.9rem;
+    color: var(--text-700);
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+.privacy-toggle-link {
+    font-size: 0.8rem;
+    color: var(--ub-purple-700);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+.privacy-toggle-link .arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+.privacy-group.is-open .privacy-toggle-link .arrow {
+    transform: rotate(180deg);
+}
+
+.privacy-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+.privacy-group.is-open .privacy-content {
+    max-height: 200px; 
+    overflow-y: auto; 
+}
+
+.privacy-box {
+    background-color: var(--white);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    color: var(--text-600);
+    line-height: 1.5;
+    margin-top: 0.25rem;
+}
+.privacy-box p {
+    font-size: 0.8rem;
+    color: var(--text-600);
+    line-height: 1.5;
+    margin-top: 0;
+    /* ========== [수정] 줄 간격 여유 있게 ========== */
+    margin-bottom: 1rem; 
+}
+.privacy-box p:last-child {
+    margin-bottom: 0; /* 마지막 문단은 여백 제거 */
+}
+/* ========================================= */
+.privacy-box strong {
+    font-weight: 600;
+    color: var(--text-700);
 }
