@@ -417,9 +417,6 @@ body {
     margin-top: 0.35rem; 
     min-height: 1em; 
 }
-.checkbox-error {
-    margin-left: 1.75rem; 
-}
 
 /* 에러 상태 */
 .form-group.error input,
@@ -433,6 +430,14 @@ body {
 .form-group.error.floating label {
     color: var(--text-red);
 }
+
+.privacy-group.error .privacy-group-header label {
+    color: var(--text-red);
+}
+.privacy-group.error .error-message {
+    margin-left: 1.75rem; 
+}
+
 
 .form-group .icon-feedback {
     position: absolute;
@@ -555,11 +560,12 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .privacy-group-header {
     display: flex;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0; 
 }
 .privacy-group-header input[type="checkbox"] {
     margin-right: 0.5rem;
     width: auto;
+    transform: translateY(-1px);
 }
 .privacy-group-header label {
     font-weight: 700; 
@@ -567,6 +573,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     color: var(--text-700);
     margin-bottom: 0;
     flex-grow: 1;
+    cursor: pointer; 
 }
 .privacy-toggle-link {
     font-size: 0.8rem;
@@ -584,39 +591,51 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     transform: rotate(180deg);
 }
 
+/* ========== [수정] 스크롤 짤림(Clipping) 버그 수정 ========== */
 .privacy-content {
     max-height: 0;
-    overflow: hidden;
+    overflow: hidden; /* 스르륵 펼쳐질 땐 스크롤바 숨김 */
     transition: max-height 0.4s ease-out;
 }
 .privacy-group.is-open .privacy-content {
-    max-height: 200px; 
-    overflow-y: auto; 
+    max-height: 200px; /* 애니메이션 최대 높이 */
 }
-
 .privacy-box {
     background-color: var(--white);
     border: 1px solid #ccc;
     border-radius: var(--radius-md);
-    padding: 10px;
+    padding: 10px 12px;
     font-size: 0.8rem;
     color: var(--text-600);
     line-height: 1.5;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem; 
+    height: 180px; /* 고정 높이 */
+    overflow-y: auto; /* "안에 내용만" 스크롤링 */
 }
-/* ========== [수정] 줄 간격 여유 있게 ========== */
+/* =================================================== */
+
 .privacy-box p {
     font-size: 0.8rem;
     color: var(--text-600);
     line-height: 1.5;
     margin-top: 0;
-    margin-bottom: 1rem; /* 0.5rem -> 1rem */
+    margin-bottom: 1rem; 
 }
-/* ========================================= */
+.privacy-box p:last-child {
+    margin-bottom: 0; 
+}
 .privacy-box strong {
-    font-weight: 600;
+    font-weight: 700; 
     color: var(--text-700);
 }
+
+/* ========== [추가] 빨간줄(중요) 텍스트 스타일 ========== */
+.privacy-highlight {
+    font-size: 0.85rem !important; /* 0.8rem -> 0.85rem */
+    font-weight: 700 !important; /* 굵게 */
+    color: var(--text-900) !important; /* 더 진하게 */
+}
+/* =================================================== */
 
 
 /* ----------------------------------------------------
@@ -693,7 +712,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 }
 .btn-next:hover::before,
 .btn-submit:hover::before,
-#success-message .btn:hover::before {
+#success-message .btn::before {
     left: 150%;
 }
 
@@ -817,6 +836,14 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
     
     .form-group .icon-feedback { display: none; }
     input[type="email"] { padding-right: 3rem; }
+    
+    /* [수정] 모바일 스크롤 짤림 버그 수정 */
+    .privacy-group.is-open .privacy-content {
+        max-height: 150px; /* 모바일은 150px */
+    }
+    .privacy-box {
+        height: 130px; /* 모바일은 130px */
+    }
 }
 
 /* ----------------------------------------------------
@@ -841,77 +868,4 @@ img { max-width: 100%; height: auto; display: block; }
         opacity: 0;
         transform: scale(0.5);
     }
-}
-
-/* ========== "아코디언" 동의란 스타일 ========== */
-.privacy-group {
-    margin-bottom: 1rem;
-}
-.privacy-group-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-.privacy-group-header input[type="checkbox"] {
-    margin-right: 0.5rem;
-    width: auto;
-}
-.privacy-group-header label {
-    font-weight: 700; 
-    font-size: 0.9rem;
-    color: var(--text-700);
-    margin-bottom: 0;
-    flex-grow: 1;
-}
-.privacy-toggle-link {
-    font-size: 0.8rem;
-    color: var(--ub-purple-700);
-    text-decoration: underline;
-    cursor: pointer;
-    margin-left: 10px;
-    white-space: nowrap;
-}
-.privacy-toggle-link .arrow {
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-.privacy-group.is-open .privacy-toggle-link .arrow {
-    transform: rotate(180deg);
-}
-
-.privacy-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-}
-.privacy-group.is-open .privacy-content {
-    max-height: 200px; 
-    overflow-y: auto; 
-}
-
-.privacy-box {
-    background-color: var(--white);
-    border: 1px solid #ccc;
-    border-radius: var(--radius-md);
-    padding: 10px 12px;
-    font-size: 0.8rem;
-    color: var(--text-600);
-    line-height: 1.5;
-    margin-top: 0.25rem;
-}
-.privacy-box p {
-    font-size: 0.8rem;
-    color: var(--text-600);
-    line-height: 1.5;
-    margin-top: 0;
-    /* ========== [수정] 줄 간격 여유 있게 ========== */
-    margin-bottom: 1rem; 
-}
-.privacy-box p:last-child {
-    margin-bottom: 0; /* 마지막 문단은 여백 제거 */
-}
-/* ========================================= */
-.privacy-box strong {
-    font-weight: 600;
-    color: var(--text-700);
 }
