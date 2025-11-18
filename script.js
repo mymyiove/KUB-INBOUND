@@ -20,10 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStep = 1;
     const totalSteps = steps.length;
-    // [수정] progressStepNumbers 변수 삭제 (더 이상 필요 없음)
+    // [수정] 스텝 서클 V자 페이드아웃을 위해 innerHTML 대신 CSS로 제어
+    // const progressStepNumbers = progressSteps.map(step => step.querySelector('.step-circle').innerHTML);
 
-
-    // --- "아코디언" 동의란 ---
+    
+    // --- [극도 업그레이드 1] "아코디언" 동의란 ---
     document.querySelectorAll('.privacy-toggle-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateButtons(stepNumber);
     }
 
+    // [수정] "스텝 서클" UI 업데이트
     function updateProgressUI(stepNumber) {
         progressSteps.forEach((step, index) => {
             if (index < stepNumber - 1) { // 완료된 스텝
@@ -61,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
+        // [수정] "뚫림" 버그 수정 (width -> transform)
+        // (0, 0.5, 1)
         const progressScale = (stepNumber - 1) / (totalSteps - 1); 
         progressFill.style.transform = `scaleX(${progressScale})`;
     }
@@ -85,20 +89,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showError(inputElement, message) {
         const formGroup = inputElement.closest('.form-group');
-        const errorElement = formGroup.querySelector('.error-message');
+        // [수정] 체크박스는 .form-group이 아니라 .privacy-group-header의 부모를 찾아야 함
+        const errorTargetGroup = inputElement.closest('.privacy-group') || formGroup;
+        const errorElement = errorTargetGroup.querySelector('.error-message');
         
-        formGroup.classList.add('error');
-        formGroup.classList.remove('valid'); 
-        errorElement.textContent = message;
+        errorTargetGroup.classList.add('error');
+        errorTargetGroup.classList.remove('valid'); 
+        if (errorElement) errorElement.textContent = message;
         
-        if (formGroup.classList.contains('privacy-group') && !formGroup.classList.contains('is-open')) {
-            formGroup.classList.add('is-open');
-            formGroup.querySelector('.arrow').innerHTML = '▲';
+        // [수정] 아코디언이 닫혀있으면 강제로 연다
+        if (errorTargetGroup.classList.contains('privacy-group') && !errorTargetGroup.classList.contains('is-open')) {
+            errorTargetGroup.classList.add('is-open');
+            const arrow = errorTargetGroup.querySelector('.arrow');
+            if (arrow) arrow.innerHTML = '▲'; // arrow가 있는 경우에만
         }
         
-        formGroup.classList.add('shake');
-        formGroup.addEventListener('animationend', () => {
-            formGroup.classList.remove('shake');
+        errorTargetGroup.classList.add('shake');
+        errorTargetGroup.addEventListener('animationend', () => {
+            errorTargetGroup.classList.remove('shake');
         }, { once: true });
     }
 
@@ -108,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         formGroup.classList.remove('error');
         formGroup.classList.add('valid');
-        errorElement.textContent = ''; 
+        if (errorElement) errorElement.textContent = ''; 
     }
 
     function clearErrors() {
@@ -123,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ========== [수정] "만 14세" 유효성 검사 추가 ==========
     function validateStep(stepNumber) {
         clearErrors(); 
         let isValid = true;
@@ -135,7 +144,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (input.type === "checkbox") {
                 if (!input.checked) {
                     isValid = false;
-                    showError(input, "필수 항목에 동의해주세요.");
+                    if (input.id === 'agree_age') {
+                        showError(input, "만 14세 이상만 신청할 수 있습니다.");
+                    } else {
+                        showError(input, "필수 항목에 동의해주세요.");
+                    }
                 }
             } 
             else if (!value) {
@@ -166,6 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return isValid;
     }
+    // ==================================================
 
 
     // --- 4. 폼 제출 및 리셋 로직 ---
@@ -183,9 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         progressSteps[0].classList.add("active"); 
         
+        // [수정] 아코디언 닫기
         document.querySelectorAll('.privacy-group.is-open').forEach(group => {
             group.classList.remove('is-open');
-            group.querySelector('.arrow').innerHTML = '▼';
+            const arrow = group.querySelector('.arrow');
+            if (arrow) arrow.innerHTML = '▼';
         });
         
         successMessage.style.display = "none";
