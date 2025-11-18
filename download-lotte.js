@@ -14,36 +14,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const companyInput = document.getElementById("company-name");
     
     
-    // --- [극도 업그레이드 1] "아코디언" 동의란 ---
+    // --- "아코디언" 동의란 ---
     document.querySelectorAll('.privacy-toggle-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const parentGroup = link.closest('.privacy-group');
             parentGroup.classList.toggle('is-open');
             const arrow = link.querySelector('.arrow');
-            arrow.innerHTML = parentGroup.classList.contains('is-open') ? '▲' : '▼';
+            if (arrow) arrow.innerHTML = parentGroup.classList.contains('is-open') ? '▲' : '▼';
         });
     });
-    // ------------------------------------------
     
 
     // --- 2. 인라인 유효성 검사 ---
     function showError(inputElement, message) {
         const formGroup = inputElement.closest('.form-group');
-        const errorElement = formGroup.querySelector('.error-message');
-        formGroup.classList.add('error');
-        formGroup.classList.remove('valid');
-        errorElement.textContent = message;
+        // [수정] 체크박스는 .form-group이 아니라 .privacy-group-header의 부모를 찾아야 함
+        const errorTargetGroup = inputElement.closest('.privacy-group') || formGroup;
+        const errorElement = errorTargetGroup.querySelector('.error-message');
         
-        // [수정] 아코디언이 닫혀있으면 강제로 연다
-        if (formGroup.classList.contains('privacy-group') && !formGroup.classList.contains('is-open')) {
-            formGroup.classList.add('is-open');
-            formGroup.querySelector('.arrow').innerHTML = '▲';
+        errorTargetGroup.classList.add('error');
+        errorTargetGroup.classList.remove('valid'); 
+        if (errorElement) errorElement.textContent = message;
+        
+        if (errorTargetGroup.classList.contains('privacy-group') && !errorTargetGroup.classList.contains('is-open')) {
+            errorTargetGroup.classList.add('is-open');
+            const arrow = errorTargetGroup.querySelector('.arrow');
+            if (arrow) arrow.innerHTML = '▲';
         }
         
-        formGroup.classList.add('shake');
-        formGroup.addEventListener('animationend', () => {
-            formGroup.classList.remove('shake');
+        errorTargetGroup.classList.add('shake');
+        errorTargetGroup.addEventListener('animationend', () => {
+            errorTargetGroup.classList.remove('shake');
         }, { once: true });
     }
     
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         formGroup.classList.remove('error');
         formGroup.classList.add('valid');
-        errorElement.textContent = ''; 
+        if (errorElement) errorElement.textContent = ''; 
     }
 
     function clearErrors() {
@@ -68,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ========== [수정] "만 14세" 유효성 검사 추가 ==========
     function validateForm() {
         clearErrors(); 
         let isValid = true;
@@ -79,7 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (input.type === "checkbox") {
                 if (!input.checked) {
                     isValid = false;
-                    showError(input, "필수 항목에 동의해주세요.");
+                    if (input.id === 'agree_age') {
+                        showError(input, "만 14세 이상만 신청할 수 있습니다.");
+                    } else {
+                        showError(input, "필수 항목에 동의해주세요.");
+                    }
                 }
             } 
             else if (!value) {
@@ -110,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return isValid;
     }
+    // ==================================================
 
 
     // --- 3. 폼 제출 및 리셋 로직 ---
@@ -122,10 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = "무료 자료 다운로드";
         
-        // [수정] 아코디언 닫기
         document.querySelectorAll('.privacy-group.is-open').forEach(group => {
             group.classList.remove('is-open');
-            group.querySelector('.arrow').innerHTML = '▼';
+            const arrow = group.querySelector('.arrow');
+            if (arrow) arrow.innerHTML = '▼';
         });
         
         loadSavedInfo();
@@ -147,7 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
             data.phone = data.phone.replace(/-/g, "");
         }
         
+        // ========== [수정] 리드 소스 변경! ==========
         data.lead_source = "롯데이노베이트";
+        // =======================================
         
         saveInfoToStorage(data); 
 
