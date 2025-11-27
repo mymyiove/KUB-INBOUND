@@ -19,6 +19,23 @@
             margin-top: auto; 
             padding-top: 7rem; 
         }
+
+        /* ========== [추가] 화살표 살랑살랑 애니메이션 ========== */
+        @keyframes bounce-right-gentle {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(6px); /* 오른쪽으로 6px 이동 */
+            }
+        }
+
+        .info-pane .service-intro-link .link-arrow {
+            display: inline-block;
+            /* 1.5초 동안 부드럽게(ease-in-out) 무한 반복(infinite) */
+            animation: bounce-right-gentle 1.5s ease-in-out infinite; 
+        }
+        /* =================================================== */
     </style>
 </head>
 <body>
@@ -38,9 +55,9 @@
                 
                 <p class="trusted-by-line">
                     AI는 이제 기술적 목표가 아닌 새로운 비즈니스 운영 체계입니다.<br><br>
-                    트렌드 보고서를 통해 조직의 성장을 위한 가장 확실한 내비게이션을 확인하고,<br>
-                    AI의 차세대 혁신을 실천해 보세요.<br><br>
-                    AI는 결승점이 아닌 '시작점' 이니까요!
+                    트렌드 보고서를 통해 조직의 성장을 위한 가장 확실한 내비게이션을 확인하고,
+                    AI 혁신의 차세대 혁신을 실천해 보세요.<br><br>
+                    AI는 결승점이 아닌 '시작점'이니까요!
                 </p>
                 
                 <div class="testimonial-slider">
@@ -64,7 +81,7 @@
             <img src="udemy-logo-purple.png" alt="Udemy Business Logo" class="mobile-logo">
 
             <div class="mobile-info-pane">
-                <p>AI 시대의 필독서: <strong>2026 글로벌 스킬 트렌드 리포트</strong></p>
+                <p>AI 시대의 필독서: <strong>2026 글로벌 스킬 트렌드</strong></p>
                 <p class="mobile-trusted-by">조직 성장을 위한 핵심 인사이트를 확인하세요.</p>
             </div>
 
@@ -157,7 +174,6 @@
                               <p><strong>수신 방법:</strong> SMS, 이메일, 전화 등</p>
                               
                               <p class="privacy-highlight"><strong>보유 및 이용기간:</strong> <strong>동의 철회</strong> 요청 시까지</p>
-                              
                               <p><strong>동의의 거부 시 불이익:</strong> 동의를 거부하셔도 서비스 이용에는 제한이 없으나, <strong>웅진씽크빅</strong> <strong>유데미</strong>의 최신 소식 및 혜택 정보를 받아보실 수 없습니다.</p>
                             </div>
                         </div>
@@ -170,7 +186,7 @@
                         </div>
                         <div class="error-message checkbox-error"></div>
                     </div>
-                    </div>
+                </div>
 
                 <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
 
