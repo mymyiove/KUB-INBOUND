@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>기업 교육의 새로운 기준 | Woongjin SkillOne</title>
-    <link rel="icon" type="image/png" href="favicon_skillone.png?v=12">
+    <link rel="icon" type="image/png" href="favicon_skillone.png?v=14">
     
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -34,7 +34,7 @@
 
         .form-container {
             width: 1050px; 
-            height: 750px; 
+            height: 780px; /* PC 스크롤 방지를 위해 높이 안정화 */
             display: flex; background: var(--bg-dark-card);
             border-radius: 20px; overflow: hidden;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
@@ -136,26 +136,24 @@
         .check-item.selected { border-color: var(--primary-orange); background: rgba(255,107,0,0.1); color: #fff; font-weight: 600; }
         .check-item input { width: 20px; height: 20px; margin-right: 10px; accent-color: var(--primary-orange); cursor: pointer; }
 
-        /* 요약 뷰 */
-        .summary-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 15px 20px; margin-bottom: 20px; }
-        .summary-grid { display: grid; grid-template-columns: 80px 15px 1fr; gap: 10px 0; font-size: 0.9rem; line-height: 1.4; }
+        /* [요청 2] 3단계 요약 & 동의란 여백 다이어트 (스크롤바 방지) */
+        .summary-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 12px 20px; margin-bottom: 12px; }
+        .summary-grid { display: grid; grid-template-columns: 80px 15px 1fr; gap: 8px 0; font-size: 0.9rem; line-height: 1.4; }
         .summary-label { color: #888; font-weight: 600; }
         .summary-divider { color: #444; text-align: center; }
         .summary-value { color: #fff; word-break: break-word; }
 
-        /* 전체 동의 */
         .privacy-all-wrapper {
             background: #2a2a2a; border: 1px solid #444; border-radius: 8px; 
-            padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center;
+            padding: 12px 20px; margin-bottom: 12px; display: flex; align-items: center;
         }
         .privacy-all-wrapper label { color: var(--primary-orange); font-weight: 800; font-size: 1rem; margin-left: 10px; cursor: pointer; flex: 1;}
         .privacy-all-wrapper input { width: 22px; height: 22px; accent-color: var(--primary-orange); cursor: pointer; }
 
-        /* 개별 동의 컨테이너 */
-        .privacy-container { border: 1px solid #333; border-radius: 8px; background: #1a1a1a; margin-bottom: 20px; }
+        .privacy-container { border: 1px solid #333; border-radius: 8px; background: #1a1a1a; margin-bottom: 15px; }
         
         .privacy-group { 
-            padding: 15px 20px; border-bottom: 1px solid #333; 
+            padding: 13px 20px; border-bottom: 1px solid #333; 
             display: flex; flex-direction: column; justify-content: center; position: relative; 
         }
         .privacy-group:last-child { border-bottom: none; }
@@ -166,15 +164,14 @@
         .toggle-btn { color: var(--primary-orange); font-size: 0.8rem; text-decoration: none; cursor: pointer; white-space: nowrap; margin-left: 5px; flex-shrink: 0;}
         
         .privacy-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .is-open .privacy-content { max-height: 500px; margin-top: 15px; }
-        .privacy-box { background: #000; padding: 15px; border-radius: 6px; font-size: 0.8rem; color: #999; line-height: 1.6; }
+        .is-open .privacy-content { max-height: 400px; margin-top: 10px; }
+        .privacy-box { background: #000; padding: 12px; border-radius: 6px; font-size: 0.8rem; color: #999; line-height: 1.5; }
         .privacy-box strong { color: #ddd; }
         .privacy-box ul { padding-left: 20px; margin: 5px 0; }
         
         .privacy-group .error-message { position: absolute; bottom: 2px; left: 20px; font-size: 0.75rem; margin: 0; }
 
-        /* 하단 버튼 */
-        .nav-btns { display: flex; justify-content: space-between; margin-top: auto; padding-top: 15px; border-top: 1px solid #222; }
+        .nav-btns { display: flex; justify-content: space-between; margin-top: auto; padding-top: 10px; border-top: 1px solid #222; }
         .btn { padding: 14px 30px; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; flex: 1; max-width: 48%; }
         .btn-prev { background: #333; color: #fff; }
         .btn-prev:hover { background: #444; }
@@ -185,21 +182,19 @@
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
 
         /* =========================================================
-           [모바일 폼 순서 재배치 완벽 해결]
+           [모바일 최적화 완벽 수정] 헤더 잘림 버그 및 중앙 정렬 
            ========================================================= */
         @media (max-width: 768px) {
-            body { padding: 0; background: #000; } /* 모바일에서는 검정 배경 통일 */
+            /* [해결 1] align-items: flex-start로 화면 최상단 고정 (잘림 방지) */
+            body { padding: 0; background: #000; align-items: flex-start; } 
             
-            /* 컨테이너 속성 변경으로 자식 요소들 순서 제어 (Flex Order) */
             .form-container { 
                 flex-direction: column; width: 100%; height: auto; min-height: 100vh; 
                 margin: 0; border-radius: 0; border: none; box-shadow: none; background: #000;
             }
             
-            /* info-pane의 껍데기를 날려 내부 요소들이 form-container의 직접적인 flex 아이템이 되도록 처리 */
             .info-pane { display: contents; }
             
-            /* 모바일 순서 배치 */
             .top-header-zone { order: 1; height: auto; margin: 0; padding: 30px 20px 10px; justify-content: center; background: #000; }
             .info-logo { margin: 0 auto; display: block; }
             
@@ -208,13 +203,11 @@
             .info-top .sub-copy { font-size: 0.85rem; text-align: center; margin-bottom: 0; }
             .hide-on-mobile { display: none !important; }
             
-            /* 핵심 폼이 3번째로 등장! */
             .form-pane { 
                 order: 3; width: 100%; padding: 30px 20px; overflow-y: visible; flex-grow: 1; 
                 border-radius: 20px 20px 0 0; background: var(--form-bg); 
             }
             
-            /* 폼 아래 롤링 배너 배치 */
             .info-bottom { 
                 order: 4; min-height: 120px; margin-top: 0; padding: 30px 20px; 
                 border-top: none; background: #111; 
@@ -225,17 +218,17 @@
             .service-intro-link { position: relative; text-align: center; margin-top: 10px; }
             .service-link { font-size: 0.85rem; }
 
-            /* 푸터가 제일 마지막 */
             .footer-text { order: 5; margin: 0; padding: 0 0 30px 0; position: static; text-align: center; font-size: 0.7rem; color: #555; background: #111; }
 
-            /* 상태 선 중앙 정렬 계산: 24px 기준 top 11px */
             .progress-bar { width: 100%; margin-bottom: 30px; }
             .progress-bar::before { left: 16.66%; width: 66.66%; top: 11px; }
             .progress-fill { left: 16.66%; width: 66.66%; top: 11px; }
             .progress-step { font-size: 0.7rem; }
             .circle { width: 24px; height: 24px; line-height: 20px; font-size: 0.8rem; border-width: 1px; }
 
-            .step-title { font-size: 1.15rem; margin-bottom: 20px; }
+            /* [해결 2] 모바일 스텝 타이틀 정중앙 정렬 완벽 배치 */
+            .step-title { font-size: 1.2rem; margin-bottom: 20px; text-align: center; word-break: keep-all; line-height: 1.4; }
+            
             .input-grid { grid-template-columns: 1fr; gap: 10px; }
             .checkbox-grid { grid-template-columns: 1fr; gap: 10px; }
             
