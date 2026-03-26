@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>기업 교육의 새로운 기준 | Woongjin SkillOne</title>
-    <link rel="icon" type="image/png" href="favicon_skillone.png?v=8">
+    <link rel="icon" type="image/png" href="favicon_skillone.png?v=9">
     
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -19,25 +19,23 @@
             --error-red: #ff4d4d;
         }
 
-        /* 기본 초기화 */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body { height: 100%; margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
 
+        /* [요청 1] 브랜드 컬러 그라데이션 (주황 > 보라 > 파랑 > 남색 > 주황) */
         body {
             font-family: 'Pretendard', sans-serif;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #6d28d2, #a435f0, #f09435, #d52a7c);
+            background: linear-gradient(135deg, #FF6B00, #6d28d2, #0077B5, #151b26, #FF6B00);
             background-size: 400% 400%;
             animation: gradient-flow 15s ease infinite;
         }
         @keyframes gradient-flow { 0% {background-position:0% 50%} 50% {background-position:100% 50%} 100% {background-position:0% 50%} }
 
-        /* [핵심 수정 1] PC 버전 레이아웃 균형 (모바일 대응 포함) */
         .form-container {
             width: 1050px; 
-            min-height: 700px; /* 고정 높이 탈피, 최소 높이만 지정 */
-            height: auto; 
+            height: 750px; 
             display: flex; background: var(--bg-dark-card);
             border-radius: 20px; overflow: hidden;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
@@ -45,13 +43,12 @@
             position: relative; margin: 20px;
         }
 
-        /* 좌우 레이아웃 수평 완벽 일치용 헤더 존 */
         .top-header-zone {
             height: 60px; margin-bottom: 25px; 
             display: flex; align-items: center; width: 100%;
         }
 
-        /* 왼쪽 패널 (PC 고정) */
+        /* 왼쪽 패널 */
         .info-pane { 
             width: 42%; padding: 50px 40px; background: #000; 
             display: flex; flex-direction: column; justify-content: flex-start; 
@@ -76,24 +73,18 @@
         .link-arrow { margin-left: 8px; transition: 0.3s; }
         .service-link:hover .link-arrow { transform: translateX(5px); }
 
-        /* 오른쪽 폼 패널 (스크롤 제어) */
+        /* 오른쪽 폼 패널 */
         .form-pane { 
             width: 58%; padding: 50px 40px; background: var(--form-bg); 
             display: flex; flex-direction: column; position: relative;
+            overflow-y: auto; scroll-behavior: smooth;
         }
 
-        /* 폼 패널 스크롤바 디자인 */
-        @media (min-width: 769px) {
-            .form-pane { max-height: none; }
-            .form-container { height: 750px; } /* PC는 높이 유지 */
-            .form-pane { overflow-y: auto; } /* PC에만 스크롤바 */
-            .form-pane::-webkit-scrollbar { width: 8px; }
-            .form-pane::-webkit-scrollbar-track { background: var(--form-bg); border-radius: 4px; }
-            .form-pane::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
-            .form-pane::-webkit-scrollbar-thumb:hover { background: var(--primary-orange); }
-        }
+        .form-pane::-webkit-scrollbar { width: 8px; }
+        .form-pane::-webkit-scrollbar-track { background: var(--form-bg); border-radius: 4px; }
+        .form-pane::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        .form-pane::-webkit-scrollbar-thumb:hover { background: var(--primary-orange); }
 
-        /* 프로그레스 바 */
         .progress-bar { display: flex; justify-content: space-between; position: relative; width: 90%; margin: 0 auto; }
         .progress-bar::before { content: ''; position: absolute; top: 14px; left: 10%; width: 80%; height: 2px; background: #333; z-index: 1; }
         .progress-fill { position: absolute; top: 14px; left: 10%; width: 80%; height: 2px; background: var(--primary-orange); z-index: 2; transform: scaleX(0); transform-origin: left; transition: 0.4s; }
@@ -105,78 +96,82 @@
         .active .circle { background: var(--primary-orange); border-color: var(--primary-orange); color: #fff; }
         .check .circle { background: var(--primary-orange); border-color: var(--primary-orange); color: #fff; }
 
-        /* 폼 스텝 애니메이션 */
         .form-step { display: none; animation: fadeIn 0.4s; flex-grow: 1; margin-top: 10px; }
         .form-step.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .step-title { font-size: 1.3rem; color: #fff; margin-bottom: 25px; line-height: 1.5; font-weight: 700; }
+        .step-title { font-size: 1.3rem; color: #fff; margin-bottom: 20px; line-height: 1.5; font-weight: 700; }
         .step-title strong { color: var(--primary-orange); }
 
-        /* 입력 폼 그리드 */
+        /* [요청 2] 연락처 박살 해결 (input[type="tel"] 추가) */
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .form-group { position: relative; margin-bottom: 20px; }
+        .form-group { position: relative; margin-bottom: 18px; }
         .form-group.full { grid-column: 1 / -1; }
         
-        /* 모바일 터치 최적화된 입력창 높이 */
-        input[type="text"], input[type="email"], select, textarea {
-            width: 100%; padding: 14px 18px; background: var(--input-bg); border: 1px solid #444; 
-            border-radius: 10px; color: #fff !important; font-size: 1rem; box-sizing: border-box; font-family: inherit; transition: 0.2s;
-            appearance: none; -webkit-appearance: none; /* 모바일 기본 스타일 제거 */
+        input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+            width: 100%; padding: 12px 15px; background: var(--input-bg); border: 1px solid #444; 
+            border-radius: 8px; color: #fff !important; font-size: 0.95rem; box-sizing: border-box; font-family: inherit; transition: 0.2s;
+            appearance: none; -webkit-appearance: none;
         }
         input:focus, select:focus, textarea:focus { border-color: var(--primary-orange); outline: none; background: #222; }
-        textarea { min-height: 120px; resize: none; margin-top: 5px; }
+        textarea { min-height: 100px; resize: none; margin-top: 5px; }
         
-        .error-message { color: var(--error-red); font-size: 0.8rem; position: absolute; bottom: -18px; left: 5px; }
+        .error-message { color: var(--error-red); font-size: 0.75rem; position: absolute; bottom: -18px; left: 5px; }
         .form-group.error input, .form-group.error select { border-color: var(--error-red); }
 
-        /* 플랫폼 선택 체크박스 UI */
         .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .check-item { 
             display: flex; align-items: center; color: #ccc; font-size: 0.95rem; cursor: pointer; 
-            background: #222; padding: 14px 18px; border-radius: 10px; border: 1px solid #333; transition: 0.2s; 
+            background: #222; padding: 12px 15px; border-radius: 8px; border: 1px solid #333; transition: 0.2s; 
         }
         .check-item:hover { border-color: #666; }
         .check-item.selected { border-color: var(--primary-orange); background: rgba(255,107,0,0.1); color: #fff; font-weight: 600; }
         .check-item input { width: 20px; height: 20px; margin-right: 12px; accent-color: var(--primary-orange); cursor: pointer; }
 
-        /* 요약 뷰 */
-        .summary-box { background: #111; border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 30px; }
-        .summary-grid { display: grid; grid-template-columns: 85px 15px 1fr; gap: 12px 0; font-size: 0.9rem; line-height: 1.4; }
+        .summary-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 15px 20px; margin-bottom: 20px; }
+        .summary-grid { display: grid; grid-template-columns: 85px 15px 1fr; gap: 10px 0; font-size: 0.9rem; line-height: 1.4; }
         .summary-label { color: #888; font-weight: 600; }
         .summary-divider { color: #444; text-align: center; }
         .summary-value { color: #fff; word-break: break-word; }
 
-        /* [핵심 수정 2] 동의 영역 정렬 및 '전체 동의' 추가 */
-        .privacy-container { border: 1px solid #333; border-radius: 10px; background: #1a1a1a; margin-bottom: 20px; }
+        /* [요청 3 & 4] 전체 동의 분리 및 동의란 상하 여백 완벽 동일화 */
+        
+        /* 전체 동의 박스 (완전 분리 및 강조) */
+        .privacy-all-wrapper {
+            background: #2a2a2a; border: 1px solid #444; border-radius: 8px; 
+            padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center;
+        }
+        .privacy-all-wrapper label { color: var(--primary-orange); font-weight: 800; font-size: 1rem; margin-left: 10px; cursor: pointer; flex: 1;}
+        .privacy-all-wrapper input { width: 22px; height: 22px; accent-color: var(--primary-orange); cursor: pointer; }
+
+        /* 개별 동의 컨테이너 */
+        .privacy-container { border: 1px solid #333; border-radius: 8px; background: #1a1a1a; margin-bottom: 20px; }
+        
+        /* 상하 간격 픽셀 단위 일치 */
         .privacy-group { 
-            padding: 18px 20px; border-bottom: 1px solid #333; 
+            padding: 15px 20px; /* 모든 그룹 공통 패딩 */
+            border-bottom: 1px solid #333; 
             display: flex; flex-direction: column; justify-content: center; position: relative; 
         }
         .privacy-group:last-child { border-bottom: none; }
         
-        /* 전체 동의 전용 스타일 */
-        .privacy-all-group { background: #222; border-radius: 10px 10px 0 0; }
-        .privacy-all-group label { color: var(--primary-orange); font-size: 1rem; font-weight: 700; }
-
         .privacy-header { display: flex; align-items: center; width: 100%; }
         .privacy-header input { width: 18px; height: 18px; margin-right: 12px; accent-color: var(--primary-orange); cursor: pointer; }
-        .privacy-header label { color: #ddd; font-size: 0.95rem; flex: 1; cursor: pointer; font-weight: 600; margin: 0; line-height: 1.2; }
+        .privacy-header label { color: #ddd; font-size: 0.9rem; flex: 1; cursor: pointer; margin: 0; line-height: 1.2; }
         .toggle-btn { color: var(--primary-orange); font-size: 0.8rem; text-decoration: none; cursor: pointer; white-space: nowrap; margin-left: 10px; }
         
         .privacy-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .is-open .privacy-content { max-height: 500px; margin-top: 15px; }
-        .privacy-box { background: #000; padding: 15px; border-radius: 8px; font-size: 0.8rem; color: #999; line-height: 1.6; }
+        .privacy-box { background: #000; padding: 15px; border-radius: 6px; font-size: 0.8rem; color: #999; line-height: 1.6; }
         .privacy-box strong { color: #ddd; }
         .privacy-box ul { padding-left: 20px; margin: 5px 0; }
         
-        /* 동의란 에러메시지 위치 고정 */
-        .privacy-error-space { height: 18px; margin-top: 5px; padding-left: 30px; }
-        .privacy-group .error-message { position: static; color: var(--error-red); font-size: 0.8rem; }
+        /* 에러 메시지가 레이아웃을 밀어내지 않도록 Absolute 처리 */
+        .privacy-group .error-message { position: absolute; bottom: 2px; left: 20px; font-size: 0.75rem; margin: 0; }
 
-        /* 하단 버튼 (모바일에서 더 크게) */
-        .nav-btns { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 1px solid #222; }
-        .btn { padding: 16px 35px; border-radius: 10px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.2s; flex: 1; max-width: 48%; }
+        /* 하단 버튼 (공간 낭비 축소) */
+        .nav-btns { display: flex; justify-content: space-between; margin-top: auto; padding-top: 15px; border-top: 1px solid #222; }
+        .btn { padding: 14px 30px; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; flex: 1; max-width: 48%; }
         .btn-prev { background: #333; color: #fff; }
         .btn-prev:hover { background: #444; }
         .btn-next, .btn-submit { background: var(--primary-orange); color: #fff; }
@@ -185,65 +180,47 @@
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
 
-        /* =========================================================
-           [핵심 수정 3] 모바일 최적화 (Mobile-First / RWD) 
-           ========================================================= */
+        /* [요청 5] 모바일 예쁘게 롤백 (카드 형태 유지) */
         @media (max-width: 768px) {
-            body { padding: 0; align-items: flex-start; } /* 화면 맨 위부터 시작 */
+            body { padding: 20px 15px; align-items: flex-start; } 
             
             .form-container { 
-                flex-direction: column; width: 100%; margin: 0; border-radius: 0; border: none; 
-                min-height: 100vh; height: auto; box-shadow: none; 
+                flex-direction: column; width: 100%; height: auto; min-height: 80vh; 
+                margin: 0; border-radius: 20px; /* 모바일에서도 둥근 카드 유지 */
             }
             
-            /* 수평 존 해제 */
-            .top-header-zone { height: auto; margin-bottom: 15px; justify-content: center; flex-direction: column; }
+            .top-header-zone { height: auto; margin-bottom: 20px; justify-content: center; flex-direction: column; }
             
-            /* 왼쪽 패널 모바일 대응 */
-            .info-pane { 
-                width: 100%; padding: 30px 20px; justify-content: center; 
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-            }
+            .info-pane { width: 100%; padding: 30px 25px; justify-content: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .info-top .main-copy { font-size: 1.25rem; white-space: normal; text-align: center; }
             .info-top .sub-copy { font-size: 0.9rem; text-align: center; margin-bottom: 20px; }
             .info-top .promo-text { font-size: 0.85rem; text-align: center; }
             
-            /* 롤링 배너 모바일 터치 영역 및 시인성 고려 */
-            .info-bottom { min-height: 180px; margin-top: 25px; border-top: 1px solid #222; padding-top: 25px; }
+            .info-bottom { min-height: 160px; margin-top: 25px; border-top: 1px solid #222; padding-top: 25px; }
             .testimonial-item h4 { font-size: 1.1rem; text-align: center; }
             .testimonial-item p { font-size: 0.85rem; text-align: center; margin-bottom: 15px; }
             .service-intro-link { position: relative; text-align: center; margin-top: 10px; bottom: auto; left: auto; }
             .service-link { font-size: 0.9rem; }
 
-            /* 오른쪽 폼 패널 모바일 대응 */
-            .form-pane { 
-                width: 100%; padding: 30px 20px; overflow-y: visible; /* 스크롤 body에 맡김 */
-                flex-grow: 1;
-            }
+            .form-pane { width: 100%; padding: 30px 25px; overflow-y: visible; }
             
-            /* 프로그레스 바 간소화 */
             .progress-bar { width: 100%; margin-bottom: 30px; }
             .progress-step { font-size: 0.7rem; }
             .circle { width: 22px; height: 22px; line-height: 20px; font-size: 0.8rem; border-width: 1px; }
 
-            /* 입력창 가독성 증대 */
-            .step-title { font-size: 1.25rem; margin-bottom: 20px; }
+            .step-title { font-size: 1.2rem; margin-bottom: 20px; }
             .input-grid { grid-template-columns: 1fr; gap: 10px; }
             .checkbox-grid { grid-template-columns: 1fr; gap: 10px; }
             
-            /* 요약 뷰 간격 */
             .summary-box { padding: 15px; }
             .summary-grid { grid-template-columns: 75px 10px 1fr; gap: 10px 0; font-size: 0.85rem; }
             
-            /* 동의란 간격 */
-            .privacy-group { padding: 15px 0; }
-            .privacy-header label { font-size: 0.9rem; }
+            .privacy-group { padding: 15px 15px; }
+            .privacy-header label { font-size: 0.85rem; }
             .privacy-box { font-size: 0.8rem; }
-            .privacy-error-space { height: 16px; }
 
-            /* 버튼 크기 (엄지손가락 터치 고려) */
-            .nav-btns { margin-top: 25px; }
-            .btn { padding: 16px 20px; font-size: 1rem; }
+            .nav-btns { margin-top: 20px; }
+            .btn { padding: 15px 20px; font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -251,7 +228,7 @@
 
     <div class="form-container">
         <div class="info-pane">
-            <div class="top-header-zone">
+            <div class="top-header-zone" style="justify-content: flex-start;">
                 <img src="src/img/logo_skillone_white.png" alt="SkillOne Logo" class="info-logo">
             </div>
 
@@ -289,7 +266,7 @@
         <div class="form-pane" id="form-pane">
             <form id="pro-contact-form">
                 
-                <div class="top-header-zone">
+                <div class="top-header-zone" style="justify-content: center;">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progress-fill"></div>
                         <div class="progress-step active" data-step="1"><div class="circle">1</div>정보 입력</div>
@@ -364,21 +341,18 @@
                     <div class="summary-box" id="summary-display">
                         </div>
                     
-                    <div class="privacy-container">
-                        <div class="privacy-group privacy-all-group">
-                            <div class="privacy-header">
-                                <input type="checkbox" id="agree-all">
-                                <label for="agree-all">아래 약관에 전체 동의합니다.</label>
-                            </div>
-                        </div>
+                    <div class="privacy-all-wrapper">
+                        <input type="checkbox" id="agree-all">
+                        <label for="agree-all">아래 약관에 전체 동의합니다.</label>
+                    </div>
 
+                    <div class="privacy-container">
                         <div class="privacy-group required">
                             <div class="privacy-header">
                                 <input type="checkbox" id="privacy-agree" name="privacy_agree" class="sub-check" required>
                                 <label for="privacy-agree">(필수) 개인정보 수집·이용 동의</label>
                                 <span class="toggle-btn">[자세히 보기 ▼]</span>
                             </div>
-                            <div class="privacy-error-space"><div class="error-message"></div></div>
                             <div class="privacy-content">
                                 <div class="privacy-box">
                                     <p><strong>개인정보 수집·이용 주체:</strong> (주)웅진씽크빅</p>
@@ -396,6 +370,7 @@
                                     <p><strong>동의의 거부 시 불이익:</strong> 동의를 거부하실 경우, 상담 신청 및 진행, 관련 문의 응대가 제한될 수 있습니다.</p>
                                 </div>
                             </div>
+                            <div class="error-message"></div>
                         </div>
 
                         <div class="privacy-group">
@@ -404,7 +379,6 @@
                                 <label for="marketing-agree">(선택) 광고성 정보 수신 동의</label>
                                 <span class="toggle-btn">[자세히 보기 ▼]</span>
                             </div>
-                            <div class="privacy-error-space"></div>
                             <div class="privacy-content">
                                 <div class="privacy-box">
                                     <p><strong>개인정보 수집·이용 주체:</strong> (주)웅진씽크빅</p>
@@ -421,7 +395,7 @@
                                 <input type="checkbox" id="age-agree" name="age_agree" class="sub-check" required>
                                 <label for="age-agree">(필수) 본인은 만 14세 이상입니다.</label>
                             </div>
-                            <div class="privacy-error-space"><div class="error-message"></div></div>
+                            <div class="error-message"></div>
                         </div>
                     </div>
                 </div>
@@ -464,8 +438,6 @@
             let rollingIdx = 0;
 
             setInterval(() => {
-                // 모바일이거나 PC화면이 아닐 때는 롤링 제외
-                if (window.innerWidth <= 768) return; 
                 if (testimonials.length === 0) return;
 
                 testimonials[rollingIdx].classList.remove("active");
@@ -493,26 +465,20 @@
 
             // --- 체크박스 시각적 강조 ---
             document.querySelectorAll('.check-item input').forEach(checkbox => {
-                // 초기 상태 확인
                 if(checkbox.checked) checkbox.closest('.check-item').classList.add('selected');
-
                 checkbox.addEventListener('change', function() {
-                    if(this.checked) {
-                        this.closest('.check-item').classList.add('selected');
-                    } else {
-                        this.closest('.check-item').classList.remove('selected');
-                    }
+                    if(this.checked) this.closest('.check-item').classList.add('selected');
+                    else this.closest('.check-item').classList.remove('selected');
                 });
             });
 
-            // --- [핵심 수정 2] 전체 동의 로직 ---
+            // --- 전체 동의 로직 ---
             const agreeAll = document.getElementById('agree-all');
             const subChecks = document.querySelectorAll('.sub-check');
 
             agreeAll.addEventListener('change', function() {
                 subChecks.forEach(cb => {
                     cb.checked = this.checked;
-                    // 필수 동의 에러메시지 초기화
                     const group = cb.closest(".privacy-group");
                     if(this.checked) {
                         group.classList.remove("error");
@@ -524,15 +490,12 @@
 
             subChecks.forEach(cb => {
                 cb.addEventListener('change', function() {
-                    // 필수항목 체크 시 에러 해결
                     if(this.checked) {
                         const group = this.closest(".privacy-group");
                         group.classList.remove("error");
                         const err = group.querySelector(".error-message");
                         if(err) err.innerText = "";
                     }
-                    
-                    // 전체동의 상태 연동
                     const allChecked = Array.from(subChecks).every(c => c.checked);
                     agreeAll.checked = allChecked;
                 });
@@ -560,7 +523,6 @@
                 `;
             }
 
-            // --- UI 갱신 & 스크롤 제어 ---
             function updateUI() {
                 steps.forEach((s, i) => s.classList.toggle("active", i === currentStep - 1));
                 progressSteps.forEach((s, i) => {
@@ -572,16 +534,11 @@
                 prevBtn.style.display = currentStep > 1 ? "block" : "none";
                 nextBtn.style.display = currentStep < steps.length ? "block" : "none";
                 submitBtn.style.display = currentStep === steps.length ? "block" : "none";
-
-                // 모바일에서는 스텝 전환 시 최상단으로 스크롤 (formPane에 스크롤이 있을 경우)
-                if(window.innerWidth > 768) {
-                    formPane.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'smooth' }); // 모바일은 body 스크롤
-                }
+                
+                formPane.scrollTo({ top: 0, behavior: 'smooth' });
+                if(window.innerWidth <= 768) window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // --- 유효성 검사 ---
             function validateInput(input) {
                 const group = input.closest(".form-group") || input.closest(".privacy-group");
                 const err = group.querySelector(".error-message");
@@ -596,18 +553,24 @@
                     }
                 } else if (!input.value.trim() && input.required) {
                     isOk = false; group.classList.add("error");
-                    if (err) err.innerText = "필수 입력 항목입니다.";
+                    if (err) err.innerText = "필수 항목을 입력해주세요.";
+                } 
+                else if (input.type === "email" && input.value.trim() !== "") {
+                    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+                    if (!emailRegex.test(input.value.trim())) {
+                        isOk = false; group.classList.add("error");
+                        if (err) err.innerText = "올바른 이메일 주소를 확인해주세요!";
+                    } else {
+                        group.classList.remove("error"); if (err) err.innerText = "";
+                    }
                 } else {
                     group.classList.remove("error"); if (err) err.innerText = "";
                 }
                 return isOk;
             }
 
-            // 실시간 블러(Blur) 검증
             document.querySelectorAll("input[required], select[required]").forEach(input => {
-                input.addEventListener('blur', function() {
-                    validateInput(this);
-                });
+                input.addEventListener('blur', function() { validateInput(this); });
             });
 
             nextBtn.addEventListener("click", () => {
@@ -645,7 +608,6 @@
             form.addEventListener("submit", (e) => {
                 e.preventDefault();
                 
-                // 마지막 단계 필수 체크박스 최종 검증
                 const current = steps[currentStep - 1];
                 const inputs = current.querySelectorAll("input[required]");
                 let formOk = true;
@@ -684,7 +646,6 @@
                 });
             });
 
-            // 연락처 포맷팅
             document.getElementById("phone").addEventListener('input', function (e) {
                 let val = e.target.value.replace(/\D/g, "");
                 if (val.length > 11) val = val.substring(0, 11);
