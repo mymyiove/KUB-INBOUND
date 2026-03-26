@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>기업 교육의 새로운 기준 | Woongjin SkillOne</title>
-    <link rel="icon" type="image/png" href="src/img/favicon_skillone.png?v=16">
+    <link rel="icon" type="image/png" href="src/img/favicon_skillone.png?v=17">
     
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -47,6 +47,7 @@
             display: flex; align-items: center; width: 100%;
         }
 
+        /* --- 왼쪽 패널 --- */
         .info-pane { 
             width: 42%; padding: 50px 40px; background: #000; 
             display: flex; flex-direction: column; justify-content: flex-start; 
@@ -55,9 +56,12 @@
         .info-logo { max-height: 35px; width: auto; }
         
         .info-top { margin-bottom: 0; }
-        .info-top .main-copy { font-size: 1.35rem; color: #fff; line-height: 1.4; font-weight: 800; margin-bottom: 10px; white-space: nowrap; }
-        .info-top .sub-copy { font-size: 0.95rem; color: #fff; margin-bottom: 20px; }
-        .info-top .sub-copy strong { color: var(--primary-orange); }
+        .info-top .main-copy { font-size: 1.35rem; color: #fff; line-height: 1.4; font-weight: 800; margin-bottom: 15px; white-space: nowrap; }
+        
+        /* [요청 5] 카피 뽝! 강조 */
+        .info-top .sub-copy { font-size: 1.3rem; color: #fff; margin-bottom: 20px; font-weight: 700; word-break: keep-all; }
+        .info-top .sub-copy strong { color: var(--primary-orange); font-size: 1.6rem; font-weight: 900; }
+        
         .info-top .promo-text { font-size: 0.9rem; color: #888; line-height: 1.6; margin-bottom: 0; }
         .info-top .promo-text strong { color: var(--primary-orange); }
 
@@ -76,8 +80,11 @@
         .link-arrow { margin-left: 8px; transition: 0.3s; }
         .service-link:hover .link-arrow { transform: translateX(5px); }
 
-        .footer-text { margin-top: auto; text-align: left; font-size: 0.75rem; color: #444; font-weight: 600; }
+        /* [요청 3] 푸터 설명 추가 */
+        .footer-text { margin-top: auto; text-align: left; font-size: 0.75rem; color: #444; font-weight: 600; line-height: 1.5; }
+        .footer-text .brand-desc { opacity: 0.6; font-weight: 400; display: block; margin-bottom: 3px; }
 
+        /* --- 오른쪽 폼 패널 --- */
         .form-pane { 
             width: 58%; padding: 50px 40px; background: var(--form-bg); 
             display: flex; flex-direction: column; position: relative;
@@ -105,9 +112,11 @@
         .form-step.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .step-title { font-size: 1.3rem; color: #fff; margin-bottom: 20px; line-height: 1.5; font-weight: 700; }
+        /* [요청 1] 폼 타이틀 중앙 정렬 */
+        .step-title { font-size: 1.3rem; color: #fff; margin-bottom: 25px; line-height: 1.5; font-weight: 700; text-align: center; }
         .step-title strong { color: var(--primary-orange); }
 
+        /* 입력 폼 */
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .form-group { position: relative; margin-bottom: 18px; }
         .form-group.full { grid-column: 1 / -1; }
@@ -123,6 +132,7 @@
         .error-message { color: var(--error-red); font-size: 0.75rem; position: absolute; bottom: -18px; left: 5px; white-space: nowrap; }
         .form-group.error input, .form-group.error select, .form-group.error textarea { border-color: var(--error-red); }
 
+        /* 플랫폼 선택 */
         .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .check-item { 
             display: flex; align-items: center; color: #ccc; font-size: 0.95rem; cursor: pointer; 
@@ -132,12 +142,14 @@
         .check-item.selected { border-color: var(--primary-orange); background: rgba(255,107,0,0.1); color: #fff; font-weight: 600; }
         .check-item input { width: 20px; height: 20px; margin-right: 10px; accent-color: var(--primary-orange); cursor: pointer; }
 
+        /* 요약 뷰 */
         .summary-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 15px 20px; margin-bottom: 12px; }
         .summary-grid { display: grid; grid-template-columns: 80px 15px 1fr; gap: 10px 0; font-size: 0.9rem; line-height: 1.4; }
         .summary-label { color: #888; font-weight: 600; }
         .summary-divider { color: #444; text-align: center; }
         .summary-value { color: #fff; word-break: break-word; }
 
+        /* 전체 동의 */
         .privacy-all-wrapper {
             background: #2a2a2a; border: 1px solid #444; border-radius: 8px; 
             padding: 12px 20px; margin-bottom: 12px; display: flex; align-items: center;
@@ -166,6 +178,7 @@
         
         .privacy-group .error-message { position: absolute; bottom: 2px; left: 20px; font-size: 0.75rem; margin: 0; }
 
+        /* 하단 버튼 */
         .nav-btns { display: flex; justify-content: space-between; margin-top: auto; padding-top: 10px; border-top: 1px solid #222; }
         .btn { padding: 14px 30px; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; flex: 1; max-width: 48%; }
         .btn-prev { background: #333; color: #fff; }
@@ -176,6 +189,9 @@
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
 
+        /* =========================================================
+           모바일 최적화
+           ========================================================= */
         @media (max-width: 768px) {
             body { padding: 0; background: #000; align-items: flex-start; } 
             
@@ -190,8 +206,9 @@
             .info-logo { margin: 0 auto; display: block; }
             
             .info-top { order: 2; padding: 0 20px 20px; background: #000; }
-            .info-top .main-copy { font-size: 1.15rem; white-space: normal; text-align: center; margin-bottom: 5px;}
-            .info-top .sub-copy { font-size: 0.85rem; text-align: center; margin-bottom: 0; }
+            .info-top .main-copy { font-size: 1.15rem; white-space: normal; text-align: center; margin-bottom: 10px;}
+            .info-top .sub-copy { font-size: 1.2rem; text-align: center; margin-bottom: 0; }
+            .info-top .sub-copy strong { font-size: 1.4rem; }
             .hide-on-mobile { display: none !important; }
             
             .form-pane { 
@@ -217,7 +234,7 @@
             .progress-step { font-size: 0.7rem; }
             .circle { width: 24px; height: 24px; line-height: 20px; font-size: 0.8rem; border-width: 1px; }
 
-            .step-title { font-size: 1.2rem; margin-bottom: 20px; text-align: center; word-break: keep-all; line-height: 1.4; }
+            .step-title { font-size: 1.15rem; margin-bottom: 25px; line-height: 1.4; }
             
             .input-grid { grid-template-columns: 1fr; gap: 10px; }
             .checkbox-grid { grid-template-columns: 1fr; gap: 10px; }
@@ -249,7 +266,7 @@
 
             <div class="info-top">
                 <div class="main-copy">글로벌 교육 콘텐츠와 LXP를 하나로!<br>기업 교육의 새로운 기준</div>
-                <div class="sub-copy"><strong>Woongjin SkillOne</strong>이 제시합니다.</div>
+                <div class="sub-copy"><strong>Woongjin SkillOne</strong>이<br>제시합니다.</div>
                 
                 <div class="promo-text hide-on-mobile">
                     지금 문의하시면, 1:1 전문 컨설팅과 함께<br>귀사만을 위한 <strong>맞춤형 제안</strong>을 드립니다.
@@ -278,7 +295,10 @@
                 </div>
             </div>
             
-            <div class="footer-text">© 2026 WoongjinThinkbig SkillOne, Hugh</div>
+            <div class="footer-text">
+                <span class="brand-desc">웅진 SkillOne은 웅진의 기업교육사업 전문 브랜드 입니다.</span>
+                © 2026 WoongjinThinkbig SkillOne, Hugh
+            </div>
         </div>
 
         <div class="form-pane" id="form-pane">
@@ -349,7 +369,7 @@
                     </div>
 
                     <div class="form-group full">
-                        <textarea id="inquiry" name="inquiry" placeholder="추가 문의사항을 입력해 주세요. (선택)"></textarea>
+                        <textarea id="inquiry" name="inquiry" placeholder="교육 목표와 문의 사항을 자유롭게 입력해주세요! 자세한 내용을 담아주실 수록 더 효율적인 상담이 가능해집니다.(선택)"></textarea>
                         <div class="error-message"></div>
                     </div>
                 </div>
@@ -450,7 +470,7 @@
 
             let currentStep = 1;
 
-            // --- [요청 4] 임시 저장(LocalStorage) 로드 ---
+            // 로컬스토리지 로드
             function loadSavedInfo() {
                 try {
                     const saved = localStorage.getItem('skillOneLeadInfo');
@@ -463,7 +483,7 @@
                         if(info.email) document.getElementById('email').value = info.email;
                         if(info.phone) document.getElementById('phone').value = info.phone;
                     }
-                } catch(e) { console.warn("LocalStorage Load Error"); }
+                } catch(e) {}
             }
             loadSavedInfo();
 
@@ -481,13 +501,14 @@
                 } catch(e) {}
             }
 
-            // --- 롤링 슬라이더 ---
+            // 롤링 슬라이더
             const testimonials = document.querySelectorAll(".testimonial-item");
             const rollingLink = document.getElementById("rolling-link");
             let rollingIdx = 0;
 
             setInterval(() => {
                 if (testimonials.length === 0) return;
+
                 testimonials[rollingIdx].classList.remove("active");
                 rollingIdx = (rollingIdx + 1) % testimonials.length;
                 const nextItem = testimonials[rollingIdx];
@@ -502,7 +523,7 @@
                 }
             }, 5000);
 
-            // --- 아코디언 토글 ---
+            // 아코디언 토글
             document.querySelectorAll(".toggle-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const group = btn.closest(".privacy-group");
@@ -511,7 +532,7 @@
                 });
             });
 
-            // --- 체크박스 강조 ---
+            // 체크박스 강조
             document.querySelectorAll('.check-item input').forEach(checkbox => {
                 if(checkbox.checked) checkbox.closest('.check-item').classList.add('selected');
                 checkbox.addEventListener('change', function() {
@@ -520,7 +541,7 @@
                 });
             });
 
-            // --- 전체 동의 연동 ---
+            // 전체 동의
             const agreeAll = document.getElementById('agree-all');
             const subChecks = document.querySelectorAll('.sub-check');
 
@@ -549,7 +570,7 @@
                 });
             });
 
-            // --- 요약 뷰 ---
+            // 요약 뷰 갱신
             function updateSummary() {
                 const name = document.getElementById('full-name').value;
                 const jobTitle = document.getElementById('job-title').value;
@@ -625,7 +646,7 @@
                 const inputs = current.querySelectorAll("input[required], select[required]");
                 let stepOk = true;
 
-                if (currentStep === 1) saveInfoToStorage(); // 1단계 통과 시 저장
+                if (currentStep === 1) saveInfoToStorage(); 
 
                 if (currentStep === 2) {
                     const checked = document.querySelectorAll('input[name="product"]:checked');
@@ -679,7 +700,6 @@
                 data.product = products.join(", ");
                 data.phone = data.phone.replace(/\D/g, "");
 
-                // [요청 1] 웅진스킬원 상담요청 강제 주입
                 data.lead_source = "스킬원 상담요청";
 
                 submitBtn.disabled = true;
@@ -691,7 +711,7 @@
                     form.style.display = "none";
                     successMsg.style.display = "block";
                     confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                    localStorage.removeItem('skillOneLeadInfo'); // [요청 4] 성공 시 임시저장 삭제
+                    localStorage.removeItem('skillOneLeadInfo'); 
                 }).catch(() => {
                     alert("전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
                     submitBtn.disabled = false;
