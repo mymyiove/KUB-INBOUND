@@ -4,62 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기업 교육의 새로운 기준 | Woongjin SkillOne</title>
-    <link rel="icon" type="image/png" href="favicon_skillone.png">
+    <link rel="icon" type="image/png" href="favicon_skillone.png?v=1">
+    
     <link rel="stylesheet" href="style.css">
+
     <style>
-        /* 웅진스킬원 블랙/오렌지 테마 커스텀 */
         :root {
-            --primary-color: #FF6B00; /* 웅진 오렌지 (포인트용) */
-            --bg-dark: #121212; /* 메인 배경 블랙 */
-            --pane-bg: #1a1a1a;
-            --text-white: #ffffff;
+            /* 기존 보라색 변수들을 오렌지와 블랙으로 강제 재정의 */
+            --ub-purple-700: #FF6B00 !important; 
+            --ub-purple-dark: #e66000 !important;
+            --ub-accent: #FF6B00 !important;
+            --form-bg-light: #222 !important;
+            --text-900: #fff !important;
+            --primary-color: #FF6B00;
         }
 
-        body { background-color: var(--bg-dark); color: var(--text-white); }
-        
-        /* 왼쪽 정보 패널을 블랙으로 처리 */
-        .info-pane { 
-            background: linear-gradient(135deg, #000000 0%, #252525 100%) !important; 
+        /* 배경 애니메이션 블랙 테마로 교체 */
+        .animated-bg {
+            background: linear-gradient(135deg, #000, #1a1a1a, #000) !important;
         }
 
-        /* 버튼 및 강조 요소 */
-        .btn-next, .btn-submit { 
-            background-color: var(--primary-color) !important; 
+        /* 왼쪽 패널 블랙 처리 */
+        .info-pane {
+            background: #000 !important;
+        }
+
+        /* 폼 영역 다크 모드 스타일 */
+        .form-pane {
+            background: rgba(30, 30, 30, 0.95) !important;
+            color: #fff !important;
+        }
+        .form-intro {
+            background-color: #2a2a2a !important;
+            color: #ccc !important;
             border: none !important;
         }
-        .progress-bar-fill { background: var(--primary-color) !important; }
-        .step-circle { border-color: var(--primary-color) !important; }
-        .active .step-circle { background-color: var(--primary-color) !important; }
-        .step-label { color: #888; }
-        .active .step-label { color: var(--text-white); }
+        .step-title { color: #fff !important; }
+        .step-title strong { color: var(--primary-color) !important; }
 
-        /* 체크박스 스타일 커스텀 */
+        /* 입력창 배경 및 테두리 조정 */
+        input[type="text"], input[type="email"], select, textarea {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+        .form-group.floating label {
+            background: #2a2a2a !important;
+            color: #888 !important;
+        }
+        input:focus, select:focus, textarea:focus {
+            background: #333 !important;
+            border-color: var(--primary-color) !important;
+        }
+
+        /* 플랫폼 선택 체크박스 커스텀 스타일 */
         .checkbox-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-            background: #2a2a2a;
+            gap: 12px;
+            margin: 20px 0;
             padding: 15px;
-            border-radius: 8px;
+            background: #333;
+            border-radius: 12px;
+            border: 1px solid #444;
         }
         .checkbox-item {
             display: flex;
             align-items: center;
+            color: #fff;
             font-size: 0.9rem;
             cursor: pointer;
         }
         .checkbox-item input {
+            width: 18px !important; 
+            height: 18px !important;
             margin-right: 8px;
             accent-color: var(--primary-color);
-            width: 18px;
-            height: 18px;
+            padding: 0 !important; /* 기존 padding 상쇄 */
         }
 
-        /* 롤링 텍스트 애니메이션 유지용 */
-        .testimonial-item h4 { color: var(--primary-color); font-size: 1.4rem; margin-bottom: 10px; }
-        .service-intro-link a { color: #bbb; text-decoration: none; border-bottom: 1px solid #555; padding-bottom: 2px; }
-        .service-intro-link a:hover { color: var(--primary-color); border-color: var(--primary-color); }
+        /* 하단 버튼 및 프로그레스 바 */
+        .btn-next, .btn-submit { background-color: var(--primary-color) !important; color: #fff !important; }
+        .progress-bar-fill { background-color: var(--primary-color) !important; }
+        .step-circle { border-color: var(--primary-color) !important; }
+        .active .step-circle { background-color: var(--primary-color) !important; color: #fff !important; }
+        
+        /* 롤링 텍스트 색상 및 위치 교정 */
+        .testimonial-item h4 { color: var(--primary-color) !important; }
+        .testimonial-item p { color: #bbb !important; }
     </style>
 </head>
 <body>
@@ -140,7 +172,7 @@
 
                 <div class="form-step" data-step="2">
                     <h3 class="step-title">관심 있는 <strong>플랫폼</strong>을 선택해주세요.</h3>
-                    <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 10px;">* 복수 선택 시 각 플랫폼별 상담 기회가 생성됩니다.</p>
+                    <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 10px;">* 중복 선택이 가능합니다.</p>
                     
                     <div class="checkbox-container">
                         <label class="checkbox-item">
@@ -166,16 +198,16 @@
                 <div class="form-step" data-step="3">
                     <h3 class="step-title">성장을 위한 <strong>마지막 단계</strong>입니다.</h3>
                     <div class="form-group">
-                        <textarea id="inquiry" name="inquiry" rows="3" placeholder="추가 문의사항이 있다면 적어주세요."></textarea>
+                        <textarea id="inquiry" name="inquiry" rows="3" placeholder="추가 문의사항을 입력해 주세요."></textarea>
                     </div>
-
+                    
                     <div class="form-group privacy-group">
                         <div class="privacy-group-header">
                             <input type="checkbox" id="agree_optional" name="agree_optional" value="Y">
                             <label for="agree_optional">(선택) 광고성 정보 수신 동의</label>
                         </div>
-                        <div class="privacy-content" style="display:block; font-size: 0.75rem; color: #888; padding: 5px 0;">
-                            수집 주체: (주)웅진씽크빅 / 목적: <strong>웅진스킬원(Woongjin SkillOne)</strong> 소식 및 혜택 안내
+                        <div style="font-size: 0.75rem; color: #888; padding: 5px 0 10px 25px;">
+                            수집 주체: (주)웅진씽크빅 / 목적: 웅진스킬원 소식 안내
                         </div>
                     </div>
                     
@@ -188,12 +220,12 @@
                 <div class="form-navigation">
                     <button type="button" class="btn btn-prev" id="prev-btn">이전</button>
                     <button type="button" class="btn btn-next" id="next-btn">다음</button>
-                    <button type="submit" class="btn btn-submit" id="submit-btn" style="display:none;">무료 상담 신청</button>
+                    <button type="submit" class="btn btn-submit" id="submit-btn" style="display:none;">신청하기</button>
                 </div>
             </form>
 
             <div id="success-message" style="display: none; text-align: center;">
-                <h3>🎉 신청이 완료되었습니다!</h3>
+                <h3>🎉 신청 완료!</h3>
                 <p>전문 컨설턴트가 곧 연락드리겠습니다.</p>
             </div>
         </div>
@@ -201,5 +233,29 @@
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        // 1. 텍스트 롤링 로직 (4초 간격)
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.testimonial-item');
+            if(slides.length > 0) {
+                setInterval(() => {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }, 4000);
+            }
+        });
+
+        // 2. 체크박스 선택 데이터 처리
+        // 이 로직은 script.js에서 폼 데이터를 수집할 때 호출되어야 함
+        function getSelectedProducts() {
+            const selected = [];
+            document.querySelectorAll('input[name="product"]:checked').forEach(cb => {
+                selected.push(cb.value);
+            });
+            return selected.join(', ');
+        }
+    </script>
 </body>
 </html>
