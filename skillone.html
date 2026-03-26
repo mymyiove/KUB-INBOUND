@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기업 교육의 새로운 기준 | Woongjin SkillOne</title>
-    <link rel="icon" type="image/png" href="favicon_skillone.png?v=6">
+    <link rel="icon" type="image/png" href="favicon_skillone.png?v=7">
     
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -38,13 +38,10 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* [핵심 수정 1] 좌우 레이아웃 수평 완벽 일치용 헤더 존 */
+        /* 공통 헤더 존 (좌우 수평 완벽 일치용) */
         .top-header-zone {
-            height: 60px; /* 로고와 스텝바가 차지하는 공통 높이 강제 지정 */
-            margin-bottom: 25px; 
-            display: flex; 
-            align-items: center;
-            width: 100%;
+            height: 60px; margin-bottom: 25px; 
+            display: flex; align-items: center; width: 100%;
         }
 
         /* 왼쪽 패널 */
@@ -53,7 +50,7 @@
             display: flex; flex-direction: column; justify-content: flex-start; 
         }
         
-        .info-logo { max-height: 35px; width: auto; } /* 높이 제한으로 zone 안에 쏙 들어가게 */
+        .info-logo { max-height: 35px; width: auto; }
         
         .info-top .main-copy { font-size: 1.35rem; color: #fff; line-height: 1.4; font-weight: 800; margin-bottom: 10px; white-space: nowrap; }
         .info-top .sub-copy { font-size: 0.95rem; color: #fff; margin-bottom: 30px; }
@@ -74,9 +71,18 @@
         .service-link:hover .link-arrow { transform: translateX(5px); }
 
         /* 오른쪽 폼 패널 */
-        .form-pane { width: 58%; padding: 50px 40px; background: var(--form-bg); overflow-y: auto; display: flex; flex-direction: column; }
+        .form-pane { 
+            width: 58%; padding: 50px 40px; background: var(--form-bg); 
+            overflow-y: auto; display: flex; flex-direction: column; scroll-behavior: smooth;
+        }
 
-        /* 프로그레스 바를 헤더 존 안에 맞춤 */
+        /* [업그레이드 1] 커스텀 스크롤바 */
+        .form-pane::-webkit-scrollbar { width: 8px; }
+        .form-pane::-webkit-scrollbar-track { background: var(--form-bg); border-radius: 4px; }
+        .form-pane::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        .form-pane::-webkit-scrollbar-thumb:hover { background: var(--primary-orange); }
+
+        /* 프로그레스 바 */
         .progress-bar { display: flex; justify-content: space-between; position: relative; width: 90%; margin: 0 auto; }
         .progress-bar::before { content: ''; position: absolute; top: 14px; left: 10%; width: 80%; height: 2px; background: #333; z-index: 1; }
         .progress-fill { position: absolute; top: 14px; left: 10%; width: 80%; height: 2px; background: var(--primary-orange); z-index: 2; transform: scaleX(0); transform-origin: left; transition: 0.4s; }
@@ -107,44 +113,51 @@
         input:focus, select:focus, textarea:focus { border-color: var(--primary-orange); outline: none; background: #222; }
         textarea { min-height: 100px; resize: none; margin-top: 5px; }
         
-        .error-message { color: var(--error-red); font-size: 0.75rem; margin-top: 4px; min-height: 1rem; position: absolute; }
+        .error-message { color: var(--error-red); font-size: 0.75rem; position: absolute; bottom: -18px; left: 5px; }
         .form-group.error input, .form-group.error select { border-color: var(--error-red); }
 
-        /* [핵심 수정 2] 플랫폼 선택 체크박스 시각적 강조 UI */
+        /* 플랫폼 선택 체크박스 */
         .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .check-item { 
             display: flex; align-items: center; color: #ccc; font-size: 0.9rem; cursor: pointer; 
             background: #222; padding: 12px 15px; border-radius: 8px; border: 1px solid #333; transition: 0.2s; 
         }
         .check-item:hover { border-color: #666; }
-        /* 체크되었을 때 박스 전체 하이라이트 */
         .check-item.selected { border-color: var(--primary-orange); background: rgba(255,107,0,0.1); color: #fff; font-weight: 600; }
         .check-item input { width: 18px; height: 18px; margin-right: 10px; accent-color: var(--primary-orange); cursor: pointer; }
 
-        /* 3단계: 요약 뷰 */
+        /* 요약 뷰 */
         .summary-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 20px; margin-bottom: 25px; }
         .summary-grid { display: grid; grid-template-columns: 85px 15px 1fr; gap: 12px 0; font-size: 0.85rem; line-height: 1.4; }
         .summary-label { color: #888; font-weight: 600; }
         .summary-divider { color: #444; text-align: center; }
         .summary-value { color: #fff; word-break: break-word; }
 
-        /* 개인정보 동의 영역 */
-        .privacy-group { padding: 15px 0; border-bottom: 1px solid #333; display: flex; flex-direction: column; justify-content: center; position: relative; }
-        .privacy-group:last-of-type { border-bottom: none; }
+        /* [핵심 수정] 개인정보 동의 영역 상하 간격 완벽 통일 */
+        .privacy-container { border: 1px solid #333; border-radius: 8px; background: #1a1a1a; }
+        .privacy-group { 
+            padding: 16px 20px; /* 모든 그룹에 동일한 패딩 적용 */
+            border-bottom: 1px solid #333; 
+            display: flex; flex-direction: column; justify-content: center; position: relative; 
+        }
+        .privacy-group:last-child { border-bottom: none; }
         .privacy-header { display: flex; align-items: center; width: 100%; }
-        .privacy-header input { width: 16px; height: 16px; margin-right: 10px; accent-color: var(--primary-orange); }
-        .privacy-header label { color: #ddd; font-size: 0.9rem; flex: 1; cursor: pointer; font-weight: 600; margin: 0; }
-        .toggle-btn { color: var(--primary-orange); font-size: 0.8rem; text-decoration: none; cursor: pointer; white-space: nowrap; }
+        .privacy-header input { width: 18px; height: 18px; margin-right: 12px; accent-color: var(--primary-orange); cursor: pointer; }
+        .privacy-header label { color: #ddd; font-size: 0.95rem; flex: 1; cursor: pointer; font-weight: 600; margin: 0; line-height: 1.2; }
+        .toggle-btn { color: var(--primary-orange); font-size: 0.8rem; text-decoration: none; cursor: pointer; white-space: nowrap; margin-left: 10px; }
         
         .privacy-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .is-open .privacy-content { max-height: 500px; }
-        .privacy-box { background: #111; padding: 15px; border-radius: 6px; margin-top: 15px; font-size: 0.8rem; color: #999; line-height: 1.6; }
+        .privacy-box { background: #000; padding: 15px; border-radius: 6px; margin-top: 15px; font-size: 0.8rem; color: #999; line-height: 1.6; }
         .privacy-box strong { color: #ddd; }
         .privacy-box ul { padding-left: 20px; margin: 5px 0; }
-        .privacy-group .error-message { position: relative; margin-top: 8px; }
+        
+        /* 동의란 전용 에러 메시지 자리 고정 확보 (높이 흔들림 방지) */
+        .privacy-error-space { height: 14px; margin-top: 4px; padding-left: 30px; }
+        .privacy-group .error-message { position: static; color: var(--error-red); font-size: 0.75rem; }
 
         /* 하단 버튼 */
-        .nav-btns { display: flex; justify-content: space-between; margin-top: auto; padding-top: 20px; }
+        .nav-btns { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 10px; }
         .btn { padding: 12px 30px; border-radius: 8px; border: none; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .btn-prev { background: #333; color: #fff; }
         .btn-prev:hover { background: #444; }
@@ -161,12 +174,13 @@
             .top-header-zone { height: auto; margin-bottom: 20px; justify-content: center; }
             .info-pane { width: 100%; padding: 30px 25px; justify-content: center; }
             .info-bottom { display: none; } 
-            .form-pane { width: 100%; padding: 30px 25px; }
+            .form-pane { width: 100%; padding: 30px 25px; overflow-y: visible; }
             .input-grid { grid-template-columns: 1fr; }
             .checkbox-grid { grid-template-columns: 1fr; }
             .summary-grid { grid-template-columns: 75px 10px 1fr; }
             .progress-step { font-size: 0.75rem; }
             .circle { width: 24px; height: 24px; line-height: 22px; }
+            .error-message { bottom: -16px; }
         }
     </style>
 </head>
@@ -209,7 +223,7 @@
             </div>
         </div>
 
-        <div class="form-pane">
+        <div class="form-pane" id="form-pane">
             <form id="pro-contact-form">
                 
                 <div class="top-header-zone" style="justify-content: center;">
@@ -287,55 +301,58 @@
                     <div class="summary-box" id="summary-display">
                         </div>
                     
-                    <div class="privacy-group required">
-                        <div class="privacy-header">
-                            <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
-                            <label for="privacy-agree">(필수) 개인정보 수집·이용 동의</label>
-                            <span class="toggle-btn">[자세히 보기 ▼]</span>
-                        </div>
-                        <div class="privacy-content">
-                            <div class="privacy-box">
-                                <p><strong>개인정보 수집·이용 주체:</strong> (주)웅진씽크빅</p>
-                                <p><strong>수집이용 항목:</strong></p>
-                                <ul>
-                                    <li>[필수] 이름, 회사 이메일, 전화번호, 직책(직함), 회사/기관명, 소속팀</li>
-                                    <li>[선택] 문의사항</li>
-                                </ul>
-                                <p><strong>수집이용 목적:</strong></p>
-                                <ul>
-                                    <li>신청자 본인 확인, 요청 자료(PDF 등) 발송</li>
-                                    <li>상담 신청 접수 및 진행, 관련 문의 응대</li>
-                                </ul>
-                                <p><strong>보유이용 기간: 문의 응대 종료 시까지 보유하며, 요청 시 즉시 삭제합니다.</strong></p>
-                                <p><strong>동의의 거부 시 불이익:</strong> 동의를 거부하실 경우, 상담 신청 및 진행, 관련 문의 응대가 제한될 수 있습니다.</p>
+                    <div class="privacy-container">
+                        <div class="privacy-group required">
+                            <div class="privacy-header">
+                                <input type="checkbox" id="privacy-agree" name="privacy_agree" required>
+                                <label for="privacy-agree">(필수) 개인정보 수집·이용 동의</label>
+                                <span class="toggle-btn">[자세히 보기 ▼]</span>
+                            </div>
+                            <div class="privacy-error-space"><div class="error-message"></div></div>
+                            <div class="privacy-content">
+                                <div class="privacy-box">
+                                    <p><strong>개인정보 수집·이용 주체:</strong> (주)웅진씽크빅</p>
+                                    <p><strong>수집이용 항목:</strong></p>
+                                    <ul>
+                                        <li>[필수] 이름, 회사 이메일, 전화번호, 직책(직함), 회사/기관명, 소속팀</li>
+                                        <li>[선택] 문의사항</li>
+                                    </ul>
+                                    <p><strong>수집이용 목적:</strong></p>
+                                    <ul>
+                                        <li>신청자 본인 확인, 요청 자료(PDF 등) 발송</li>
+                                        <li>상담 신청 접수 및 진행, 관련 문의 응대</li>
+                                    </ul>
+                                    <p><strong>보유이용 기간: 문의 응대 종료 시까지 보유하며, 요청 시 즉시 삭제합니다.</strong></p>
+                                    <p><strong>동의의 거부 시 불이익:</strong> 동의를 거부하실 경우, 상담 신청 및 진행, 관련 문의 응대가 제한될 수 있습니다.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="error-message"></div>
-                    </div>
 
-                    <div class="privacy-group">
-                        <div class="privacy-header">
-                            <input type="checkbox" id="marketing-agree" name="marketing_agree">
-                            <label for="marketing-agree">(선택) 광고성 정보 수신 동의</label>
-                            <span class="toggle-btn">[자세히 보기 ▼]</span>
-                        </div>
-                        <div class="privacy-content">
-                            <div class="privacy-box">
-                                <p><strong>개인정보 수집·이용 주체:</strong> (주)웅진씽크빅</p>
-                                <p><strong>수집이용 목적:</strong> 웅진스킬원 관련 소식, 혜택 및 이벤트 안내 등 발송</p>
-                                <p><strong>수신 방법:</strong> SMS, 이메일, 전화 등</p>
-                                <p><strong>보유 및 이용기간: 동의 철회 요청 시까지</strong></p>
-                                <p><strong>동의의 거부 시 불이익:</strong> 동의를 거부하셔도 서비스 이용에는 제한이 없으나, 웅진씽크빅 웅진스킬원의 최신 소식 및 혜택 정보를 받아보실 수 없습니다.</p>
+                        <div class="privacy-group">
+                            <div class="privacy-header">
+                                <input type="checkbox" id="marketing-agree" name="marketing_agree">
+                                <label for="marketing-agree">(선택) 광고성 정보 수신 동의</label>
+                                <span class="toggle-btn">[자세히 보기 ▼]</span>
+                            </div>
+                            <div class="privacy-error-space"></div>
+                            <div class="privacy-content">
+                                <div class="privacy-box">
+                                    <p><strong>개인정보 수집·이용 주체:</strong> (주)웅진씽크빅</p>
+                                    <p><strong>수집이용 목적:</strong> 웅진스킬원 관련 소식, 혜택 및 이벤트 안내 등 발송</p>
+                                    <p><strong>수신 방법:</strong> SMS, 이메일, 전화 등</p>
+                                    <p><strong>보유 및 이용기간: 동의 철회 요청 시까지</strong></p>
+                                    <p><strong>동의의 거부 시 불이익:</strong> 동의를 거부하셔도 서비스 이용에는 제한이 없으나, 웅진씽크빅 웅진스킬원의 최신 소식 및 혜택 정보를 받아보실 수 없습니다.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="privacy-group required">
-                        <div class="privacy-header">
-                            <input type="checkbox" id="age-agree" name="age_agree" required>
-                            <label for="age-agree">(필수) 본인은 만 14세 이상입니다.</label>
+                        <div class="privacy-group required">
+                            <div class="privacy-header">
+                                <input type="checkbox" id="age-agree" name="age_agree" required>
+                                <label for="age-agree">(필수) 본인은 만 14세 이상입니다.</label>
+                            </div>
+                            <div class="privacy-error-space"><div class="error-message"></div></div>
                         </div>
-                        <div class="error-message"></div>
                     </div>
                 </div>
 
@@ -360,6 +377,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const form = document.getElementById("pro-contact-form");
+            const formPane = document.getElementById("form-pane");
             const steps = document.querySelectorAll(".form-step");
             const progressSteps = document.querySelectorAll(".progress-step");
             const progressFill = document.getElementById("progress-fill");
@@ -376,7 +394,7 @@
             let rollingIdx = 0;
 
             setInterval(() => {
-                if (window.innerWidth <= 768) return; // 모바일은 롤링 제외
+                if (window.innerWidth <= 768) return; 
                 testimonials[rollingIdx].classList.remove("active");
                 rollingIdx = (rollingIdx + 1) % testimonials.length;
                 const nextItem = testimonials[rollingIdx];
@@ -398,7 +416,7 @@
                 });
             });
 
-            // --- [UX 개선 2] 체크박스 선택 시 박스 하이라이트 ---
+            // --- 체크박스 시각적 강조 ---
             document.querySelectorAll('.check-item input').forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
                     if(this.checked) {
@@ -409,7 +427,7 @@
                 });
             });
 
-            // --- 요약 뷰 업데이트 ---
+            // --- 요약 뷰 렌더링 ---
             function updateSummary() {
                 const name = document.getElementById('full-name').value;
                 const jobTitle = document.getElementById('job-title').value;
@@ -442,9 +460,12 @@
                 prevBtn.style.display = currentStep > 1 ? "block" : "none";
                 nextBtn.style.display = currentStep < steps.length ? "block" : "none";
                 submitBtn.style.display = currentStep === steps.length ? "block" : "none";
+                
+                // [업그레이드 2] 스텝 변경 시 맨 위로 부드럽게 스크롤
+                formPane.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // --- 단일 인풋 검증 ---
+            // --- 단일 인풋 엄격 검증 (이메일 정규식 추가) ---
             function validateInput(input) {
                 const group = input.closest(".form-group") || input.closest(".privacy-group");
                 const err = group.querySelector(".error-message");
@@ -459,14 +480,14 @@
                     }
                 } else if (!input.value.trim() && input.required) {
                     isOk = false; group.classList.add("error");
-                    if (err) err.innerText = "필수 입력 항목입니다.";
+                    if (err) err.innerText = "필수 항목을 입력해주세요.";
                 } 
-                // [핵심 수정 3] 깐깐한 이메일 정규식 도입
                 else if (input.type === "email" && input.value.trim() !== "") {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    // 이메일 정규식: @와 . 필수 포함 검사
+                    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
                     if (!emailRegex.test(input.value.trim())) {
                         isOk = false; group.classList.add("error");
-                        if (err) err.innerText = "이메일 주소를 확인해주세요!";
+                        if (err) err.innerText = "올바른 이메일 주소를 확인해주세요!";
                     } else {
                         group.classList.remove("error"); if (err) err.innerText = "";
                     }
@@ -476,14 +497,12 @@
                 return isOk;
             }
 
-            // --- [UX 개선 1] 실시간 검증 (Blur 이벤트) ---
+            // 실시간 블러(Blur) 검증
             document.querySelectorAll("input[required], select[required]").forEach(input => {
-                input.addEventListener('blur', function() {
-                    validateInput(this);
-                });
+                input.addEventListener('blur', function() { validateInput(this); });
             });
 
-            // --- 스텝 전체 검증 ---
+            // 스텝 폼 전체 검증
             function validateStep() {
                 const current = steps[currentStep - 1];
                 const inputs = current.querySelectorAll("input[required], select[required]");
