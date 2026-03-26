@@ -8,17 +8,14 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     <div class="form-container">
         <div class="info-pane">
-            <img src="../src/img/logo_skillone_white.png" alt="SkillOne Logo" class="info-logo">
-
+            <img src="../src/img/logo_skillone_white.png" alt="SkillOne" class="info-logo">
             <div class="info-top">
                 <div class="main-copy">글로벌 교육 콘텐츠와 LXP를 하나로!<br>기업 교육의 새로운 기준</div>
                 <div class="sub-copy"><strong>Woongjin SkillOne</strong>이 제시합니다.</div>
                 <div class="promo-text hide-on-mobile">지금 문의하시면, 1:1 전문 컨설팅과 함께<br>귀사만을 위한 <strong>맞춤형 제안</strong>을 드립니다.</div>
             </div>
-
             <div class="info-bottom">
                 <div class="testimonial-slider">
                     <div class="testimonial-item active" data-link="https://udemy.wjtb.co.kr/main.html">
@@ -27,11 +24,11 @@
                     </div>
                     <div class="testimonial-item" data-link="https://linkedinlearningpartner.wjtb.co.kr/main.html">
                         <h4>LinkedIn Learning</h4>
-                        <p>"글로벌 인재를 만드는 필수 선택!<br class="hide-on-mobile">전 세계 전문가 강의를 만나보세요."</p>
+                        <p>"글로벌 인재를 만드는 필수 선택!<br class="hide-on-mobile">전문가 강의를 지금 만나보세요."</p>
                     </div>
                     <div class="testimonial-item" data-link="https://degreed.wjtb.co.kr/main.html">
                         <h4>Degreed</h4>
-                        <p>"스킬 기반 LXP를 빠르게 구축!<br class="hide-on-mobile">조직 역량을 데이터로 정교하게 관리하세요."</p>
+                        <p>"스킬 기반 LXP를 빠르게 구축!<br class="hide-on-mobile">조직 역량을 데이터로 관리하세요."</p>
                     </div>
                 </div>
                 <div class="service-intro-link">
@@ -40,7 +37,6 @@
                     </a>
                 </div>
             </div>
-            
             <div class="footer-text">
                 <span class="brand-desc">웅진 SkillOne은 웅진의 기업교육사업 전문 브랜드 입니다.</span>
                 © 2026 WoongjinThinkbig SkillOne, Hugh
@@ -49,8 +45,7 @@
 
         <div class="form-pane" id="form-pane">
             <form id="pro-contact-form">
-                <input type="hidden" name="lead_source" id="lead_source" value="스킬원 상담요청">
-
+                <input type="hidden" name="lead_source" value="스킬원 상담요청">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                     <div class="progress-step active"><div class="circle">1</div>정보 입력</div>
@@ -73,7 +68,7 @@
                 <div class="form-step" data-step="2">
                     <h3 class="step-title">귀사의 <strong>교육 목표</strong>와 <strong>문의 사항</strong>을<br>들려주세요.</h3>
                     <div class="form-group full">
-                        <label class="label-desc">상담을 원하는 플랫폼 선택 *</label>
+                        <label style="color:#aaa; font-size:0.85rem; display:block; margin-bottom:10px;">상담을 원하는 플랫폼 선택 *</label>
                         <div class="checkbox-grid">
                             <label class="check-item"><input type="checkbox" name="product" value="udemy"> Udemy Business</label>
                             <label class="check-item"><input type="checkbox" name="product" value="Linkedin Learning"> LinkedIn Learning</label>
@@ -102,10 +97,19 @@
                         <input type="checkbox" id="agree-all">
                         <label for="agree-all">아래 약관에 전체 동의합니다.</label>
                     </div>
-                    <div class="privacy-box">
-                        <label><input type="checkbox" name="privacy_agree" value="Y" required> (필수) 개인정보 수집·이용 동의</label><br>
-                        <label><input type="checkbox" name="marketing_agree" value="Y"> (선택) 광고성 정보 수신 동의</label><br>
-                        <label><input type="checkbox" name="age_agree" value="Y" required> (필수) 본인은 만 14세 이상입니다.</label>
+                    <div class="privacy-container">
+                        <div class="privacy-group">
+                            <label for="privacy-agree">(필수) 개인정보 수집 및 이용 동의</label>
+                            <input type="checkbox" id="privacy-agree" name="privacy_agree" class="sub-check" value="Y" required>
+                        </div>
+                        <div class="privacy-group">
+                            <label for="marketing-agree">(선택) 광고성 정보 수신 동의</label>
+                            <input type="checkbox" id="marketing-agree" name="marketing_agree" class="sub-check" value="Y">
+                        </div>
+                        <div class="privacy-group">
+                            <label for="age-agree">(필수) 본인은 만 14세 이상입니다.</label>
+                            <input type="checkbox" id="age-agree" name="age_agree" class="sub-check" value="Y" required>
+                        </div>
                     </div>
                 </div>
 
@@ -115,14 +119,12 @@
                     <button type="submit" class="btn btn-submit" id="submit-btn" style="display:none;">신청하기</button>
                 </div>
             </form>
-
             <div id="success-message" style="display: none; text-align: center; padding: 60px 20px;">
-                <h2 style="color:var(--primary-orange); margin-bottom:20px;">🎉 신청이 완료되었습니다!</h2>
-                <p style="color:#ccc;">소중한 정보를 바탕으로 전문가가 연락드리겠습니다.</p>
+                <h2 style="color:var(--primary-orange); margin-bottom:20px; font-size: 2rem;">🎉 신청 완료!</h2>
+                <p style="color:#ccc;">신속하게 연락드리겠습니다.</p>
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="js/script.js"></script>
 </body>
