@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>기업 교육의 새로운 기준 | Woongjin SkillOne</title>
-    <link rel="icon" type="image/png" href="favicon_skillone.png?v=11">
+    <link rel="icon" type="image/png" href="favicon_skillone.png?v=12">
     
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -42,7 +42,6 @@
             position: relative; margin: 20px;
         }
 
-        /* 좌우 레이아웃 정렬을 위한 공통 헤더 존 */
         .top-header-zone {
             height: 60px; margin-bottom: 20px; 
             display: flex; align-items: center; width: 100%;
@@ -63,7 +62,6 @@
         .info-top .promo-text { font-size: 0.9rem; color: #888; line-height: 1.6; margin-bottom: 0; }
         .info-top .promo-text strong { color: var(--primary-orange); }
 
-        /* [요청 2, 5] 롤링 간격 축소 & 겹침 해결 */
         .info-bottom { 
             width: 100%; margin-top: 40px; border-top: 1px solid #222; padding-top: 25px; 
         }
@@ -79,7 +77,6 @@
         .link-arrow { margin-left: 8px; transition: 0.3s; }
         .service-link:hover .link-arrow { transform: translateX(5px); }
 
-        /* [요청 1] 푸터 텍스트 좌측 정렬 & 바닥 고정 */
         .footer-text { margin-top: auto; text-align: left; font-size: 0.75rem; color: #444; font-weight: 600; }
 
         /* --- 오른쪽 폼 패널 --- */
@@ -94,7 +91,6 @@
         .form-pane::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
         .form-pane::-webkit-scrollbar-thumb:hover { background: var(--primary-orange); }
 
-        /* 프로그레스 바 정렬 (선 관통 위치 수학적 계산 top: 13px) */
         .progress-bar { display: flex; justify-content: space-between; position: relative; width: 85%; margin: 0 auto; }
         .progress-bar::before { content: ''; position: absolute; top: 13px; left: 16.66%; width: 66.66%; height: 2px; background: #333; z-index: 1; }
         .progress-fill { position: absolute; top: 13px; left: 16.66%; width: 66.66%; height: 2px; background: var(--primary-orange); z-index: 2; transform: scaleX(0); transform-origin: left; transition: 0.4s; }
@@ -189,40 +185,50 @@
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
 
         /* =========================================================
-           [요청 3, 4] 모바일 최적화 (겹침 완전 해결, 선 중앙 정렬 완벽 계산) 
+           [모바일 폼 순서 재배치 완벽 해결]
            ========================================================= */
         @media (max-width: 768px) {
-            body { padding: 0; background: var(--bg-dark-card); } /* 풀스크린 쾌적함 부여 */
+            body { padding: 0; background: #000; } /* 모바일에서는 검정 배경 통일 */
             
+            /* 컨테이너 속성 변경으로 자식 요소들 순서 제어 (Flex Order) */
             .form-container { 
                 flex-direction: column; width: 100%; height: auto; min-height: 100vh; 
-                margin: 0; border-radius: 0; border: none; box-shadow: none;
+                margin: 0; border-radius: 0; border: none; box-shadow: none; background: #000;
             }
             
-            .top-header-zone { height: auto; margin-bottom: 20px; justify-content: center; flex-direction: column; }
+            /* info-pane의 껍데기를 날려 내부 요소들이 form-container의 직접적인 flex 아이템이 되도록 처리 */
+            .info-pane { display: contents; }
             
-            .info-pane { width: 100%; padding: 40px 20px 30px; justify-content: center; border-bottom: 1px solid #222; }
-            .info-top { margin-bottom: 10px; }
-            .info-logo { margin: 0 auto 20px; display: block; }
+            /* 모바일 순서 배치 */
+            .top-header-zone { order: 1; height: auto; margin: 0; padding: 30px 20px 10px; justify-content: center; background: #000; }
+            .info-logo { margin: 0 auto; display: block; }
+            
+            .info-top { order: 2; padding: 0 20px 20px; background: #000; }
             .info-top .main-copy { font-size: 1.15rem; white-space: normal; text-align: center; margin-bottom: 5px;}
             .info-top .sub-copy { font-size: 0.85rem; text-align: center; margin-bottom: 0; }
-            
             .hide-on-mobile { display: none !important; }
             
-            /* 롤링 겹침 완벽 해결 구조 */
-            .info-bottom { min-height: auto; margin-top: 20px; padding-top: 25px; border-top: 1px solid #222; }
-            .testimonial-slider { height: 75px; } /* 고정 높이 줘서 안 겹치게 */
+            /* 핵심 폼이 3번째로 등장! */
+            .form-pane { 
+                order: 3; width: 100%; padding: 30px 20px; overflow-y: visible; flex-grow: 1; 
+                border-radius: 20px 20px 0 0; background: var(--form-bg); 
+            }
+            
+            /* 폼 아래 롤링 배너 배치 */
+            .info-bottom { 
+                order: 4; min-height: 120px; margin-top: 0; padding: 30px 20px; 
+                border-top: none; background: #111; 
+            }
+            .testimonial-slider { height: 80px; }
             .testimonial-item h4 { font-size: 1rem; text-align: center; margin-bottom: 5px;}
             .testimonial-item p { font-size: 0.8rem; text-align: center; }
-            
             .service-intro-link { position: relative; text-align: center; margin-top: 10px; }
             .service-link { font-size: 0.85rem; }
 
-            .footer-text { margin-top: 20px; position: static; text-align: center; font-size: 0.7rem; color: #555; }
+            /* 푸터가 제일 마지막 */
+            .footer-text { order: 5; margin: 0; padding: 0 0 30px 0; position: static; text-align: center; font-size: 0.7rem; color: #555; background: #111; }
 
-            .form-pane { width: 100%; padding: 30px 20px; overflow-y: visible; flex-grow: 1; }
-            
-            /* [요청 4] 모바일 상태 선 중앙정렬 (24px 원 기준 선 두께 고려 = top: 11px) */
+            /* 상태 선 중앙 정렬 계산: 24px 기준 top 11px */
             .progress-bar { width: 100%; margin-bottom: 30px; }
             .progress-bar::before { left: 16.66%; width: 66.66%; top: 11px; }
             .progress-fill { left: 16.66%; width: 66.66%; top: 11px; }
@@ -239,7 +245,7 @@
             .privacy-all-wrapper { padding: 12px 15px; margin-bottom: 10px;}
             .privacy-all-wrapper label { font-size: 0.9rem; }
             .privacy-group { padding: 12px 15px; }
-            .privacy-header label { font-size: 0.8rem; } /* 동의란 2줄 방지 폰트 축소 */
+            .privacy-header label { font-size: 0.8rem; } 
             .toggle-btn { font-size: 0.7rem; }
             .privacy-box { font-size: 0.75rem; padding: 10px; }
             
