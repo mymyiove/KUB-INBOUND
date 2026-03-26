@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>기업 교육의 새로운 기준 | Woongjin SkillOne</title>
-    <link rel="icon" type="image/png" href="src/img/favicon_skillone.png?v=22">
-    
+    <link rel="icon" type="image/png" href="src/img/favicon_skillone.png?v=23">
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
         :root {
             --primary-orange: #FF6B00;
             --primary-dark: #e66000;
@@ -16,12 +14,9 @@
             --form-bg: #1e1e1e;
             --input-bg: #2a2a2a;
             --text-white: #ffffff;
-            --error-red: #ff4d4d;
         }
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body { height: 100%; margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
-
         body {
             font-family: 'Pretendard', sans-serif;
             display: flex; justify-content: center; align-items: center;
@@ -33,54 +28,51 @@
         @keyframes gradient-flow { 0% {background-position:0% 50%} 50% {background-position:100% 50%} 100% {background-position:0% 50%} }
 
         .form-container {
-            width: 1050px; height: 800px; 
-            display: flex; background: var(--bg-dark-card);
-            border-radius: 20px; overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative; margin: 20px;
+            width: 1050px; height: 800px; display: flex; 
+            background: var(--bg-dark-card); border-radius: 20px; overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* --- 왼쪽 패널 (정렬 복구) --- */
+        /* 왼쪽 패널 - 정렬 및 로고 수정 */
         .info-pane { 
-            width: 42%; padding: 50px 40px; background: #000; 
-            display: flex; flex-direction: column; justify-content: center; /* 중앙 정렬 복구 */
+            width: 42%; padding: 60px 45px; background: #000; 
+            display: flex; flex-direction: column; justify-content: center; /* 수직 중앙 정렬 */
         }
+        /* 로고 비례 교정: 찌부 방지 */
+        .info-logo { width: 200px; height: auto; display: block; margin-bottom: 50px; }
         
-        .info-logo { max-height: 35px; width: auto; margin-bottom: 40px; }
-        
-        .info-top .main-copy { font-size: 1.35rem; color: #fff; line-height: 1.4; font-weight: 800; margin-bottom: 15px; }
-        .info-top .sub-copy { font-size: 1.25rem; color: #fff; margin-bottom: 20px; font-weight: 700; }
+        .info-top .main-copy { font-size: 1.4rem; color: #fff; line-height: 1.4; font-weight: 800; margin-bottom: 15px; }
+        .info-top .sub-copy { font-size: 1.2rem; color: #fff; margin-bottom: 25px; font-weight: 700; }
         .info-top .sub-copy strong { color: var(--primary-orange); font-size: 1.5rem; font-weight: 900; }
-        .info-top .promo-text { font-size: 0.9rem; color: #888; line-height: 1.6; }
+        .info-top .promo-text { font-size: 0.95rem; color: #888; line-height: 1.6; }
 
-        .info-bottom { margin-top: 40px; border-top: 1px solid #222; padding-top: 30px; }
-        .testimonial-slider { position: relative; height: 90px; width: 100%; }
+        .info-bottom { margin-top: 50px; border-top: 1px solid #222; padding-top: 35px; }
+        .testimonial-slider { position: relative; height: 100px; }
         .testimonial-item { position: absolute; top: 0; left: 0; opacity: 0; transition: 0.5s ease; pointer-events: none; }
         .testimonial-item.active { opacity: 1; pointer-events: auto; }
-        .testimonial-item h4 { color: var(--primary-orange); font-size: 1.15rem; margin: 0 0 10px 0; }
-        .testimonial-item p { color: #aaa; font-size: 0.9rem; line-height: 1.5; margin: 0; font-style: italic; }
+        .testimonial-item h4 { color: var(--primary-orange); font-size: 1.2rem; margin: 0 0 10px 0; }
+        .testimonial-item p { color: #aaa; font-size: 0.95rem; line-height: 1.5; margin: 0; font-style: italic; }
         
-        /* 서비스 링크 CSS 복구 */
+        /* 서비스 링크 CSS 세련되게 복구 */
         .service-intro-link { margin-top: 15px; }
         .service-link { 
             color: #fff; text-decoration: none; font-weight: 700; font-size: 0.9rem; 
-            display: inline-flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.3);
+            display: inline-flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.4);
             padding-bottom: 2px; transition: 0.3s;
         }
         .service-link:hover { color: var(--primary-orange); border-color: var(--primary-orange); }
-        .link-arrow { margin-left: 6px; font-size: 1rem; }
+        .link-arrow { margin-left: 8px; font-weight: 400; }
 
-        .footer-text { margin-top: 60px; text-align: left; font-size: 0.75rem; color: #444; font-weight: 600; line-height: 1.5; }
-        .footer-text .brand-desc { opacity: 0.6; display: block; margin-bottom: 3px; font-weight: 400; }
+        .footer-text { margin-top: 60px; font-size: 0.75rem; color: #444; line-height: 1.5; }
+        .footer-text .brand-desc { opacity: 0.6; display: block; margin-bottom: 4px; font-weight: 400; }
 
-        /* --- 오른쪽 폼 패널 --- */
+        /* 오른쪽 패널 */
         .form-pane { 
-            width: 58%; padding: 50px 40px; background: var(--form-bg); 
+            width: 58%; padding: 50px 45px; background: var(--form-bg); 
             display: flex; flex-direction: column; justify-content: center;
         }
 
-        .progress-bar { display: flex; justify-content: space-between; position: relative; width: 85%; margin: 0 auto 40px; }
+        .progress-bar { display: flex; justify-content: space-between; position: relative; width: 85%; margin: 0 auto 50px; }
         .progress-bar::before { content: ''; position: absolute; top: 13px; left: 16.66%; width: 66.66%; height: 2px; background: #333; }
         .progress-fill { position: absolute; top: 13px; left: 16.66%; width: 66.66%; height: 2px; background: var(--primary-orange); z-index: 2; transform: scaleX(0); transform-origin: left; transition: 0.4s; }
         .progress-step { flex: 1; display: flex; flex-direction: column; align-items: center; color: #666; font-size: 0.8rem; z-index: 3; }
@@ -92,19 +84,19 @@
         .form-step.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .step-title { font-size: 1.35rem; color: #fff; margin-bottom: 30px; line-height: 1.5; font-weight: 700; text-align: center; }
+        .step-title { font-size: 1.4rem; color: #fff; margin-bottom: 35px; line-height: 1.5; font-weight: 700; text-align: center; }
         .step-title strong { color: var(--primary-orange); }
 
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .form-group { margin-bottom: 20px; position: relative; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .form-group { margin-bottom: 22px; }
         .form-group.full { grid-column: 1 / -1; }
         
         input, select, textarea {
-            width: 100%; padding: 13px 15px; background: var(--input-bg); border: 1px solid #444; 
-            border-radius: 8px; color: #fff; font-size: 0.95rem; font-family: inherit; transition: 0.2s;
+            width: 100%; padding: 14px 16px; background: var(--input-bg); border: 1px solid #444; 
+            border-radius: 8px; color: #fff; font-size: 1rem; font-family: inherit; transition: 0.2s;
         }
-        input:focus, select:focus, textarea:focus { border-color: var(--primary-orange); outline: none; }
-        textarea { height: 110px; resize: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary-orange); outline: none; background: #222; }
+        textarea { height: 120px; resize: none; }
 
         .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
         .check-item { 
@@ -114,26 +106,21 @@
         .check-item.selected { border-color: var(--primary-orange); color: #fff; background: rgba(255,107,0,0.1); }
         .check-item input { width: 18px; height: 18px; margin-right: 10px; accent-color: var(--primary-orange); }
 
-        .summary-box { background: #111; border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-        .summary-grid { display: grid; grid-template-columns: 80px 15px 1fr; gap: 10px 0; font-size: 0.9rem; }
+        .summary-box { background: #111; border: 1px solid #333; border-radius: 10px; padding: 22px; margin-bottom: 25px; }
+        .summary-grid { display: grid; grid-template-columns: 85px 15px 1fr; gap: 12px 0; font-size: 0.95rem; }
         .summary-label { color: #888; }
         .summary-value { color: #fff; font-weight: 600; }
 
-        .privacy-all-wrapper { background: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; }
-        .privacy-all-wrapper label { color: var(--primary-orange); font-weight: 800; margin-left: 10px; cursor: pointer; }
-
-        .nav-btns { display: flex; justify-content: space-between; margin-top: 30px; }
-        .btn { padding: 15px; border-radius: 8px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; flex: 1; transition: 0.2s; }
-        .btn-prev { background: #333; color: #fff; margin-right: 10px; }
+        .nav-btns { display: flex; justify-content: space-between; margin-top: 40px; }
+        .btn { padding: 16px; border-radius: 8px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; flex: 1; transition: 0.2s; }
+        .btn-prev { background: #333; color: #fff; margin-right: 12px; }
         .btn-next, .btn-submit { background: var(--primary-orange); color: #fff; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         @media (max-width: 768px) {
             .form-container { flex-direction: column; width: 100%; height: auto; margin: 0; border-radius: 0; }
-            .info-pane { width: 100%; padding: 40px 20px; }
-            .form-pane { width: 100%; padding: 40px 20px; border-radius: 20px 20px 0 0; }
+            .info-pane { width: 100%; padding: 40px 25px; }
+            .form-pane { width: 100%; padding: 45px 25px; border-radius: 25px 25px 0 0; }
             .input-grid, .checkbox-grid { grid-template-columns: 1fr; }
-            .sub-copy br { display: none; }
         }
     </style>
 </head>
@@ -141,7 +128,7 @@
 
     <div class="form-container">
         <div class="info-pane">
-            <img src="src/img/logo_skillone_white.png" alt="SkillOne Logo" class="info-logo">
+            <img src="src/img/logo_skillone_white.png" alt="SkillOne" class="info-logo">
             <div class="info-top">
                 <div class="main-copy">글로벌 교육 콘텐츠와 LXP를 하나로!<br>기업 교육의 새로운 기준</div>
                 <div class="sub-copy"><strong>Woongjin SkillOne</strong>이 제시합니다.</div>
@@ -151,15 +138,15 @@
                 <div class="testimonial-slider">
                     <div class="testimonial-item active" data-link="https://udemy.wjtb.co.kr/main.html">
                         <h4>Udemy Business</h4>
-                        <p>"미래를 준비하는 기업들의 마지막 선택!<br>국내 유수 대기업이 함께합니다."</p>
+                        <p>"미래를 준비하는 기업들의 마지막 선택!<br>삼성, SK, 현대 등 대기업이 함께합니다."</p>
                     </div>
                     <div class="testimonial-item" data-link="https://linkedinlearningpartner.wjtb.co.kr/main.html">
                         <h4>LinkedIn Learning</h4>
-                        <p>"글로벌 인재를 만드는 필수 선택!<br>전문가 강의를 지금 만나보세요."</p>
+                        <p>"글로벌 인재를 만드는 필수 선택!<br>25,000개 이상의 전문가 강의를 만나보세요."</p>
                     </div>
                     <div class="testimonial-item" data-link="https://degreed.wjtb.co.kr/main.html">
                         <h4>Degreed</h4>
-                        <p>"스킬 기반 LXP를 빠르게 구축!<br>조직 역량을 데이터로 관리하세요."</p>
+                        <p>"스킬 기반 LXP를 빠르게 구축!<br>조직 역량을 데이터로 정교하게 관리하세요."</p>
                     </div>
                 </div>
                 <div class="service-intro-link">
@@ -229,10 +216,10 @@
                         <input type="checkbox" id="agree-all">
                         <label for="agree-all">아래 약관에 전체 동의합니다.</label>
                     </div>
-                    <div style="border: 1px solid #333; border-radius: 8px; padding: 10px; background: #1a1a1a; font-size: 0.8rem; color: #888;">
+                    <div style="border: 1px solid #333; border-radius: 8px; padding: 15px; background: #1a1a1a; font-size: 0.85rem; color: #888; line-height: 1.6;">
                         <input type="checkbox" name="privacy_agree" value="Y" required> (필수) 개인정보 수집 및 이용 동의<br>
                         <input type="checkbox" name="marketing_agree" value="Y"> (선택) 광고성 정보 수신 동의<br>
-                        <input type="checkbox" name="age_agree" value="Y" required> (필수) 만 14세 이상입니다.
+                        <input type="checkbox" name="age_agree" value="Y" required> (필수) 본인은 만 14세 이상입니다.
                     </div>
                 </div>
 
@@ -244,8 +231,8 @@
             </form>
 
             <div id="success-message" style="display: none; text-align: center; padding: 60px 20px;">
-                <h2 style="color:var(--primary-orange); margin-bottom:20px;">🎉 신청 완료!</h2>
-                <p style="color:#ccc;">전문 컨설턴트가 곧 연락드리겠습니다.</p>
+                <h2 style="color:var(--primary-orange); margin-bottom:25px; font-size: 2rem;">🎉 신청 완료!</h2>
+                <p style="color:#ccc; font-size: 1.1rem; line-height: 1.6;">전문 컨설턴트가 입력하신 정보를 바탕으로<br>신속하게 연락드리겠습니다.</p>
             </div>
         </div>
     </div>
@@ -261,7 +248,6 @@
             const prevBtn = document.getElementById("prev-btn");
             const submitBtn = document.getElementById("submit-btn");
             const successMsg = document.getElementById("success-message");
-
             let currentStep = 1;
 
             // 로컬스토리지 로드
@@ -294,11 +280,15 @@
                 });
             });
 
+            const agreeAll = document.getElementById('agree-all');
+            const subChecks = document.querySelectorAll('input[type="checkbox"]:not(#agree-all)');
+            agreeAll.addEventListener('change', function() {
+                subChecks.forEach(cb => cb.checked = this.checked);
+            });
+
             function updateUI() {
                 steps.forEach((s, i) => s.classList.toggle("active", i === currentStep - 1));
-                progressSteps.forEach((s, i) => {
-                    s.classList.toggle("active", i === currentStep - 1);
-                });
+                progressSteps.forEach((s, i) => s.classList.toggle("active", i === currentStep - 1));
                 progressFill.style.transform = `scaleX(${(currentStep - 1) / (steps.length - 1)})`;
                 prevBtn.style.display = currentStep > 1 ? "block" : "none";
                 nextBtn.style.display = currentStep < steps.length ? "block" : "none";
@@ -318,10 +308,12 @@
                     localStorage.setItem('skillOneLeadInfo', JSON.stringify(info));
                 }
                 if (currentStep === 2) {
+                    const products = Array.from(document.querySelectorAll('input[name="product"]:checked')).map(cb => cb.parentElement.innerText.trim()).join(', ');
                     document.getElementById('summary-display').innerHTML = `
                         <div class="summary-grid">
-                            <div class="summary-label">🏢 회사</div><div class="summary-divider">|</div><div class="summary-value">${document.getElementById('company-name').value}</div>
+                            <div class="summary-label">🏢 소속</div><div class="summary-divider">|</div><div class="summary-value">${document.getElementById('company-name').value} (${document.getElementById('team').value})</div>
                             <div class="summary-label">👤 담당자</div><div class="summary-divider">|</div><div class="summary-value">${document.getElementById('full-name').value}님</div>
+                            <div class="summary-label">🎯 플랫폼</div><div class="summary-divider">|</div><div class="summary-value" style="color:var(--primary-orange);">${products || '선택 안함'}</div>
                         </div>`;
                 }
                 currentStep++; updateUI();
